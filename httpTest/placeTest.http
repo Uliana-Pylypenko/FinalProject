@@ -12,5 +12,18 @@ Content-Type: application/json
 
 {
   "name": "afasf",
-  "userId": 1
+  "userId": 7
 }
+
+###
+
+PUT localhost:8080/place/update/1
+Content-Type: application/json
+
+{
+  "name": "updated"
+}
+
+###
+
+DELETE localhost:8080/place/delete/1

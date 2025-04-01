@@ -29,4 +29,14 @@ public class PlaceController {
     public ResponseEntity<String> create(@RequestBody PlaceDTO placeDTO) {
         return placeService.create(placeDTO);
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody PlaceDTO placeDTO) {
+        return placeService.update(id, placeDTO);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        return placeService.delete(id);
+    }
 }
