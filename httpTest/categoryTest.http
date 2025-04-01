@@ -1,0 +1,24 @@
+### GET request to example server
+GET localhost:8080/category
+
+###
+
+POST localhost:8080/category/create
+Content-Type: application/json
+
+{
+  "name": "Dark sky park"
+}
+
+###
+
+PUT localhost:8080/category/update/3
+Content-Type: application/json
+
+{
+  "name": "Dark sky"
+}
+
+###
+
+DELETE localhost:8080/category/delete/3
