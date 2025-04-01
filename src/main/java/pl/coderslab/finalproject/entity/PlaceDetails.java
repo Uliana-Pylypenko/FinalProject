@@ -17,11 +17,17 @@ public class PlaceDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String country;
     private String location;
+    private String address;
     private String description;
     private String activites;
 
+    // it's better to have place_id in this table, bc first you add the place and then details
+    // this way you don't have to provide details during creating the place
     @OneToOne
     Place place;
+
+
 
 }

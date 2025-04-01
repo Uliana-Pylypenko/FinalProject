@@ -5,8 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.coderslab.finalproject.dto.PlaceDTO;
+import pl.coderslab.finalproject.entity.Category;
 import pl.coderslab.finalproject.entity.Place;
 import pl.coderslab.finalproject.entity.User;
+import pl.coderslab.finalproject.repository.CategoryRepository;
+import pl.coderslab.finalproject.repository.PlaceDetailsRepository;
 import pl.coderslab.finalproject.repository.PlaceRepository;
 import pl.coderslab.finalproject.repository.UserRepository;
 
@@ -19,6 +22,8 @@ import java.util.stream.Collectors;
 public class PlaceService {
     private final PlaceRepository placeRepository;
     private final UserRepository userRepository;
+    private final PlaceDetailsRepository placeDetailsRepository;
+    private final CategoryRepository categoryRepository;
 
     public ResponseEntity<List<PlaceDTO>> getAll() {
         List<PlaceDTO> placeDTOS = placeRepository
@@ -41,11 +46,12 @@ public class PlaceService {
     public ResponseEntity<String> create(PlaceDTO placeDTO) {
         Long userId = placeDTO.getUserId();
         Optional<User> user = userRepository.findById(userId);
-        if (user.isPresent()) {
-            placeRepository.save(PlaceDTO.toEntity(placeDTO, userRepository));
+        Optional<Category> category = categoryRepository.findById(placeDTO.getCategoryId());
+        if (user.isPresent() && category.isPresent()) {
+            placeRepository.save(PlaceDTO.toEntity(placeDTO, userRepository, placeDetailsRepository, categoryRepository));
             return new ResponseEntity<>("Place successfully created", HttpStatus.CREATED);
         }
-        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("User or category not found", HttpStatus.NOT_FOUND);
 
     }
 
@@ -53,9 +59,15 @@ public class PlaceService {
         Optional<Place> place = placeRepository.findById(place_id);
         // userId can't be changed
         if (place.isPresent()) {
-            place.get().setName(placeDTO.getName());
-            placeRepository.save(place.get());
-            return new ResponseEntity<>("Place successfully updated", HttpStatus.OK);
+            Long categoryId = placeDTO.getCategoryId();
+            Optional<Category> category = categoryRepository.findById(categoryId);
+            if (category.isPresent()) {
+                place.get().setName(placeDTO.getName());
+                place.get().setCategory(category.get());
+                placeRepository.save(place.get());
+                return new ResponseEntity<>("Place successfully updated", HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Category not found", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>("Place not found", HttpStatus.NOT_FOUND);
     }
@@ -68,6 +80,10 @@ public class PlaceService {
         }
         return new ResponseEntity<>("Place not found", HttpStatus.NOT_FOUND);
     }
+
+//    public List<Category> getAllCategories() {
+//        return placeRepository.getAllCategories();
+//    }
 
 
 

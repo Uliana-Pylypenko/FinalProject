@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.finalproject.dto.PlaceDTO;
+import pl.coderslab.finalproject.entity.Category;
 import pl.coderslab.finalproject.entity.Place;
 import pl.coderslab.finalproject.service.PlaceService;
 
@@ -39,4 +40,9 @@ public class PlaceController {
     public ResponseEntity<String> delete(@PathVariable Long id) {
         return placeService.delete(id);
     }
+
+//    @GetMapping("/categories")
+//    public List<Category> getAllCategories() {
+//        return placeService.getAllCategories();
+//    }
 }

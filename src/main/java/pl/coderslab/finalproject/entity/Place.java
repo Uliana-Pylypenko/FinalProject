@@ -25,9 +25,16 @@ public class Place {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany
-    @JoinTable(name = "place_category",
-            joinColumns = @JoinColumn(name = "place_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<Category> categories;
+//    @ManyToMany
+//    @JoinTable(name = "place_category",
+//            joinColumns = @JoinColumn(name = "place_id"),
+//            inverseJoinColumns = @JoinColumn(name = "category_id"))
+//    private Set<Category> categories;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @OneToOne(mappedBy = "place")
+    private PlaceDetails placeDetails;
 }

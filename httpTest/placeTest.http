@@ -12,7 +12,8 @@ Content-Type: application/json
 
 {
   "name": "afasf",
-  "userId": 7
+  "userId": 1,
+  "categoryId": 2
 }
 
 ###
@@ -21,9 +22,14 @@ PUT localhost:8080/place/update/1
 Content-Type: application/json
 
 {
-  "name": "updated"
+  "name": "updated",
+  "categoryId": 2
 }
 
 ###
 
 DELETE localhost:8080/place/delete/1
+
+###
+
+GET localhost:8080/place/categories
