@@ -19,9 +19,6 @@ public class Place {
 
     private String name;
 
-    @OneToOne
-    PlaceDetails details;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

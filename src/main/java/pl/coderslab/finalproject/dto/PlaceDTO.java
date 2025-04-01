@@ -22,7 +22,7 @@ public class PlaceDTO {
         PlaceDTO placeDTO = new PlaceDTO();
         placeDTO.setId(place.getId());
         placeDTO.setName(place.getName());
-        placeDTO.setDetailsId(place.getDetails().getId());
+        //placeDTO.setDetailsId(place.getDetails().getId());
         placeDTO.setUserId(place.getUser().getId());
         return placeDTO;
     }
@@ -31,7 +31,7 @@ public class PlaceDTO {
         Place place = new Place();
         place.setId(placeDTO.getId());
         place.setName(placeDTO.getName());
-        place.setDetails(detailsRepository.findById(placeDTO.getDetailsId()).orElse(null));
+        //place.setDetails(detailsRepository.findById(placeDTO.getDetailsId()).orElse(null));
         place.setUser(userRepository.findById(placeDTO.getUserId()).orElse(null));
         return place;
     }

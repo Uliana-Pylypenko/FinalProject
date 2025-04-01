@@ -21,5 +21,7 @@ public class PlaceDetails {
     private String description;
     private String activites;
 
+    @OneToOne
+    Place place;
 
 }
