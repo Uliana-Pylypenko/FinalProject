@@ -19,6 +19,7 @@ public class User {
 
     private String username;
 
+    //@Email
     private String email;
 
     private String password;
