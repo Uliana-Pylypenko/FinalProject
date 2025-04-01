@@ -2,3 +2,15 @@
 GET localhost:8080/place
 
 ###
+
+GET localhost:8080/place/1
+
+###
+
+POST localhost:8080/place/create
+Content-Type: application/json
+
+{
+  "name": "afasf",
+  "userId": 1
+}

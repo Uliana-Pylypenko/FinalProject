@@ -8,6 +8,8 @@ import pl.coderslab.finalproject.entity.Place;
 import pl.coderslab.finalproject.repository.DetailsRepository;
 import pl.coderslab.finalproject.repository.UserRepository;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,8 +17,9 @@ import pl.coderslab.finalproject.repository.UserRepository;
 public class PlaceDTO {
     private Long id;
     private String name;
-    private Long detailsId;
+    //private Long detailsId;
     private Long userId;
+    private Set<Long> categoryIds;
 
     public static PlaceDTO toDTO(Place place) {
         PlaceDTO placeDTO = new PlaceDTO();
@@ -27,7 +30,7 @@ public class PlaceDTO {
         return placeDTO;
     }
 
-    public static Place toEntity(PlaceDTO placeDTO, DetailsRepository detailsRepository, UserRepository userRepository) {
+    public static Place toEntity(PlaceDTO placeDTO, UserRepository userRepository) {
         Place place = new Place();
         place.setId(placeDTO.getId());
         place.setName(placeDTO.getName());
