@@ -7,7 +7,7 @@ GET localhost:8080/event/place-id/2
 
 ###
 
-POST localhost:8080/event/create/2
+POST localhost:8080/event/create/4
 Content-Type: application/json
 
 {
@@ -15,3 +15,19 @@ Content-Type: application/json
   "date": "2025-06-07",
   "time": "14:00:00"
 }
+
+###
+
+PUT localhost:8080/event/update/1
+Content-Type: application/json
+
+{
+  "description": "update",
+  "date": "2025-03-03",
+  "time": "18:00:00",
+  "title": "update"
+}
+
+###
+
+DELETE localhost:8080/event/delete/4

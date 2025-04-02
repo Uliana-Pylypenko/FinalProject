@@ -29,4 +29,14 @@ public class EventController {
     public ResponseEntity<String> createEvent(@PathVariable Long placeId, @RequestBody EventDTO eventDTO) {
         return eventService.addEvent(placeId, eventDTO);
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> updateEvent(@PathVariable Long id, @RequestBody EventDTO eventDTO) {
+        return eventService.updateEvent(id, eventDTO);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteEvent(@PathVariable Long id) {
+        return eventService.deleteEvent(id);
+    }
 }

@@ -32,9 +32,7 @@ public class PlaceDetailsService {
         if (place.isPresent()) {
             placeDetailsDTO.setPlaceId(placeId);
             PlaceDetails placeDetails = PlaceDetailsDTO.toEntity(placeDetailsDTO, placeRepository);
-            //place.get().setPlaceDetails(placeDetails);
             placeDetailsRepository.save(placeDetails);
-            //placeRepository.save(place.get());
             return new ResponseEntity<>("Details added successfully", HttpStatus.CREATED);
         }
         return new ResponseEntity<>("Place not found", HttpStatus.NOT_FOUND);

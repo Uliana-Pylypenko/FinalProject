@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.finalproject.dto.EventDTO;
 import pl.coderslab.finalproject.entity.Event;
 import pl.coderslab.finalproject.entity.Place;
@@ -51,5 +50,29 @@ public class EventService {
             return new ResponseEntity<>("Event added", HttpStatus.CREATED);
         }
         return new ResponseEntity<>("Place not found", HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntity<String> updateEvent(Long id, EventDTO eventDTO) {
+        Optional<Event> eventToUpdate = eventRepository.findById(id);
+        if (eventToUpdate.isPresent()) {
+            Event event = eventToUpdate.get();
+            event.setDescription(eventDTO.getDescription());
+            event.setDate(eventDTO.getDate());
+            event.setTime(eventDTO.getTime());
+            event.setTitle(eventDTO.getTitle());
+            // place can't be changed
+            eventRepository.save(event);
+            return new ResponseEntity<>("Event updated", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Event not found", HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntity<String> deleteEvent(Long id) {
+        Optional<Event> eventToDelete = eventRepository.findById(id);
+        if (eventToDelete.isPresent()) {
+            eventRepository.deleteById(id);
+            return new ResponseEntity<>("Event deleted", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Event not found", HttpStatus.NOT_FOUND);
     }
 }

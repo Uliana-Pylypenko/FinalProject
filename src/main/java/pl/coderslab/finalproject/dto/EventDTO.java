@@ -38,18 +38,19 @@ public class EventDTO {
     }
 
     public static Event toEntity(EventDTO eventDTO, PlaceRepository placeRepository) {
-        Event event = new Event();
-        event.setId(eventDTO.getId());
-        event.setTitle(eventDTO.getTitle());
-        event.setDescription(eventDTO.getDescription());
-        event.setDate(eventDTO.getDate());
-        event.setTime(eventDTO.getTime());
         Optional<Place> place = placeRepository.findById(eventDTO.getPlaceId());
         if (place.isPresent()) {
+            Event event = new Event();
+            event.setId(eventDTO.getId());
+            event.setTitle(eventDTO.getTitle());
+            event.setDescription(eventDTO.getDescription());
+            event.setDate(eventDTO.getDate());
+            event.setTime(eventDTO.getTime());
             event.setPlace(place.get());
+            return event;
         } else {
             throw new EntityNotFoundException("Place with id " + eventDTO.getPlaceId() + " not found");
         }
-        return event;
+
     }
 }

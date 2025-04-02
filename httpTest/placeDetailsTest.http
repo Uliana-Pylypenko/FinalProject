@@ -3,7 +3,7 @@ GET localhost:8080/place-details/place-id/7
 
 ###
 
-POST localhost:8080/place-details/create/7
+POST localhost:8080/place-details/create/4
 Content-Type: application/json
 
 {
