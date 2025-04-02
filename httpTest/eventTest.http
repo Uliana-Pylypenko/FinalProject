@@ -1,0 +1,17 @@
+### GET request to example server
+GET localhost:8080/event
+
+###
+
+GET localhost:8080/event/place-id/2
+
+###
+
+POST localhost:8080/event/create/2
+Content-Type: application/json
+
+{
+  "description": "dfdbf",
+  "date": "2025-06-07",
+  "time": "14:00:00"
+}

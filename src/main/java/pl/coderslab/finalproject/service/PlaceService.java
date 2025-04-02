@@ -8,10 +8,7 @@ import pl.coderslab.finalproject.dto.PlaceDTO;
 import pl.coderslab.finalproject.entity.Category;
 import pl.coderslab.finalproject.entity.Place;
 import pl.coderslab.finalproject.entity.User;
-import pl.coderslab.finalproject.repository.CategoryRepository;
-import pl.coderslab.finalproject.repository.PlaceDetailsRepository;
-import pl.coderslab.finalproject.repository.PlaceRepository;
-import pl.coderslab.finalproject.repository.UserRepository;
+import pl.coderslab.finalproject.repository.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +21,7 @@ public class PlaceService {
     private final UserRepository userRepository;
     private final PlaceDetailsRepository placeDetailsRepository;
     private final CategoryRepository categoryRepository;
+    private final EventRepository eventRepository;
 
     public ResponseEntity<List<PlaceDTO>> getAll() {
         List<PlaceDTO> placeDTOS = placeRepository
@@ -49,7 +47,8 @@ public class PlaceService {
         Optional<User> user = userRepository.findById(userId);
         Optional<Category> category = categoryRepository.findById(placeDTO.getCategoryId());
         if (user.isPresent() && category.isPresent()) {
-            placeRepository.save(PlaceDTO.toEntity(placeDTO, userRepository, placeDetailsRepository, categoryRepository));
+            // when we create a place, we don't have neither details nor events yet
+            placeRepository.save(PlaceDTO.toEntity(placeDTO, userRepository, placeDetailsRepository, categoryRepository, eventRepository));
             return new ResponseEntity<>("Place successfully created", HttpStatus.CREATED);
         }
         return new ResponseEntity<>("User or category not found", HttpStatus.NOT_FOUND);

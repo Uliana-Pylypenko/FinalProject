@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -37,4 +39,9 @@ public class Place {
 
     @OneToOne(mappedBy = "place", cascade = CascadeType.ALL)
     private PlaceDetails placeDetails;
+
+    @OneToMany(mappedBy = "place", cascade = CascadeType.ALL)
+    private List<Event> events = new ArrayList<>();
+
+
 }
