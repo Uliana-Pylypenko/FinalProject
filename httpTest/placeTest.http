@@ -3,7 +3,7 @@ GET localhost:8080/place
 
 ###
 
-GET localhost:8080/place/1
+GET localhost:8080/place/7
 
 ###
 
@@ -28,8 +28,5 @@ Content-Type: application/json
 
 ###
 
-DELETE localhost:8080/place/delete/1
+DELETE localhost:8080/place/delete/7
 
-###
-
-GET localhost:8080/place/categories

@@ -43,6 +43,7 @@ public class PlaceService {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    // creates Place with PlaceDetails=null
     public ResponseEntity<String> create(PlaceDTO placeDTO) {
         Long userId = placeDTO.getUserId();
         Optional<User> user = userRepository.findById(userId);
@@ -80,11 +81,6 @@ public class PlaceService {
         }
         return new ResponseEntity<>("Place not found", HttpStatus.NOT_FOUND);
     }
-
-//    public List<Category> getAllCategories() {
-//        return placeRepository.getAllCategories();
-//    }
-
 
 
 

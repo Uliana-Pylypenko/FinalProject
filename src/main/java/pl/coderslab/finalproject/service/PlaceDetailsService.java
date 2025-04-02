@@ -11,7 +11,6 @@ import pl.coderslab.finalproject.repository.PlaceDetailsRepository;
 import pl.coderslab.finalproject.repository.PlaceRepository;
 
 import java.util.Optional;
-import java.util.OptionalInt;
 
 @Service
 @AllArgsConstructor
@@ -32,7 +31,10 @@ public class PlaceDetailsService {
         Optional<Place> place = placeRepository.findById(placeId);
         if (place.isPresent()) {
             placeDetailsDTO.setPlaceId(placeId);
-            placeDetailsRepository.save(PlaceDetailsDTO.toEntity(placeDetailsDTO, placeRepository));
+            PlaceDetails placeDetails = PlaceDetailsDTO.toEntity(placeDetailsDTO, placeRepository);
+            //place.get().setPlaceDetails(placeDetails);
+            placeDetailsRepository.save(placeDetails);
+            //placeRepository.save(place.get());
             return new ResponseEntity<>("Details added successfully", HttpStatus.CREATED);
         }
         return new ResponseEntity<>("Place not found", HttpStatus.NOT_FOUND);
