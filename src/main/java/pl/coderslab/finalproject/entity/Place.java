@@ -35,6 +35,6 @@ public class Place {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToOne(mappedBy = "place")
+    @OneToOne(mappedBy = "place", cascade = CascadeType.ALL)
     private PlaceDetails placeDetails;
 }

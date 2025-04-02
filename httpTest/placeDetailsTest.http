@@ -1,4 +1,33 @@
 ### GET request to example server
-GET localhost:8080/place-details
+GET localhost:8080/place-details/place-id/3
 
 ###
+
+POST localhost:8080/place-details/create/2
+Content-Type: application/json
+
+{
+  "description": "sdfbsf",
+  "activites": "dsbfsdfb",
+  "address": "dfsdbsbdf",
+  "country": "ddsfbsb",
+  "location": "dfsdbfb"
+}
+
+###
+
+
+PUT localhost:8080/place-details/update/1
+Content-Type: application/json
+
+{
+  "description": "sdfbsf update",
+  "activites": "dsbfsdfb update",
+  "address": "dfsdbsbdf update",
+  "country": "ddsfbsb update",
+  "location": "dfsdbfb update"
+}
+
+###
+
+DELETE localhost:8080/place-details/delete/2
