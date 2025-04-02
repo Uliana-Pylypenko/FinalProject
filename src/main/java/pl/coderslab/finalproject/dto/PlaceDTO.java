@@ -12,6 +12,7 @@ import pl.coderslab.finalproject.repository.EventRepository;
 import pl.coderslab.finalproject.repository.PlaceDetailsRepository;
 import pl.coderslab.finalproject.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +26,7 @@ public class PlaceDTO {
     private Long detailsId;
     private Long userId;
     private Long categoryId;
-    private List<Long> eventIds;
+    private List<Long> eventIds; // = new ArrayList<>();
 
     public static PlaceDTO toDTO(Place place) {
         PlaceDTO placeDTO = new PlaceDTO();
@@ -49,18 +50,60 @@ public class PlaceDTO {
         return placeDTO;
     }
 
-    public static Place toEntity(PlaceDTO placeDTO,
+//    public static Place toEntity(PlaceDTO placeDTO,
+//                                 UserRepository userRepository,
+//                                 PlaceDetailsRepository placeDetailsRepository,
+//                                 CategoryRepository categoryRepository,
+//                                 EventRepository eventRepository) {
+//        Place place = new Place();
+//        place.setId(placeDTO.getId());
+//        place.setName(placeDTO.getName());
+//        Long detailsId = placeDTO.getDetailsId();
+//        if (detailsId != null) {
+//            place.setPlaceDetails(placeDetailsRepository.findById(detailsId).orElse(null));
+//        } else {
+//            place.setPlaceDetails(null);
+//        }
+//        place.setUser(userRepository.findById(placeDTO.getUserId()).orElse(null));
+//        place.setCategory(categoryRepository.findById(placeDTO.getCategoryId()).orElse(null));
+//        List<Long> eventIds = placeDTO.getEventIds();
+//        if (eventIds != null) {
+//            place.setEvents(eventRepository.findAllById(placeDTO.getEventIds()));
+//        } else {
+//            place.setEvents(null);
+//        }
+//        return place;
+//    }
+
+    public static Place toEntityUserCategory(PlaceDTO placeDTO,
+                                             UserRepository userRepository,
+                                             CategoryRepository categoryRepository) {
+        Place place = new Place();
+        place.setId(placeDTO.getId());
+        place.setName(placeDTO.getName());
+        place.setUser(userRepository.findById(placeDTO.getUserId()).orElse(null));
+        place.setCategory(categoryRepository.findById(placeDTO.getCategoryId()).orElse(null));
+        return place;
+    }
+
+        public static Place toEntity(PlaceDTO placeDTO,
                                  UserRepository userRepository,
                                  PlaceDetailsRepository placeDetailsRepository,
                                  CategoryRepository categoryRepository,
                                  EventRepository eventRepository) {
-        Place place = new Place();
-        place.setId(placeDTO.getId());
-        place.setName(placeDTO.getName());
-        place.setPlaceDetails(placeDetailsRepository.findById(placeDTO.getDetailsId()).orElse(null));
-        place.setUser(userRepository.findById(placeDTO.getUserId()).orElse(null));
-        place.setCategory(categoryRepository.findById(placeDTO.getCategoryId()).orElse(null));
-        place.setEvents(eventRepository.findAllById(placeDTO.getEventIds()));
-        return place;
-    }
+            Place place = toEntityUserCategory(placeDTO, userRepository, categoryRepository);
+            Long detailsId = placeDTO.getDetailsId();
+            if (detailsId != null) {
+                place.setPlaceDetails(placeDetailsRepository.findById(detailsId).orElse(null));
+            } else {
+                place.setPlaceDetails(null);
+            }
+            List<Long> eventIds = placeDTO.getEventIds();
+            if (eventIds != null) {
+                place.setEvents(eventRepository.findAllById(placeDTO.getEventIds()));
+            } else {
+                place.setEvents(null);
+            }
+            return place;
+        }
 }

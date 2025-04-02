@@ -48,7 +48,7 @@ public class PlaceService {
         Optional<Category> category = categoryRepository.findById(placeDTO.getCategoryId());
         if (user.isPresent() && category.isPresent()) {
             // when we create a place, we don't have neither details nor events yet
-            placeRepository.save(PlaceDTO.toEntity(placeDTO, userRepository, placeDetailsRepository, categoryRepository, eventRepository));
+            placeRepository.save(PlaceDTO.toEntityUserCategory(placeDTO, userRepository, categoryRepository));
             return new ResponseEntity<>("Place successfully created", HttpStatus.CREATED);
         }
         return new ResponseEntity<>("User or category not found", HttpStatus.NOT_FOUND);
