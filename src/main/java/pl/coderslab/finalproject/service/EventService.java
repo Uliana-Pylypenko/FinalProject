@@ -29,14 +29,6 @@ public class EventService {
         return new ResponseEntity<>(eventDTOS, HttpStatus.OK);
     }
 
-    public ResponseEntity<EventDTO> getEventById(Long id) {
-        Optional<Event> optionalEvent = eventRepository.findById(id);
-        if (optionalEvent.isPresent()) {
-            return new ResponseEntity<>(EventDTO.toDTO(optionalEvent.get()), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-    }
-
     public ResponseEntity<List<EventDTO>> getAllEventsByPlaceId(Long placeId) {
         List<EventDTO> eventDTOS = eventRepository
                 .findAllByPlaceId(placeId)

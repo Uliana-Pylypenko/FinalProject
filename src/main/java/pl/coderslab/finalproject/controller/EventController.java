@@ -20,11 +20,6 @@ public class EventController {
         return eventService.getAllEvents();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<EventDTO> getEventById(@PathVariable Long id) {
-        return eventService.getEventById(id);
-    }
-
     @GetMapping("/place-id/{placeId}")
     public ResponseEntity<List<EventDTO>> getEventsByPlaceId(@PathVariable Long placeId) {
         return eventService.getAllEventsByPlaceId(placeId);

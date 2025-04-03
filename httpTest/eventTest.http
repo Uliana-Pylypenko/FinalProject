@@ -3,10 +3,6 @@ GET localhost:8080/event
 
 ###
 
-GET localhost:8080/event/1
-
-###
-
 GET localhost:8080/event/place-id/2
 
 ###

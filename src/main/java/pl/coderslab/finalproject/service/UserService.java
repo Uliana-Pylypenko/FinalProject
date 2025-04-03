@@ -40,17 +40,6 @@ public class UserService {
         return new ResponseEntity<>("User created successfully", HttpStatus.CREATED);
     }
 
-    // maybe add confirm password
-    public ResponseEntity<String> register(String username, String email, String password) {
-        User user = new User();
-        user.setUsername(username);
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setAdmin(false);
-        userRepository.save(user);
-        return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
-    }
-
     public ResponseEntity<String> update(Long id, UserDTO userDTO) {
         Optional<User> userToUpdate = userRepository.findById(id);
         if (userToUpdate.isPresent()) {
