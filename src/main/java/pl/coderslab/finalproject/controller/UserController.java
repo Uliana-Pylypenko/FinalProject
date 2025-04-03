@@ -1,7 +1,6 @@
 package pl.coderslab.finalproject.controller;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -2,23 +2,28 @@ package pl.coderslab.finalproject.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.finalproject.dto.PlaceDTO;
 import pl.coderslab.finalproject.entity.Category;
 import pl.coderslab.finalproject.entity.Place;
+import pl.coderslab.finalproject.repository.PlaceRepository;
 import pl.coderslab.finalproject.service.PlaceService;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/place")
 @AllArgsConstructor
 public class PlaceController {
     private final PlaceService placeService;
+    private final PlaceRepository placeRepository;
 
     @GetMapping
-    public ResponseEntity<List<PlaceDTO>> getAll() {
-        return placeService.getAll();
+    public String getAll(Model model) {
+        model.addAttribute("places", placeService.getAll());
+        return "place";
     }
 
     @GetMapping("/{id}")

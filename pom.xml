@@ -11,6 +11,9 @@
     <groupId>pl.coderslab</groupId>
     <artifactId>FinalProject</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+
+    <packaging>war</packaging>
+
     <name>FinalProject</name>
     <description>FinalProject</description>
     <url/>
