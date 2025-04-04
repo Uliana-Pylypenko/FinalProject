@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.List;
 @ToString
 public class PlaceApiDTO {
     private String place_id;
+    private String name;
     private String country;
     private String city;
     private String address;
@@ -34,6 +36,12 @@ public class PlaceApiDTO {
             PlaceApiDTO placeApiDTO = new PlaceApiDTO();
             placeApiDTO.setCountry(jsonObject.getString("country"));
             placeApiDTO.setPlace_id(jsonObject.getString("place_id"));
+            try {
+                String name = jsonObject.getString("name");
+                placeApiDTO.setName(name);
+            } catch (JSONException e) {
+                e.getMessage();
+            }
             placeApiDTO.setCity(jsonObject.optString("city"));
             placeApiDTO.setAddress(jsonObject.optString("formatted"));
             placeApiDTO.setLongitude(jsonObject.getDouble("lon"));
@@ -50,6 +58,37 @@ public class PlaceApiDTO {
             placeApiDTOS.add(placeApiDTO);
         }
 
+        return placeApiDTOS;
+
+    }
+
+    public static List<PlaceApiDTO> JSONtoDTOwithName(JSONObject root) {
+        JSONArray array = root.getJSONArray("features");
+
+        List<PlaceApiDTO> placeApiDTOS = new ArrayList<>();
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject jsonObject = array.getJSONObject(i).optJSONObject("properties");
+            if (jsonObject.has("name")) {
+                PlaceApiDTO placeApiDTO = new PlaceApiDTO();
+                placeApiDTO.setCountry(jsonObject.getString("country"));
+                placeApiDTO.setPlace_id(jsonObject.getString("place_id"));
+                placeApiDTO.setName(jsonObject.optString("name"));
+                placeApiDTO.setCity(jsonObject.optString("city"));
+                placeApiDTO.setAddress(jsonObject.optString("formatted"));
+                placeApiDTO.setLongitude(jsonObject.getDouble("lon"));
+                placeApiDTO.setLatitude(jsonObject.getDouble("lat"));
+                placeApiDTO.setDistance(jsonObject.getInt("distance"));
+
+                JSONArray categoriesJson = jsonObject.optJSONArray("categories");
+                List<String> categoriesList = new ArrayList<>();
+                for (int j = 0; j < categoriesJson.length(); j++) {
+                    categoriesList.add(categoriesJson.getString(j));
+                }
+
+                placeApiDTO.setCategories(categoriesList);
+                placeApiDTOS.add(placeApiDTO);
+            }
+        }
         return placeApiDTOS;
 
     }

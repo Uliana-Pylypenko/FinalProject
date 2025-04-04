@@ -26,12 +26,16 @@ public class PlaceDTO {
     private Long detailsId;
     private Long userId;
     private Long categoryId;
+    private String latitude;
+    private String longitude;
     private List<Long> eventIds; // = new ArrayList<>();
 
     public static PlaceDTO toDTO(Place place) {
         PlaceDTO placeDTO = new PlaceDTO();
         placeDTO.setId(place.getId());
         placeDTO.setName(place.getName());
+        placeDTO.setLatitude(String.valueOf(place.getLatitude()));
+        placeDTO.setLongitude(String.valueOf(place.getLongitude()));
         //placeDTO.setDetailsId(place.getPlaceDetails().getId());// can't be null for some reason
         PlaceDetails placeDetails = place.getPlaceDetails();
         if (placeDetails != null) {
@@ -81,6 +85,8 @@ public class PlaceDTO {
         Place place = new Place();
         place.setId(placeDTO.getId());
         place.setName(placeDTO.getName());
+        place.setLatitude(Double.parseDouble(placeDTO.getLatitude()));
+        place.setLongitude(Double.parseDouble(placeDTO.getLongitude()));
         place.setUser(userRepository.findById(placeDTO.getUserId()).orElse(null));
         place.setCategory(categoryRepository.findById(placeDTO.getCategoryId()).orElse(null));
         return place;

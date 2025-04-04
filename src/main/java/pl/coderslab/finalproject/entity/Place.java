@@ -43,5 +43,9 @@ public class Place {
     @OneToMany(mappedBy = "place", cascade = CascadeType.ALL)
     private List<Event> events = new ArrayList<>();
 
+    private double longitude;
+    private double latitude;
+
+
 
 }
