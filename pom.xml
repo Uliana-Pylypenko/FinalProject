@@ -77,6 +77,17 @@
             <artifactId>json</artifactId>
             <version>20250107</version>
         </dependency>
+        <!-- jsp -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+        </dependency>
+        <!-- JSTL for JSP -->
+        <dependency>
+            <groupId>jakarta.servlet.jsp.jstl</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+        </dependency>
+        <!-- jsp -->
     </dependencies>
 
     <build>
