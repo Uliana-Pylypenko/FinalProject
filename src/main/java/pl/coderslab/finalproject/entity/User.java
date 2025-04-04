@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -25,4 +27,7 @@ public class User {
     private String password;
 
     private boolean isAdmin;
+
+    @OneToMany(mappedBy = "user")
+    private List<Place> places;
 }

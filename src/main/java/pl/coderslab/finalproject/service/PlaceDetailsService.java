@@ -18,7 +18,12 @@ public class PlaceDetailsService {
     private final PlaceRepository placeRepository;
     private final PlaceDetailsRepository placeDetailsRepository;
 
-    public ResponseEntity<PlaceDetailsDTO> getDetailsByPlaceId(Long placeId) {
+    public PlaceDetails getDetailsByPlaceId(Long placeId) {
+        Optional<PlaceDetails> placeDetails = placeDetailsRepository.findByPlaceId(placeId);
+        return placeDetails.get();
+    }
+
+    public ResponseEntity<PlaceDetailsDTO> getDetailsByPlaceIdDTO(Long placeId) {
         Optional<PlaceDetails> placeDetails = placeDetailsRepository.findByPlaceId(placeId);
         if (placeDetails.isPresent()) {
             PlaceDetailsDTO placeDetailsDTO = PlaceDetailsDTO.toDTO(placeDetails.get());
