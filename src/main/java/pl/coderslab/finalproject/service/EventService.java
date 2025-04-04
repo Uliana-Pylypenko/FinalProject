@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import pl.coderslab.finalproject.dto.EventDTO;
 import pl.coderslab.finalproject.entity.Event;
 import pl.coderslab.finalproject.entity.Place;
+import pl.coderslab.finalproject.entity.PlaceDetails;
 import pl.coderslab.finalproject.repository.EventRepository;
 import pl.coderslab.finalproject.repository.PlaceRepository;
 
@@ -20,7 +21,15 @@ public class EventService {
     private final EventRepository eventRepository;
     private final PlaceRepository placeRepository;
 
-    public ResponseEntity<List<EventDTO>> getAllEvents() {
+    public List<Event> getAll() {
+        return eventRepository.findAll();
+    }
+
+    public Event getById(Long id) {
+        return eventRepository.findById(id).orElse(null);
+    }
+
+    public ResponseEntity<List<EventDTO>> getAllEventsDTO() {
         List<EventDTO> eventDTOS = eventRepository
                 .findAll()
                 .stream()

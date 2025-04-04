@@ -6,12 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.finalproject.dto.PlaceDTO;
-import pl.coderslab.finalproject.entity.Category;
-import pl.coderslab.finalproject.entity.Place;
 import pl.coderslab.finalproject.repository.PlaceRepository;
 import pl.coderslab.finalproject.service.PlaceService;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/place")
@@ -21,9 +17,9 @@ public class PlaceController {
     private final PlaceRepository placeRepository;
 
     @GetMapping
-    public ResponseEntity<List<PlaceDTO>> getAll() {
-        //model.addAttribute("places", placeService.getAll());
-        return placeService.getAll();
+    public String getAll(Model model) {
+        model.addAttribute("places", placeService.getAll());
+        return "initial_places";
     }
 
     @GetMapping("/{id}")

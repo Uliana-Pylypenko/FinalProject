@@ -18,6 +18,10 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
 
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username).orElse(null);
+    }
+
     public ResponseEntity<List<UserDTO>> getAll() {
         List<UserDTO> userDTOS = userRepository
                 .findAll()
@@ -34,6 +38,8 @@ public class UserService {
         }
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
+
+
 
     public ResponseEntity<String> create(UserDTO userDTO) {
         userRepository.save(UserDTO.toEntity(userDTO));

@@ -9,9 +9,7 @@ import org.springframework.ui.Model;
 @Controller
 public class HelloController {
 
-    @GetMapping({
-            "/hello"
-    })
+    @GetMapping({"/hello"})
     public String hello(@RequestParam(value = "name", defaultValue = "World",
             required = true) String name, Model model) {
         model.addAttribute("name", name);

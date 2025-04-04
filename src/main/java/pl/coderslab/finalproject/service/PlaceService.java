@@ -23,7 +23,11 @@ public class PlaceService {
     private final CategoryRepository categoryRepository;
     private final EventRepository eventRepository;
 
-    public ResponseEntity<List<PlaceDTO>> getAll() {
+    public List<Place> getAll() {
+        return placeRepository.findAll();
+    }
+
+    public ResponseEntity<List<PlaceDTO>> getAllDTO() {
         List<PlaceDTO> placeDTOS = placeRepository
                 .findAll()
                 .stream()

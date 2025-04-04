@@ -2,17 +2,25 @@ package pl.coderslab.finalproject.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.finalproject.dto.UserDTO;
 import pl.coderslab.finalproject.service.UserService;
 
 import java.util.List;
 
-@RestController  // only @Controller works with the views
+@Controller  // only @Controller works with the views
 @RequestMapping("/user")
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
+
+    @GetMapping("/username/{username}")
+    public String getUser(@PathVariable String username, Model model) {
+        model.addAttribute("user", userService.findByUsername(username));
+        return "initial_user_profile";
+    }
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAll() {
