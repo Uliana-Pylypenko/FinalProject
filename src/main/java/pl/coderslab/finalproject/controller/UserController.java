@@ -8,7 +8,7 @@ import pl.coderslab.finalproject.service.UserService;
 
 import java.util.List;
 
-@RestController
+@RestController  // only @Controller works with the views
 @RequestMapping("/user")
 @AllArgsConstructor
 public class UserController {

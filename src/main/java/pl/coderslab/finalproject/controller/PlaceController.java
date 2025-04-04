@@ -21,9 +21,9 @@ public class PlaceController {
     private final PlaceRepository placeRepository;
 
     @GetMapping
-    public String getAll(Model model) {
-        model.addAttribute("places", placeService.getAll());
-        return "place";
+    public ResponseEntity<List<PlaceDTO>> getAll() {
+        //model.addAttribute("places", placeService.getAll());
+        return placeService.getAll();
     }
 
     @GetMapping("/{id}")
