@@ -16,4 +16,14 @@ public class HomeController {
     public String map() {
         return "map";
     }
+
+    @GetMapping("/user/home")
+    public String userHome() {
+        return "user_home";
+    }
+
+    @GetMapping("/admin/home")
+    public String adminHome() {
+        return "admin_home";
+    }
 }
