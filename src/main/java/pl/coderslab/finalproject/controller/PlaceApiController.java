@@ -6,18 +6,17 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import pl.coderslab.finalproject.dto.PlaceApiDTO;
 import pl.coderslab.finalproject.dto.PlaceDTO;
+import pl.coderslab.finalproject.entity.Place;
 import pl.coderslab.finalproject.service.PlaceService;
 
 import java.util.List;
 
-@RestController
+@Controller
 @AllArgsConstructor
 @RequestMapping("/geoapi")
 public class PlaceApiController {
@@ -48,10 +47,10 @@ public class PlaceApiController {
     }
 
     @GetMapping("/places/{placeId}/{categories}")
-    public List<PlaceApiDTO> getPlaces(@PathVariable Long placeId, @PathVariable String categories) {
-        PlaceDTO placeDTO = placeService.getById(placeId).getBody();
-        String coords =  placeDTO.getLatitude() + "," + placeDTO.getLongitude();
-        System.out.println(coords);
+    public String getPlaces(@PathVariable Long placeId, @PathVariable String categories, Model model) {
+        Place place = placeService.getById(placeId);
+        model.addAttribute("place", place);
+        String coords =  place.getLongitude() + "," + place.getLatitude();
 
         RestTemplate rest = new RestTemplate();
         String API_URL = API_URL1 + categories
@@ -67,7 +66,9 @@ public class PlaceApiController {
                 API_KEY);
 
         JSONObject root = new JSONObject(exchange.getBody());
-        return PlaceApiDTO.JSONtoDTOwithName(root);
+        List<PlaceApiDTO> placeApiDTOS = PlaceApiDTO.JSONtoDTOwithName(root);
+        model.addAttribute("placeApiDTOS", placeApiDTOS);
+        return "map";
 
     }
 

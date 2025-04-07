@@ -24,7 +24,7 @@ public class PlaceController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PlaceDTO> getById(@PathVariable Long id) {
-        return placeService.getById(id);
+        return placeService.getByIdDTO(id);
     }
 
     @PostMapping("/create")

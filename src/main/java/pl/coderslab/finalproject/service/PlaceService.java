@@ -36,7 +36,11 @@ public class PlaceService {
         return new ResponseEntity<>(placeDTOS, HttpStatus.OK);
     }
 
-    public ResponseEntity<PlaceDTO> getById(Long id) {
+    public Place getById(Long id) {
+        return placeRepository.findById(id).orElse(null);
+    }
+
+    public ResponseEntity<PlaceDTO> getByIdDTO(Long id) {
         Optional<Place> place = placeRepository.findById(id);
         if (place.isPresent()) {
             PlaceDTO placeDTO = PlaceDTO.toDTO(place.get());
