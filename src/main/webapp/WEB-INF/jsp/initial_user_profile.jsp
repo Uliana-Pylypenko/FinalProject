@@ -13,13 +13,15 @@
 </head>
 <body>
 <h1>Your profile</h1>
-${user.username}<br>
-${user.email}<br>
+${userDTO.username}<br>
+${userDTO.email}<br>
+${userDTO.password}<br>
+${userDTO.placeIds}<br>
 update<br>
 
 <h2>Your places</h2>
-<c:forEach items="${user.places}" var="place">
-   ${place.category.name} ${place.name}<br>
+<c:forEach items="${userPlaceDTOS}" var="place">
+   ${place.name}<br>
 </c:forEach>
 
 <%--<h2>Your events</h2>--%>

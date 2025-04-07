@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Component;
+import pl.coderslab.finalproject.dto.UserDTO;
 import pl.coderslab.finalproject.entity.User;
 
 import java.io.IOException;
@@ -19,7 +20,8 @@ public class AuthFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         HttpSession session = httpRequest.getSession();
         String requestURI = httpRequest.getRequestURI();
-        User user = (User) session.getAttribute("user");
+        //User user = (User) session.getAttribute("user");
+        UserDTO user = (UserDTO) session.getAttribute("userDTO");
 
         if (user == null) {
             httpResponse.sendRedirect("/login");

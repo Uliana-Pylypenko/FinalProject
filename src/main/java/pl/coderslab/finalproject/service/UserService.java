@@ -5,7 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.coderslab.finalproject.dto.UserDTO;
+import pl.coderslab.finalproject.entity.Place;
 import pl.coderslab.finalproject.entity.User;
+import pl.coderslab.finalproject.repository.PlaceRepository;
 import pl.coderslab.finalproject.repository.UserRepository;
 
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final PlaceRepository placeRepository;
 
     public User findByUsername(String username) {
         return userRepository.findByUsername(username).orElse(null);
@@ -42,14 +45,14 @@ public class UserService {
 
 
     public ResponseEntity<String> create(UserDTO userDTO) {
-        userRepository.save(UserDTO.toEntity(userDTO));
+        userRepository.save(UserDTO.toEntity(userDTO, placeRepository));
         return new ResponseEntity<>("User created successfully", HttpStatus.CREATED);
     }
 
     public ResponseEntity<String> update(Long id, UserDTO userDTO) {
         Optional<User> userToUpdate = userRepository.findById(id);
         if (userToUpdate.isPresent()) {
-            User user = UserDTO.toEntity(userDTO);
+            User user = UserDTO.toEntity(userDTO, placeRepository);
             user.setId(id);
             userRepository.save(user);
             return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
