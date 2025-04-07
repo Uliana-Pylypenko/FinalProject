@@ -15,17 +15,18 @@
 <h1>Your profile</h1>
 ${user.username}<br>
 ${user.email}<br>
+update<br>
 
 <h2>Your places</h2>
 <c:forEach items="${user.places}" var="place">
-  ${place.category.name} ${place.name}<br>
+   ${place.category.name} ${place.name}<br>
 </c:forEach>
 
-<h2>Your events</h2>
-<c:forEach items="${user.places}" var="place">
-  <c:forEach items="${place.events}" var="event">
-    ${event.date} ${event.time} ${event.title} ${event.place.placeDetails.location}<br>
-  </c:forEach>
-</c:forEach>
+<%--<h2>Your events</h2>--%>
+<%--<c:forEach items="${user.places}" var="place">--%>
+<%--  <c:forEach items="${place.events}" var="event">--%>
+<%--    ${event.date} ${event.time} ${event.title} ${event.place.placeDetails.location}<br>--%>
+<%--  </c:forEach>--%>
+<%--</c:forEach>--%>
 </body>
 </html>

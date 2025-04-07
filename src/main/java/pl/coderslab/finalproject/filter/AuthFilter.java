@@ -27,6 +27,7 @@ public class AuthFilter implements Filter {
             if (((user.isAdmin() && requestURI.startsWith("/user"))) || (!user.isAdmin() && requestURI.startsWith("/admin")) )  {
                 httpResponse.sendRedirect("/access-denied");
             }
+
         }
         filterChain.doFilter(request, response);
     }
