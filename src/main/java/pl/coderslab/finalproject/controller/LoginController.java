@@ -53,4 +53,9 @@ public class LoginController {
         return "redirect:/login"; // Redirect to login page
     }
 
+    @GetMapping("/access-denied")
+    public String accessDenied() {
+        return "access_denied";
+    }
+
 }
