@@ -7,10 +7,7 @@ import lombok.Setter;
 import pl.coderslab.finalproject.entity.Event;
 import pl.coderslab.finalproject.entity.Place;
 import pl.coderslab.finalproject.entity.PlaceDetails;
-import pl.coderslab.finalproject.repository.CategoryRepository;
-import pl.coderslab.finalproject.repository.EventRepository;
-import pl.coderslab.finalproject.repository.PlaceDetailsRepository;
-import pl.coderslab.finalproject.repository.UserRepository;
+import pl.coderslab.finalproject.repository.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +20,7 @@ import java.util.stream.Collectors;
 public class PlaceDTO {
     private Long id;
     private String name;
-    private Long detailsId;
+    private PlaceDetailsDTO detailsDTO;
     private Long userId;
     private Long categoryId;
     private String latitude;
@@ -38,11 +35,12 @@ public class PlaceDTO {
         placeDTO.setLongitude(String.valueOf(place.getLongitude()));
         //placeDTO.setDetailsId(place.getPlaceDetails().getId()); // can't be null for some reason
         PlaceDetails placeDetails = place.getPlaceDetails();
-        if (placeDetails != null) {
-            placeDTO.setDetailsId(placeDetails.getId());
-        } else {
-            placeDTO.setDetailsId(null); // Handle the case where PlaceDetails is null
-        }
+        placeDTO.setDetailsDTO(PlaceDetailsDTO.toDTO(placeDetails));
+//        if (placeDetails != null) {
+//            placeDTO.setDetailsId(placeDetails.getId());
+//        } else {
+//            placeDTO.setDetailsId(null); // Handle the case where PlaceDetails is null
+//        }
         placeDTO.setUserId(place.getUser().getId());
         placeDTO.setCategoryId(place.getCategory().getId());
         List<Long> eventIds = place
@@ -94,16 +92,18 @@ public class PlaceDTO {
 
         public static Place toEntity(PlaceDTO placeDTO,
                                  UserRepository userRepository,
-                                 PlaceDetailsRepository placeDetailsRepository,
+                                 PlaceRepository placeRepository,
                                  CategoryRepository categoryRepository,
                                  EventRepository eventRepository) {
             Place place = toEntityUserCategory(placeDTO, userRepository, categoryRepository);
-            Long detailsId = placeDTO.getDetailsId();
-            if (detailsId != null) {
-                place.setPlaceDetails(placeDetailsRepository.findById(detailsId).orElse(null));
-            } else {
-                place.setPlaceDetails(null);
-            }
+            PlaceDetails placeDetails = PlaceDetailsDTO.toEntity(placeDTO.getDetailsDTO(), placeRepository);
+            place.setPlaceDetails(placeDetails);
+//            Long detailsId = placeDTO.getDetailsId();
+//            if (detailsId != null) {
+//                place.setPlaceDetails(placeDetailsRepository.findById(detailsId).orElse(null));
+//            } else {
+//                place.setPlaceDetails(null);
+//            }
             List<Long> eventIds = placeDTO.getEventIds();
             if (eventIds != null) {
                 place.setEvents(eventRepository.findAllById(placeDTO.getEventIds()));

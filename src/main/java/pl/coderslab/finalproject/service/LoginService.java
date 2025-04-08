@@ -32,25 +32,13 @@ public class LoginService {
             UserDTO userDTO = UserDTO.toDTO(user);
             session.setAttribute("userDTO", userDTO);
             List<PlaceDTO> placeDTOS = new ArrayList<>();
-            List<PlaceDetailsDTO> placeDetailsDTOS = new ArrayList<>();
             if (userDTO.getPlaceIds() != null) {
                 placeDTOS = placeRepository.findAllById(userDTO.getPlaceIds())
                         .stream()
                         .map(PlaceDTO::toDTO)
                         .collect(Collectors.toList());
-
-                List<Long> placeDetailsIds = placeDTOS
-                        .stream()
-                        .map(PlaceDTO::getDetailsId)
-                        .collect(Collectors.toList());
-                placeDetailsDTOS = placeDetailsRepository
-                        .findAllById(placeDetailsIds)
-                        .stream()
-                        .map(PlaceDetailsDTO::toDTO)
-                        .collect(Collectors.toList());
             }
             session.setAttribute("userPlaceDTOS", placeDTOS);
-            session.setAttribute("userPlaceDetailsDTOS", placeDetailsDTOS);
 
             //store also user places, details and evets DTOs
             if (user.isAdmin()) {
