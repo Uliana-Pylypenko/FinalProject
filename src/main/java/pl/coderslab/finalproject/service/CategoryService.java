@@ -10,14 +10,25 @@ import pl.coderslab.finalproject.repository.CategoryRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
 
-    public ResponseEntity<List<Category>> getAll() {
-        return new ResponseEntity<>(categoryRepository.findAll(), HttpStatus.OK);
+    public CategoryDTO getCategoryById(Long id) {
+        Category category = categoryRepository.findById(id).orElse(null);
+        return CategoryDTO.toDTO(category);
+    }
+
+    public ResponseEntity<List<CategoryDTO>> getAll() {
+        List<CategoryDTO> categories = categoryRepository
+                .findAll()
+                .stream()
+                .map(CategoryDTO::toDTO)
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
     public ResponseEntity<String> addCategory(CategoryDTO categoryDTO) {

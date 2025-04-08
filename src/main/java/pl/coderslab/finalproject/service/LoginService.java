@@ -40,7 +40,7 @@ public class LoginService {
             }
             session.setAttribute("userPlaces", placeDTOS);
 
-            //store also user places, details and evets DTOs
+            //store also user places, details and events DTOs
             if (user.isAdmin()) {
                 return "redirect:/admin/home";
             } else {
@@ -49,7 +49,7 @@ public class LoginService {
 
         } else {
             model.addAttribute("error", "Invalid username or password");
-            return "initial_login"; // Return to login.jsp with error
+            return "initial_login";
         }
     }
 }

@@ -1,20 +1,30 @@
 package pl.coderslab.finalproject.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.finalproject.dto.CategoryDTO;
 import pl.coderslab.finalproject.dto.PlaceDTO;
+import pl.coderslab.finalproject.dto.UserDTO;
+import pl.coderslab.finalproject.entity.Category;
 import pl.coderslab.finalproject.repository.PlaceRepository;
+import pl.coderslab.finalproject.service.CategoryService;
 import pl.coderslab.finalproject.service.PlaceService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/place")
 @AllArgsConstructor
 public class PlaceController {
     private final PlaceService placeService;
-    private final PlaceRepository placeRepository;
+    private final CategoryService categoryService;
 
     @GetMapping
     public String getAll(Model model) {
@@ -27,9 +37,53 @@ public class PlaceController {
         return placeService.getByIdDTO(id);
     }
 
+    @GetMapping("/create")
+    public String create(Model model) {
+        model.addAttribute("categories", categoryService.getAll().getBody());
+        return "initial_add_place";
+    }
+
     @PostMapping("/create")
-    public ResponseEntity<String> create(@RequestBody PlaceDTO placeDTO) {
-        return placeService.create(placeDTO);
+    public String create(HttpServletRequest request, Model model) {
+        PlaceDTO placeDTO = new PlaceDTO();
+        String name = request.getParameter("name");
+        double latitude = Double.parseDouble(request.getParameter("latitude"));
+        double longitude = Double.parseDouble(request.getParameter("longitude"));
+        Long categoryId = Long.parseLong(request.getParameter("category"));
+        CategoryDTO categoryDTO = categoryService.getCategoryById(categoryId);
+        HttpSession session = request.getSession();
+        UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
+        Long userId = userDTO.getId();
+
+        System.out.println(name);
+        System.out.println(latitude);
+        System.out.println(longitude);
+        System.out.println(categoryDTO.getName());
+        System.out.println(userId);
+
+        placeDTO.setName(name);
+        placeDTO.setLatitude(latitude);
+        placeDTO.setLongitude(longitude);
+        placeDTO.setCategoryDTO(categoryDTO);
+        placeDTO.setUserId(userId);
+
+        ResponseEntity<String> createResponse = placeService.create(placeDTO);
+
+        if (createResponse.getStatusCode() == HttpStatus.CREATED) {
+
+            List<PlaceDTO> placeDTOS = (List<PlaceDTO>) session.getAttribute("userPlaces");
+            if (placeDTOS == null) {
+                placeDTOS = new ArrayList<>();
+            }
+            placeDTOS.add(placeDTO);
+
+            session.setAttribute("userPlaces", placeDTOS);
+
+            return "redirect:/user/home";
+        } else {
+            model.addAttribute("error_message", "Can't create place");
+            return "error";
+        }
     }
 
     @PutMapping("/update/{id}")

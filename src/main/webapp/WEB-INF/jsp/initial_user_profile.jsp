@@ -18,18 +18,33 @@ ${userDTO.email}<br>
 <a href="/user/update/${userDTO.id}">Update profile</a>
 
 <h2>Your places</h2>
+
 <c:set var="counter" value="1" />
 <c:forEach items="${userPlaces}" var="place">
     ${counter} ${place.categoryDTO.name} ${place.name} <br>
     <c:set var="counter" value="${counter + 1}" />
 </c:forEach>
 
+<c:if test="${empty userPlaces}" >
+    No places<br>
+</c:if>
+
+<a href="/place/create">Add place</a><br>
 
 <h2>Your events</h2>
+
+<c:set var="counter" value="0" />
 <c:forEach items="${userPlaces}" var="place">
   <c:forEach items="${place.eventDTOS}" var="event">
     ${event.date} ${event.time} ${event.title} <br>
+      <c:set var="counter" value="${counter + 1}" />
   </c:forEach>
 </c:forEach>
+
+<c:if test="${counter=='0'}">
+    No events<br>
+</c:if>
+
+<a href="/logout">Logout</a>
 </body>
 </html>

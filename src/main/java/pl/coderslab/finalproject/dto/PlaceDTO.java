@@ -23,32 +23,36 @@ public class PlaceDTO {
     private PlaceDetailsDTO detailsDTO;
     private Long userId;
     private CategoryDTO categoryDTO;
-    private String latitude;
-    private String longitude;
+    private double latitude;
+    private double longitude;
     private List<EventDTO> eventDTOS; // = new ArrayList<>();
 
     public static PlaceDTO toDTO(Place place) {
         PlaceDTO placeDTO = new PlaceDTO();
         placeDTO.setId(place.getId());
         placeDTO.setName(place.getName());
-        placeDTO.setLatitude(String.valueOf(place.getLatitude()));
-        placeDTO.setLongitude(String.valueOf(place.getLongitude()));
+        placeDTO.setLatitude(place.getLatitude());
+        placeDTO.setLongitude(place.getLongitude());
         //placeDTO.setDetailsId(place.getPlaceDetails().getId()); // can't be null for some reason
         PlaceDetails placeDetails = place.getPlaceDetails();
-        placeDTO.setDetailsDTO(PlaceDetailsDTO.toDTO(placeDetails));
-//        if (placeDetails != null) {
-//            placeDTO.setDetailsId(placeDetails.getId());
-//        } else {
-//            placeDTO.setDetailsId(null); // Handle the case where PlaceDetails is null
-//        }
+        if (placeDetails != null) {
+            placeDTO.setDetailsDTO(PlaceDetailsDTO.toDTO(placeDetails));
+        } else {
+            placeDTO.setDetailsDTO(null);
+        }
         placeDTO.setUserId(place.getUser().getId());
         placeDTO.setCategoryDTO(CategoryDTO.toDTO(place.getCategory()));
-        List<EventDTO> eventDTOS = place
-                .getEvents()
-                .stream()
-                .map(EventDTO::toDTO)
-                .collect(Collectors.toList());
-        placeDTO.setEventDTOS(eventDTOS);
+
+        List<Event> events = place.getEvents();
+        if (events != null) {
+            List<EventDTO> eventDTOS = events
+                    .stream()
+                    .map(EventDTO::toDTO)
+                    .collect(Collectors.toList());
+            placeDTO.setEventDTOS(eventDTOS);
+        } else {
+            placeDTO.setEventDTOS(null);
+        }
         return placeDTO;
     }
 
@@ -82,8 +86,8 @@ public class PlaceDTO {
         Place place = new Place();
         place.setId(placeDTO.getId());
         place.setName(placeDTO.getName());
-        place.setLatitude(Double.parseDouble(placeDTO.getLatitude()));
-        place.setLongitude(Double.parseDouble(placeDTO.getLongitude()));
+        place.setLatitude(placeDTO.getLatitude());
+        place.setLongitude(placeDTO.getLongitude());
         place.setUser(userRepository.findById(placeDTO.getUserId()).orElse(null));
         place.setCategory(CategoryDTO.toEntity(placeDTO.getCategoryDTO()));
         return place;
