@@ -38,7 +38,7 @@ public class LoginService {
                         .map(PlaceDTO::toDTO)
                         .collect(Collectors.toList());
             }
-            session.setAttribute("userPlaceDTOS", placeDTOS);
+            session.setAttribute("userPlaces", placeDTOS);
 
             //store also user places, details and evets DTOs
             if (user.isAdmin()) {
