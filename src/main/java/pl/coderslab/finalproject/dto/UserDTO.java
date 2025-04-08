@@ -9,6 +9,7 @@ import pl.coderslab.finalproject.entity.Place;
 import pl.coderslab.finalproject.entity.User;
 import pl.coderslab.finalproject.repository.PlaceRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

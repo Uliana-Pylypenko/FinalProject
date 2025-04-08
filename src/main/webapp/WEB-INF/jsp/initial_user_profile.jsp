@@ -16,13 +16,19 @@
 ${userDTO.username}<br>
 ${userDTO.email}<br>
 ${userDTO.password}<br>
-${userDTO.placeIds}<br>
 update<br>
 
 <h2>Your places</h2>
 <c:forEach items="${userPlaceDTOS}" var="place">
    ${place.name}<br>
 </c:forEach>
+
+<h2>Your place details</h2>
+<c:forEach items="${userPlaceDetailsDTOS}" var="place">
+    ${place.country}<br>
+</c:forEach>
+
+
 
 <%--<h2>Your events</h2>--%>
 <%--<c:forEach items="${user.places}" var="place">--%>

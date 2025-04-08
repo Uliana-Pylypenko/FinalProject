@@ -36,7 +36,7 @@ public class PlaceDTO {
         placeDTO.setName(place.getName());
         placeDTO.setLatitude(String.valueOf(place.getLatitude()));
         placeDTO.setLongitude(String.valueOf(place.getLongitude()));
-        //placeDTO.setDetailsId(place.getPlaceDetails().getId());// can't be null for some reason
+        //placeDTO.setDetailsId(place.getPlaceDetails().getId()); // can't be null for some reason
         PlaceDetails placeDetails = place.getPlaceDetails();
         if (placeDetails != null) {
             placeDTO.setDetailsId(placeDetails.getId());
