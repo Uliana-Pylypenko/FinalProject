@@ -55,12 +55,6 @@ public class PlaceController {
         UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
         Long userId = userDTO.getId();
 
-        System.out.println(name);
-        System.out.println(latitude);
-        System.out.println(longitude);
-        System.out.println(categoryDTO.getName());
-        System.out.println(userId);
-
         placeDTO.setName(name);
         placeDTO.setLatitude(latitude);
         placeDTO.setLongitude(longitude);

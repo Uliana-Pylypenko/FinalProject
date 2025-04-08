@@ -1,15 +1,24 @@
 package pl.coderslab.finalproject.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.finalproject.dto.EventDTO;
+import pl.coderslab.finalproject.dto.PlaceDTO;
 import pl.coderslab.finalproject.entity.Event;
 import pl.coderslab.finalproject.repository.EventRepository;
 import pl.coderslab.finalproject.service.EventService;
 
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -35,6 +44,57 @@ public class EventController {
     @GetMapping("/place-id/{placeId}")
     public ResponseEntity<List<EventDTO>> getEventsByPlaceId(@PathVariable Long placeId) {
         return eventService.getAllEventsByPlaceId(placeId);
+    }
+
+    @GetMapping("/create")
+    public String createEvent() {
+        return "initial_add_event";
+    }
+
+    @PostMapping("/create")
+    public String createEvent(HttpServletRequest request) {
+        Long placeId = Long.parseLong(request.getParameter("place"));
+        String title = request.getParameter("title");
+        LocalDate date = LocalDate.parse(request.getParameter("date"));
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        Time time = null;
+        try {
+            long ms = sdf.parse(request.getParameter("time")).getTime();
+            time = new Time(ms);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        String description = request.getParameter("description");
+
+        EventDTO eventDTO = new EventDTO();
+        eventDTO.setTitle(title);
+        eventDTO.setDate(date);
+        eventDTO.setTime(time);
+        eventDTO.setDescription(description);
+
+        HttpSession session = request.getSession();
+
+        ResponseEntity<String> createResponse = eventService.addEvent(placeId, eventDTO);
+        if (createResponse.getStatusCode() == HttpStatus.CREATED) {
+            List<PlaceDTO> placeDTOS = (List<PlaceDTO>) session.getAttribute("userPlaces");
+            if (placeDTOS == null) {
+                placeDTOS = new ArrayList<>();
+            } else {
+                for (PlaceDTO placeDTO : placeDTOS) {
+                    if (placeDTO.getId() == placeId) {
+                        List<EventDTO> eventDTOS = placeDTO.getEventDTOS();
+                        eventDTOS.add(eventDTO);
+                        placeDTO.setEventDTOS(eventDTOS);
+                    }
+                }
+            }
+            session.setAttribute("userPlaces", placeDTOS);
+            return "redirect:/user/home";
+        } else {
+            return "error";
+        }
+
+
     }
 
     @PostMapping("/create/{placeId}")

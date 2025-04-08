@@ -45,6 +45,8 @@ ${userDTO.email}<br>
     No events<br>
 </c:if>
 
+<a href="/event/create">Add event</a><br>
+
 <a href="/logout">Logout</a>
 </body>
 </html>
