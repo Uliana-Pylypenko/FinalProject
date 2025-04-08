@@ -20,7 +20,7 @@ public class PlaceDetailsService {
 
     public PlaceDetails getDetailsByPlaceId(Long placeId) {
         Optional<PlaceDetails> placeDetails = placeDetailsRepository.findByPlaceId(placeId);
-        return placeDetails.get();
+        return placeDetails.orElse(null);
     }
 
     public ResponseEntity<PlaceDetailsDTO> getDetailsByPlaceIdDTO(Long placeId) {

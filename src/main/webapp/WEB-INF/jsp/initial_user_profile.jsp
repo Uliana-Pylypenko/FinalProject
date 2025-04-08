@@ -21,7 +21,7 @@ ${userDTO.email}<br>
 
 <c:set var="counter" value="1" />
 <c:forEach items="${userPlaces}" var="place">
-    ${counter} ${place.categoryDTO.name} ${place.name} <br>
+    ${counter} ${place.categoryDTO.name} ${place.name} <a href="/place-details/place-id/${place.id}">Details</a><br>
     <c:set var="counter" value="${counter + 1}" />
 </c:forEach>
 

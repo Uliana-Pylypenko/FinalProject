@@ -14,7 +14,6 @@ import pl.coderslab.finalproject.repository.PlaceRepository;
 @AllArgsConstructor
 public class PlaceDetailsDTO {
     private Long id;
-
     private String country;
     private String location;
     private String address;

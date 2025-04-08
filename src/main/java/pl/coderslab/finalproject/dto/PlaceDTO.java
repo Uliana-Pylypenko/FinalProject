@@ -20,11 +20,11 @@ import java.util.stream.Collectors;
 public class PlaceDTO {
     private Long id;
     private String name;
-    private PlaceDetailsDTO detailsDTO;
     private Long userId;
     private CategoryDTO categoryDTO;
     private double latitude;
     private double longitude;
+    private PlaceDetailsDTO detailsDTO;
     private List<EventDTO> eventDTOS; // = new ArrayList<>();
 
     public static PlaceDTO toDTO(Place place) {
