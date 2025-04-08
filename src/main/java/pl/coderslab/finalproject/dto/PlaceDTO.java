@@ -25,7 +25,7 @@ public class PlaceDTO {
     private Long categoryId;
     private String latitude;
     private String longitude;
-    private List<Long> eventIds; // = new ArrayList<>();
+    private List<EventDTO> eventDTOS; // = new ArrayList<>();
 
     public static PlaceDTO toDTO(Place place) {
         PlaceDTO placeDTO = new PlaceDTO();
@@ -43,12 +43,12 @@ public class PlaceDTO {
 //        }
         placeDTO.setUserId(place.getUser().getId());
         placeDTO.setCategoryId(place.getCategory().getId());
-        List<Long> eventIds = place
+        List<EventDTO> eventDTOS = place
                 .getEvents()
                 .stream()
-                .map(Event::getId)
+                .map(EventDTO::toDTO)
                 .collect(Collectors.toList());
-        placeDTO.setEventIds(eventIds);
+        placeDTO.setEventDTOS(eventDTOS);
         return placeDTO;
     }
 
@@ -93,8 +93,7 @@ public class PlaceDTO {
         public static Place toEntity(PlaceDTO placeDTO,
                                  UserRepository userRepository,
                                  PlaceRepository placeRepository,
-                                 CategoryRepository categoryRepository,
-                                 EventRepository eventRepository) {
+                                 CategoryRepository categoryRepository) {
             Place place = toEntityUserCategory(placeDTO, userRepository, categoryRepository);
             PlaceDetails placeDetails = PlaceDetailsDTO.toEntity(placeDTO.getDetailsDTO(), placeRepository);
             place.setPlaceDetails(placeDetails);
@@ -104,12 +103,18 @@ public class PlaceDTO {
 //            } else {
 //                place.setPlaceDetails(null);
 //            }
-            List<Long> eventIds = placeDTO.getEventIds();
-            if (eventIds != null) {
-                place.setEvents(eventRepository.findAllById(placeDTO.getEventIds()));
-            } else {
-                place.setEvents(null);
-            }
+//            List<Long> eventIds = placeDTO.getEventIds();
+//            if (eventIds != null) {
+//                place.setEvents(eventRepository.findAllById(placeDTO.getEventIds()));
+//            } else {
+//                place.setEvents(null);
+//            }
+            List<Event> events = placeDTO
+                    .getEventDTOS()
+                    .stream()
+                    .map(eventDTO -> EventDTO.toEntity(eventDTO, placeRepository))
+                    .collect(Collectors.toList());
+            place.setEvents(events);
             return place;
         }
 }
