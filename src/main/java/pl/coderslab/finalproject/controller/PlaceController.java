@@ -33,12 +33,6 @@ public class PlaceController {
     private final CategoryService categoryService;
     private final PlaceRepository placeRepository;
 
-//    @GetMapping
-//    public String getAll(Model model) {
-//        model.addAttribute("places", placeService.getAll());
-//        return "initial_places";
-//    }
-
     @GetMapping()
     public String getFilteredPlaces(Model model, HttpServletRequest request) {
         model.addAttribute("places", placeService.getAllDTO().getBody());
@@ -49,20 +43,6 @@ public class PlaceController {
         String country = request.getParameter("country");
         String city = request.getParameter("city");
         String activity = request.getParameter("activity");
-
-//        Map<String, Boolean> categoryMap = categoryDTOS.stream()
-//                .collect(Collectors.toMap(categoryDTO -> categoryDTO.getName(),
-//                        categoryDTO -> {
-//                                String value = request.getParameter(categoryDTO.getName());
-//                                if (value != null) {
-//                                    return true;
-//                                } else {
-//                                    return false;
-//                                }}));
-
-//        Map<String, Boolean> categoryMap = categoryDTOS.stream()
-//                .collect(Collectors.toMap(categoryDTO -> categoryDTO.getName(),
-//                        categoryDTO -> request.getParameter(categoryDTO.getName()) != null));
 
         List<CategoryDTO> checkedCategories = new ArrayList<>();
         for (CategoryDTO categoryDTO : categoryDTOS) {

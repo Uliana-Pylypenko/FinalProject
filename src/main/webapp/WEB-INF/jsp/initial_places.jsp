@@ -6,6 +6,8 @@
 </head>
 <body>
 
+<a href="/">Back to home page</a><br>
+
 <form action="" method="get">
     Place name
     <input type="text" name="name" value="${filter_name}" placeholder="Place name"><br>

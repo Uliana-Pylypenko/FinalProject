@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/event")
@@ -28,9 +29,26 @@ public class EventController {
     private final EventService eventService;
     private final EventRepository eventRepository;
 
+//    @GetMapping
+//    public String getEvents(Model model) {
+//        model.addAttribute("events", eventService.getAll());
+//        return "initial_events";
+//    }
+
     @GetMapping
-    public String getEvents(Model model) {
-        model.addAttribute("events", eventService.getAll());
+    public String getFilteredEvents(Model model, HttpServletRequest request) {
+        model.addAttribute("events", eventService.getAllEventsDTO().getBody());
+        String startDateString = request.getParameter("title");
+        //LocalDate startDate = startDateString == null ? null : LocalDate.parse(startDateString);
+        //model.addAttribute("start_date", startDate);
+
+        List<EventDTO> filteredEvents = eventRepository
+                .findByFilters(startDateString)
+                .stream()
+                .map(EventDTO::toDTO)
+                .collect(Collectors.toList());
+
+        model.addAttribute("events", filteredEvents);
         return "initial_events";
     }
 

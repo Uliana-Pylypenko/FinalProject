@@ -13,12 +13,23 @@
 </head>
 <body>
 
-<a href="filter??">Filter???</a><br>
+<a href="/">Back to home page</a><br>
+
+<form action="" method="get">
+    Title
+    <input type="text" name="title"><br>
+    Start date
+    <input type="date" name="date_start" value="${filter_start_date}">
+    <button type="submit">Filter</button>
+</form>
 
 <c:forEach items="${events}" var="event">
-  ${event.date} ${event.time} ${event.title} ${event.place.placeDetails.location} <a href="/event/${event.id}">Details</a><br>
+  ${event.date} ${event.time} ${event.title} <a href="/event/${event.id}">Details</a><br>
 </c:forEach>
 
 <a href="events/map?">Show as map</a>
+
+<h1>check</h1>
+${start_date}
 </body>
 </html>
