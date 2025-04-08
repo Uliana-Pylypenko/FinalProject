@@ -76,8 +76,7 @@ public class PlaceController {
         model.addAttribute("filter_city", city);
         model.addAttribute("filter_activity", activity);
         model.addAttribute("filter_category", checkedCategories);
-        //model.addAttribute("filter_cat1", cat1);
-
+        
         List<PlaceDTO> filteredPlaces = placeRepository
                 .findByFilters(name, country, city, activity, checkedCategories.stream().map(CategoryDTO::toEntity).collect(Collectors.toList()))
                 .stream()
