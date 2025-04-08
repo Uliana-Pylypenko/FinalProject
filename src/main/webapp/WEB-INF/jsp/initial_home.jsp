@@ -13,23 +13,23 @@
 </head>
 <body>
 <h1>Welcome</h1>
-<c:if test="${empty user}">
+<c:if test="${empty userDTO}">
     <a href="/login">Log in</a><br>
     <a href="/register">Registration</a><br>
 </c:if>
 
-<c:if test="${user.admin}">
+<c:if test="${userDTO.admin}">
     <a href="/admin/home">Admin profile</a><br>
 </c:if>
 
-<c:if test="${not empty user && ! user.admin}">
+<c:if test="${not empty userDTO && ! userDTO.admin}">
     <a href="/user/home">User profile</a><br>
 </c:if>
 
 <a href="/place">Places</a><br>
 <a href="/event">Events</a><br>
 
-<c:if test="${not empty user}">
+<c:if test="${not empty userDTO}">
     <a href="/logout">Logout</a>
 </c:if>
 </body>

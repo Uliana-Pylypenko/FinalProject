@@ -6,10 +6,26 @@
 </head>
 <body>
 
-<a href="filter??">Filter???</a><br>
+<form action="" method="get">
+    Place name
+    <input type="text" name="name" value="${filter_name}" placeholder="Place name"><br>
+    Country
+    <input type="text" name="country" value="${filter_country}" placeholder="Country"><br>
+    City
+    <input type="text" name="city" value="${filter_city}" placeholder="City"><br>
+    <button type="submit">Filter</button>
+</form>
+
+<c:if test="${empty userDTO}">
+    <a href="/login">Login or register to add a new place</a><br>
+</c:if>
+
+<c:if test="${not empty userDTO}">
+    <a href="place/create">Add new place</a><br>
+</c:if>
 
 <c:forEach items="${places}" var="place">
-  ${place.category.name} ${place.name} <a href="/place-details/place-id/${place.id}">Details</a><br>
+  ${place.categoryDTO.name} ${place.name} <a href="/place-details/place-id/${place.id}">Details</a><br>
 </c:forEach>
 
 <a href="places/map?">Show as map</a>

@@ -15,7 +15,8 @@
 <h1>Your profile</h1>
 ${userDTO.username}<br>
 ${userDTO.email}<br>
-<a href="/user/update/${userDTO.id}">Update profile</a>
+<a href="/user/update/${userDTO.id}">Update profile</a><br>
+<a href="/">Home page</a>
 
 <h2>Your places</h2>
 

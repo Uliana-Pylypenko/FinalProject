@@ -3,6 +3,7 @@ package pl.coderslab.finalproject.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,12 +13,15 @@ import pl.coderslab.finalproject.dto.CategoryDTO;
 import pl.coderslab.finalproject.dto.PlaceDTO;
 import pl.coderslab.finalproject.dto.UserDTO;
 import pl.coderslab.finalproject.entity.Category;
+import pl.coderslab.finalproject.entity.Place;
 import pl.coderslab.finalproject.repository.PlaceRepository;
 import pl.coderslab.finalproject.service.CategoryService;
 import pl.coderslab.finalproject.service.PlaceService;
+import pl.coderslab.finalproject.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/place")
@@ -25,10 +29,31 @@ import java.util.List;
 public class PlaceController {
     private final PlaceService placeService;
     private final CategoryService categoryService;
+    private final PlaceRepository placeRepository;
 
-    @GetMapping
-    public String getAll(Model model) {
-        model.addAttribute("places", placeService.getAll());
+//    @GetMapping
+//    public String getAll(Model model) {
+//        model.addAttribute("places", placeService.getAll());
+//        return "initial_places";
+//    }
+
+    @GetMapping()
+    public String getFilteredPlaces(Model model, HttpServletRequest request) {
+        model.addAttribute("places", placeService.getAllDTO().getBody());
+        String name = request.getParameter("name");
+        String country = request.getParameter("country");
+        String city = request.getParameter("city");
+
+        model.addAttribute("filter_name", name);
+        model.addAttribute("filter_country", country);
+        model.addAttribute("filter_city", city);
+
+        List<PlaceDTO> filteredPlaces = placeRepository
+                .findByFilters(name, country, city)
+                .stream()
+                .map(PlaceDTO::toDTO)
+                .collect(Collectors.toList());
+        model.addAttribute("places", filteredPlaces);
         return "initial_places";
     }
 
