@@ -13,6 +13,8 @@
     <input type="text" name="country" value="${filter_country}" placeholder="Country"><br>
     City
     <input type="text" name="city" value="${filter_city}" placeholder="City"><br>
+    Activity
+    <input type="text" name="activity" value="${filter_activity}" placeholder="Activity"><br>
     <button type="submit">Filter</button>
 </form>
 

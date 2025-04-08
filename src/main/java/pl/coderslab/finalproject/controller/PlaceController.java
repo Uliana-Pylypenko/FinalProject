@@ -43,13 +43,15 @@ public class PlaceController {
         String name = request.getParameter("name");
         String country = request.getParameter("country");
         String city = request.getParameter("city");
+        String activity = request.getParameter("activity");
 
         model.addAttribute("filter_name", name);
         model.addAttribute("filter_country", country);
         model.addAttribute("filter_city", city);
+        model.addAttribute("filter_activity", activity);
 
         List<PlaceDTO> filteredPlaces = placeRepository
-                .findByFilters(name, country, city)
+                .findByFilters(name, country, city, activity)
                 .stream()
                 .map(PlaceDTO::toDTO)
                 .collect(Collectors.toList());

@@ -28,7 +28,7 @@ public class PlaceDetailsDTO {
        placeDetailsDTO.setLocation(placeDetails.getLocation());
        placeDetailsDTO.setAddress(placeDetails.getAddress());
        placeDetailsDTO.setDescription(placeDetails.getDescription());
-       placeDetailsDTO.setActivites(placeDetails.getActivites());
+       placeDetailsDTO.setActivites(placeDetails.getActivities());
        placeDetailsDTO.setPlaceId(placeDetails.getPlace().getId());
        return placeDetailsDTO;
    }
@@ -40,7 +40,7 @@ public class PlaceDetailsDTO {
        placeDetails.setLocation(placeDetailsDTO.getLocation());
        placeDetails.setAddress(placeDetailsDTO.getAddress());
        placeDetails.setDescription(placeDetailsDTO.getDescription());
-       placeDetails.setActivites(placeDetailsDTO.getActivites());
+       placeDetails.setActivities(placeDetailsDTO.getActivites());
        placeDetails.setPlace(placeRepository.findById(placeDetailsDTO.getPlaceId()).orElse(null));
        return placeDetails;
    }

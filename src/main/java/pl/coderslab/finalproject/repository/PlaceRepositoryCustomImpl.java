@@ -17,7 +17,7 @@ public class PlaceRepositoryCustomImpl implements PlaceRepositoryCustom{
     private EntityManager entityManager;
 
     @Override
-    public List<Place> findByFilters(String name, String country, String location) {
+    public List<Place> findByFilters(String name, String country, String location, String activity) {
         StringBuilder queryBuilder = new StringBuilder("SELECT p FROM Place p WHERE 1=1");
 
         if (name != null && !name.isEmpty()) {
@@ -28,6 +28,9 @@ public class PlaceRepositoryCustomImpl implements PlaceRepositoryCustom{
         }
         if (location != null && !location.isEmpty()) {
             queryBuilder.append(" AND p.placeDetails.location LIKE :location");
+        }
+        if (activity != null && !activity.isEmpty()) {
+            queryBuilder.append(" AND p.placeDetails.activities LIKE :activity");
         }
 
         TypedQuery<Place> query = entityManager.createQuery(queryBuilder.toString(), Place.class);
@@ -41,7 +44,9 @@ public class PlaceRepositoryCustomImpl implements PlaceRepositoryCustom{
         if (location != null && !location.isEmpty()) {
             query.setParameter("location", "%" + location + "%");
         }
-
+        if (activity != null && !activity.isEmpty()) {
+            query.setParameter("activity", "%" + activity + "%");
+        }
 
         return query.getResultList();
     }

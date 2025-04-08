@@ -52,7 +52,7 @@ public class PlaceDetailsService {
             placeDetails.setAddress(placeDetailsDTO.getAddress());
             placeDetails.setLocation(placeDetailsDTO.getLocation());
             placeDetails.setDescription(placeDetailsDTO.getDescription());
-            placeDetails.setActivites(placeDetailsDTO.getActivites());
+            placeDetails.setActivities(placeDetailsDTO.getActivites());
             placeDetailsRepository.save(placeDetails);
             return new ResponseEntity<>("Details updated successfully", HttpStatus.OK);
         }

@@ -21,7 +21,7 @@ public class PlaceDetails {
     private String location;
     private String address;
     private String description;
-    private String activites;
+    private String activities;
 
     // it's better to have place_id in this table, bc first you add the place and then details
     // this way you don't have to provide details during creating the place
