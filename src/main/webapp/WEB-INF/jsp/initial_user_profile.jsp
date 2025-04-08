@@ -15,12 +15,13 @@
 <h1>Your profile</h1>
 ${userDTO.username}<br>
 ${userDTO.email}<br>
-${userDTO.password}<br>
 update<br>
 
 <h2>Your places</h2>
+<c:set var="counter" value="1" />
 <c:forEach items="${userPlaceDTOS}" var="place">
-   ${place.name} ${place.detailsDTO.country}<br>
+    ${counter} ${place.categoryDTO.name} ${place.name} <br>
+    <c:set var="counter" value="${counter + 1}" />
 </c:forEach>
 
 

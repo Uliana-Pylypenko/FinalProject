@@ -19,9 +19,7 @@ import java.util.stream.Collectors;
 public class PlaceService {
     private final PlaceRepository placeRepository;
     private final UserRepository userRepository;
-    private final PlaceDetailsRepository placeDetailsRepository;
     private final CategoryRepository categoryRepository;
-    private final EventRepository eventRepository;
 
     public List<Place> getAll() {
         return placeRepository.findAll();
@@ -53,10 +51,10 @@ public class PlaceService {
     public ResponseEntity<String> create(PlaceDTO placeDTO) {
         Long userId = placeDTO.getUserId();
         Optional<User> user = userRepository.findById(userId);
-        Optional<Category> category = categoryRepository.findById(placeDTO.getCategoryId());
+        Optional<Category> category = categoryRepository.findById(placeDTO.getCategoryDTO().getId());
         if (user.isPresent() && category.isPresent()) {
             // when we create a place, we don't have neither details nor events yet
-            placeRepository.save(PlaceDTO.toEntityUserCategory(placeDTO, userRepository, categoryRepository));
+            placeRepository.save(PlaceDTO.toEntityUserCategory(placeDTO, userRepository));
             return new ResponseEntity<>("Place successfully created", HttpStatus.CREATED);
         }
         return new ResponseEntity<>("User or category not found", HttpStatus.NOT_FOUND);
@@ -67,7 +65,7 @@ public class PlaceService {
         Optional<Place> place = placeRepository.findById(place_id);
         // userId can't be changed
         if (place.isPresent()) {
-            Long categoryId = placeDTO.getCategoryId();
+            Long categoryId = placeDTO.getCategoryDTO().getId();
             Optional<Category> category = categoryRepository.findById(categoryId);
             if (category.isPresent()) {
                 place.get().setName(placeDTO.getName());

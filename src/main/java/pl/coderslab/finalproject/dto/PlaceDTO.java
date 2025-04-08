@@ -22,7 +22,7 @@ public class PlaceDTO {
     private String name;
     private PlaceDetailsDTO detailsDTO;
     private Long userId;
-    private Long categoryId;
+    private CategoryDTO categoryDTO;
     private String latitude;
     private String longitude;
     private List<EventDTO> eventDTOS; // = new ArrayList<>();
@@ -42,7 +42,7 @@ public class PlaceDTO {
 //            placeDTO.setDetailsId(null); // Handle the case where PlaceDetails is null
 //        }
         placeDTO.setUserId(place.getUser().getId());
-        placeDTO.setCategoryId(place.getCategory().getId());
+        placeDTO.setCategoryDTO(CategoryDTO.toDTO(place.getCategory()));
         List<EventDTO> eventDTOS = place
                 .getEvents()
                 .stream()
@@ -78,15 +78,14 @@ public class PlaceDTO {
 //    }
 
     public static Place toEntityUserCategory(PlaceDTO placeDTO,
-                                             UserRepository userRepository,
-                                             CategoryRepository categoryRepository) {
+                                             UserRepository userRepository) {
         Place place = new Place();
         place.setId(placeDTO.getId());
         place.setName(placeDTO.getName());
         place.setLatitude(Double.parseDouble(placeDTO.getLatitude()));
         place.setLongitude(Double.parseDouble(placeDTO.getLongitude()));
         place.setUser(userRepository.findById(placeDTO.getUserId()).orElse(null));
-        place.setCategory(categoryRepository.findById(placeDTO.getCategoryId()).orElse(null));
+        place.setCategory(CategoryDTO.toEntity(placeDTO.getCategoryDTO()));
         return place;
     }
 
@@ -94,7 +93,7 @@ public class PlaceDTO {
                                  UserRepository userRepository,
                                  PlaceRepository placeRepository,
                                  CategoryRepository categoryRepository) {
-            Place place = toEntityUserCategory(placeDTO, userRepository, categoryRepository);
+            Place place = toEntityUserCategory(placeDTO, userRepository);
             PlaceDetails placeDetails = PlaceDetailsDTO.toEntity(placeDTO.getDetailsDTO(), placeRepository);
             place.setPlaceDetails(placeDetails);
 //            Long detailsId = placeDTO.getDetailsId();
