@@ -15,6 +15,12 @@
     <input type="text" name="city" value="${filter_city}" placeholder="City"><br>
     Activity
     <input type="text" name="activity" value="${filter_activity}" placeholder="Activity"><br>
+    Categories<br>
+    <c:forEach items="${all_categories}" var="category">
+        <input type="checkbox" name="${category.name}">
+        ${category.name}<br>
+    </c:forEach>
+
     <button type="submit">Filter</button>
 </form>
 

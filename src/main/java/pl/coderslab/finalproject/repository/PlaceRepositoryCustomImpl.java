@@ -6,7 +6,11 @@ import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import pl.coderslab.finalproject.dto.CategoryDTO;
+import pl.coderslab.finalproject.entity.Category;
 import pl.coderslab.finalproject.entity.Place;
+
+import java.util.Map;
 import java.util.function.Predicate;
 
 import java.util.ArrayList;
@@ -17,7 +21,11 @@ public class PlaceRepositoryCustomImpl implements PlaceRepositoryCustom{
     private EntityManager entityManager;
 
     @Override
-    public List<Place> findByFilters(String name, String country, String location, String activity) {
+    public List<Place> findByFilters(String name,
+                                     String country,
+                                     String location,
+                                     String activity,
+                                     List<Category> categories) {
         StringBuilder queryBuilder = new StringBuilder("SELECT p FROM Place p WHERE 1=1");
 
         if (name != null && !name.isEmpty()) {
@@ -33,6 +41,17 @@ public class PlaceRepositoryCustomImpl implements PlaceRepositoryCustom{
             queryBuilder.append(" AND p.placeDetails.activities LIKE :activity");
         }
 
+        if (!categories.isEmpty()) {
+            queryBuilder.append(" AND (");
+            for (int i = 0; i < categories.size(); i++) {
+                if (i > 0) {
+                    queryBuilder.append(" OR ");
+                }
+                queryBuilder.append("p.category = :category" + i);
+            }
+            queryBuilder.append(")");
+        }
+
         TypedQuery<Place> query = entityManager.createQuery(queryBuilder.toString(), Place.class);
 
         if (name != null && !name.isEmpty()) {
@@ -46,6 +65,9 @@ public class PlaceRepositoryCustomImpl implements PlaceRepositoryCustom{
         }
         if (activity != null && !activity.isEmpty()) {
             query.setParameter("activity", "%" + activity + "%");
+        }
+        for (int i = 0; i < categories.size(); i++) {
+            query.setParameter("category" + i, categories.get(i));
         }
 
         return query.getResultList();

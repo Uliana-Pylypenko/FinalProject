@@ -20,7 +20,9 @@ import pl.coderslab.finalproject.service.PlaceService;
 import pl.coderslab.finalproject.service.UserService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
@@ -40,18 +42,44 @@ public class PlaceController {
     @GetMapping()
     public String getFilteredPlaces(Model model, HttpServletRequest request) {
         model.addAttribute("places", placeService.getAllDTO().getBody());
+        List<CategoryDTO> categoryDTOS = categoryService.getAll().getBody();
+        model.addAttribute("all_categories", categoryDTOS);
+
         String name = request.getParameter("name");
         String country = request.getParameter("country");
         String city = request.getParameter("city");
         String activity = request.getParameter("activity");
 
+//        Map<String, Boolean> categoryMap = categoryDTOS.stream()
+//                .collect(Collectors.toMap(categoryDTO -> categoryDTO.getName(),
+//                        categoryDTO -> {
+//                                String value = request.getParameter(categoryDTO.getName());
+//                                if (value != null) {
+//                                    return true;
+//                                } else {
+//                                    return false;
+//                                }}));
+
+//        Map<String, Boolean> categoryMap = categoryDTOS.stream()
+//                .collect(Collectors.toMap(categoryDTO -> categoryDTO.getName(),
+//                        categoryDTO -> request.getParameter(categoryDTO.getName()) != null));
+
+        List<CategoryDTO> checkedCategories = new ArrayList<>();
+        for (CategoryDTO categoryDTO : categoryDTOS) {
+            if (request.getParameter(categoryDTO.getName()) != null) {
+                checkedCategories.add(categoryDTO);
+            }
+        }
+
         model.addAttribute("filter_name", name);
         model.addAttribute("filter_country", country);
         model.addAttribute("filter_city", city);
         model.addAttribute("filter_activity", activity);
+        model.addAttribute("filter_category", checkedCategories);
+        //model.addAttribute("filter_cat1", cat1);
 
         List<PlaceDTO> filteredPlaces = placeRepository
-                .findByFilters(name, country, city, activity)
+                .findByFilters(name, country, city, activity, checkedCategories.stream().map(CategoryDTO::toEntity).collect(Collectors.toList()))
                 .stream()
                 .map(PlaceDTO::toDTO)
                 .collect(Collectors.toList());
