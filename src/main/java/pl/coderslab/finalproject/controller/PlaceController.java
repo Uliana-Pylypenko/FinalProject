@@ -141,7 +141,7 @@ public class PlaceController {
     public ResponseEntity<String> delete(@PathVariable Long id) {
         return placeService.delete(id);
     }
-    
+
 
 //    @GetMapping("/categories")
 //    public List<Category> getAllCategories() {

@@ -14,15 +14,15 @@
 <h1>Add details for place ${current_place.name}</h1>
 <form action="" method="post">
   Country
-  <input type="text" name="country" placeholder="Country"><br>
+  <input type="text" name="country" placeholder="Country" value="${current_details.country}"><br>
   City
-  <input type="text" name="city" placeholder="City"><br>
+  <input type="text" name="city" placeholder="City" value="${current_details.location}"><br>
   Address
-  <input type="text" name="address" placeholder="Address"><br>
+  <input type="text" name="address" placeholder="Address" value="${current_details.address}"><br>
   Activities
-  <input type="text" name="activities" placeholder="Activities"><br>
+  <input type="text" name="activities" placeholder="Activities" value="${current_details.activites}"><br>
   Description
-  <input type="text" name="description" placeholder="Description"><br>
+  <input type="text" name="description" placeholder="Description" value="${current_details.description}"><br>
   <button type="submit">Save</button><br>
 </form>
 </body>

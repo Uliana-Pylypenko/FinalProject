@@ -82,6 +82,30 @@ public class PlaceDetailsController {
         return placeDetailsService.updateDetails(placeId, placeDetailsDTO);
     }
 
+    @GetMapping("/update/{placeId}")
+    public String updateDetails(@PathVariable Long placeId, Model model) {
+        model.addAttribute("current_place", placeService.getByIdDTO(placeId).getBody());
+        model.addAttribute("current_details", placeDetailsService.getDetailsByPlaceIdDTO(placeId).getBody());
+        return "initial_add_details";
+    }
+
+    @PostMapping("/update/{placeId}")
+    public String updateDetails(@PathVariable Long placeId, HttpServletRequest request, Model model) {
+        String country = request.getParameter("country");
+        String city = request.getParameter("city");
+        String address = request.getParameter("address");
+        String activities = request.getParameter("activities");
+        String description = request.getParameter("description");
+        PlaceDetailsDTO placeDetailsDTO = new PlaceDetailsDTO();
+        placeDetailsDTO.setCountry(country);
+        placeDetailsDTO.setLocation(city);
+        placeDetailsDTO.setAddress(address);
+        placeDetailsDTO.setActivites(activities);
+        placeDetailsDTO.setDescription(description);
+        placeDetailsService.updateDetails(placeId, placeDetailsDTO);
+        return "redirect:/place-details/place-id/" + placeId;
+    }
+
     @DeleteMapping("/delete/{placeId}")
     public ResponseEntity<String> deleteDetails(@PathVariable Long placeId) {
         return placeDetailsService.deleteDetails(placeId);

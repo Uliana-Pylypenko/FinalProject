@@ -40,7 +40,7 @@ ${current_details.activites}<br>
 ${current_details.description}<br>
 
 <c:if test="${current_place.userId == userDTO.id && not empty current_place.detailsDTO}">
-    Update details
+    <a href="/place-details/update/${current_place.id}">Update details</a>
 </c:if>
 
 <h2>Events</h2>
