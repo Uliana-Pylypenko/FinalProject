@@ -12,6 +12,9 @@ public interface PlaceRepository extends JpaRepository<Place, Long>, PlaceReposi
     @Query("select p from Place p order by p.id desc limit 1")
     Place findByMaxIndex();
 
+    @Query("select p from Place p where p.isApproved = false")
+    List<Place> findNotApproved();
+
 
 
 }

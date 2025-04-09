@@ -125,7 +125,10 @@ public class PlaceController {
 
             session.setAttribute("userPlaces", placeDTOS);
 
-            return "redirect:/user/home";
+            String role = userDTO.isAdmin() ? "admin" : "user";
+            return "redirect:/" + role + "/home";
+
+
         } else {
             model.addAttribute("error_message", "Can't create place");
             return "error";

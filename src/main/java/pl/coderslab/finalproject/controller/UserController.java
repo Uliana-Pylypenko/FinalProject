@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.finalproject.dto.PlaceDTO;
 import pl.coderslab.finalproject.dto.UserDTO;
+import pl.coderslab.finalproject.service.PlaceService;
 import pl.coderslab.finalproject.service.UserService;
 
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final PlaceService placeService;
 
     @GetMapping("/user/home")
     public String userHome() {
@@ -91,6 +94,21 @@ public class UserController {
     @DeleteMapping("/user/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         return userService.delete(id);
+    }
+
+    @GetMapping("/admin/places-to-approve")
+    public String placesToApprove(Model model) {
+        model.addAttribute("places", placeService.getNotApprovedPlaces());
+        return "initial_approve";
+    }
+
+    @GetMapping("/admin/approve/{id}")
+    public String approve(@PathVariable Long id, HttpServletRequest request, Model model) {
+        ResponseEntity<String> response = placeService.approvePlace(id);
+        if (! response.getStatusCode().is2xxSuccessful()) {
+            model.addAttribute("error_message", "Error approving place");
+        }
+        return "redirect:/admin/places-to-approve";
     }
 
 }

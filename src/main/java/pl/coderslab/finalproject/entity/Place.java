@@ -46,6 +46,8 @@ public class Place {
     private double longitude;
     private double latitude;
 
+    private boolean isApproved;
+
 
 
 }

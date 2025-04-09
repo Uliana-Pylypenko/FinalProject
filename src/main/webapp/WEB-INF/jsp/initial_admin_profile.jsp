@@ -41,7 +41,8 @@ ${userDTO.email}<br>
 
 <a href="/event/create">Add event</a><br>
 
-<a href="/admin/users">Show users</a>
+<a href="/admin/users">Show users</a><br>
+<a href="/admin/places-to-approve">Show places to approve</a><br>
 
 <a href="/logout">Logout</a>
 </body>

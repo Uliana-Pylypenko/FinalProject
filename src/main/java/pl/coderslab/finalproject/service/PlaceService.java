@@ -70,6 +70,8 @@ public class PlaceService {
         Optional<Category> category = categoryRepository.findById(placeDTO.getCategoryDTO().getId());
         if (user.isPresent() && category.isPresent()) {
             // when we create a place, we don't have neither details nor events yet
+            boolean approved = user.get().isAdmin();
+            placeDTO.setApproved(approved);
             placeRepository.save(PlaceDTO.toEntityUserCategory(placeDTO, userRepository));
             return new ResponseEntity<>("Place successfully created", HttpStatus.CREATED);
         }
@@ -117,6 +119,25 @@ public class PlaceService {
     public PlaceDTO getLastElement() {
         Place place = placeRepository.findByMaxIndex();
         return PlaceDTO.toDTO(place);
+    }
+
+    public List<PlaceDTO> getNotApprovedPlaces() {
+        List<PlaceDTO> placeDTOS = placeRepository
+                .findNotApproved()
+                .stream()
+                .map(PlaceDTO::toDTO)
+                .collect(Collectors.toList());
+        return placeDTOS;
+    }
+
+    public ResponseEntity<String> approvePlace(Long id) {
+        Optional<Place> place = placeRepository.findById(id);
+        if (place.isPresent()) {
+            place.get().setApproved(true);
+            placeRepository.save(place.get());
+            return new ResponseEntity<>("Place successfully approved", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Place not found", HttpStatus.NOT_FOUND);
     }
 
 

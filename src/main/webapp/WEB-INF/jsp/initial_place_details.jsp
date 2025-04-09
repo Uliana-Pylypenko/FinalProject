@@ -59,8 +59,11 @@ ${current_details.description}<br>
 </c:if>
 
 <!-- cos co będzie się rozwijać przy kliknięciu -->
-<a href="/geoapi/places/${current_place.id}/leisure">Show other places nearby</a>
+<a href="/geoapi/places/${current_place.id}/leisure">Show other places nearby</a><br>
 
+<c:if test="${userDTO.admin && !current_place.approved}">
+    <a href="/admin/approve/${current_place.id}">Approve place</a><br>
+</c:if>
 
 </body>
 </html>
