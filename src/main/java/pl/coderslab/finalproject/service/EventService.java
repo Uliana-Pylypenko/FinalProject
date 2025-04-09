@@ -30,6 +30,11 @@ public class EventService {
         return eventRepository.findById(id).orElse(null);
     }
 
+    public EventDTO getByIdDTO(Long id) {
+        Optional<Event> optionalEvent = eventRepository.findById(id);
+        return optionalEvent.isPresent() ? EventDTO.toDTO(optionalEvent.get()) : null;
+    }
+
     public ResponseEntity<List<EventDTO>> getAllEventsDTO() {
         List<EventDTO> eventDTOS = eventRepository
                 .findAll()

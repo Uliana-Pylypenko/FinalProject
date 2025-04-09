@@ -33,6 +33,7 @@
 ${event.date} ${event.time}<br>
 ${event.place.name} - ${event.place.placeDetails.country}, ${event.place.placeDetails.location}, ${event.place.placeDetails.address}<br>
 ${event.description}<br>
+<a href="/event/update/${event.id}">Update event</a><br>
 
 <h3>Other events in this place</h3>
 <c:forEach items="${event.place.events}" var="event">

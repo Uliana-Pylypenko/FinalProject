@@ -72,28 +72,14 @@ public class EventController {
 
     @PostMapping("/create")
     public String createEvent(HttpServletRequest request) {
-        Long placeId = Long.parseLong(request.getParameter("place"));
-        String title = request.getParameter("title");
-        LocalDate date = LocalDate.parse(request.getParameter("date"));
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        Time time = null;
-        try {
-            long ms = sdf.parse(request.getParameter("time")).getTime();
-            time = new Time(ms);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-        String description = request.getParameter("description");
-
-        EventDTO eventDTO = new EventDTO();
-        eventDTO.setTitle(title);
-        eventDTO.setDate(date);
-        eventDTO.setTime(time);
-        eventDTO.setDescription(description);
+        EventDTO eventDTO = eventDTOForm(request);
+        Long placeId = eventDTO.getPlaceId();
 
         HttpSession session = request.getSession();
 
         ResponseEntity<String> createResponse = eventService.addEvent(placeId, eventDTO);
+
+        //this can be simplified
         if (createResponse.getStatusCode() == HttpStatus.CREATED) {
             List<PlaceDTO> placeDTOS = (List<PlaceDTO>) session.getAttribute("userPlaces");
             if (placeDTOS == null) {
@@ -121,13 +107,50 @@ public class EventController {
         return eventService.addEvent(placeId, eventDTO);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateEvent(@PathVariable Long id, @RequestBody EventDTO eventDTO) {
-        return eventService.updateEvent(id, eventDTO);
+//    @PutMapping("/update/{id}")
+//    public ResponseEntity<String> updateEvent(@PathVariable Long id, @RequestBody EventDTO eventDTO) {
+//        return eventService.updateEvent(id, eventDTO);
+//    }
+
+    @GetMapping("/update/{id}")
+    public String updateEvent(@PathVariable Long id, Model model) {
+        model.addAttribute("event", eventService.getByIdDTO(id));
+        return "initial_add_event";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateEvent(@PathVariable Long id, HttpServletRequest request) {
+        EventDTO eventDTO = eventDTOForm(request);
+        eventService.updateEvent(id, eventDTO);
+        // place can't be null it gives an ugly error!
+        return "redirect:/event/" + id;
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteEvent(@PathVariable Long id) {
         return eventService.deleteEvent(id);
+    }
+
+    public EventDTO eventDTOForm(HttpServletRequest request) {
+        Long placeId = Long.parseLong(request.getParameter("place"));
+        String title = request.getParameter("title");
+        LocalDate date = LocalDate.parse(request.getParameter("date"));
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        Time time = null;
+        try {
+            long ms = sdf.parse(request.getParameter("time")).getTime();
+            time = new Time(ms);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        String description = request.getParameter("description");
+
+        EventDTO eventDTO = new EventDTO();
+        eventDTO.setTitle(title);
+        eventDTO.setDate(date);
+        eventDTO.setTime(time);
+        eventDTO.setDescription(description);
+        eventDTO.setPlaceId(placeId);
+        return eventDTO;
     }
 }
