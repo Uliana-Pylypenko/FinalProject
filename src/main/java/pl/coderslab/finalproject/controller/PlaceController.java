@@ -34,13 +34,20 @@ public class PlaceController {
         List<CategoryDTO> categoryDTOS = categoryService.getAll().getBody();
         model.addAttribute("all_categories", categoryDTOS);
 
+        List<PlaceDTO> filteredPlaces = filterPlaces(request, model);
+        model.addAttribute("places", filteredPlaces);
+
+        return "initial_places";
+    }
+
+    public List<PlaceDTO> filterPlaces(HttpServletRequest request, Model model) {
         String name = request.getParameter("name");
         String country = request.getParameter("country");
         String city = request.getParameter("city");
         String activity = request.getParameter("activity");
 
         List<CategoryDTO> checkedCategories = new ArrayList<>();
-        for (CategoryDTO categoryDTO : categoryDTOS) {
+        for (CategoryDTO categoryDTO : categoryService.getAll().getBody()) {
             if (request.getParameter(categoryDTO.getName()) != null) {
                 checkedCategories.add(categoryDTO);
             }
@@ -51,11 +58,9 @@ public class PlaceController {
         model.addAttribute("filter_city", city);
         model.addAttribute("filter_activity", activity);
         model.addAttribute("filter_category", checkedCategories);
-        
-        List<PlaceDTO> filteredPlaces = placeService.getFilteredPlaces(name, country, city, activity, checkedCategories).getBody();
-        model.addAttribute("places", filteredPlaces);
 
-        return "initial_places";
+        List<PlaceDTO> filteredPlaces = placeService.getFilteredPlaces(name, country, city, activity, checkedCategories).getBody();
+        return filteredPlaces;
     }
 
     @GetMapping("/map")
@@ -66,25 +71,7 @@ public class PlaceController {
         List<CategoryDTO> categoryDTOS = categoryService.getAll().getBody();
         model.addAttribute("all_categories", categoryDTOS);
 
-        String name = request.getParameter("name");
-        String country = request.getParameter("country");
-        String city = request.getParameter("city");
-        String activity = request.getParameter("activity");
-
-        List<CategoryDTO> checkedCategories = new ArrayList<>();
-        for (CategoryDTO categoryDTO : categoryDTOS) {
-            if (request.getParameter(categoryDTO.getName()) != null) {
-                checkedCategories.add(categoryDTO);
-            }
-        }
-
-        model.addAttribute("filter_name", name);
-        model.addAttribute("filter_country", country);
-        model.addAttribute("filter_city", city);
-        model.addAttribute("filter_activity", activity);
-        model.addAttribute("filter_category", checkedCategories);
-
-        List<PlaceDTO> filteredPlaces = placeService.getFilteredPlaces(name, country, city, activity, checkedCategories).getBody();
+        List<PlaceDTO> filteredPlaces = filterPlaces(request, model);
         model.addAttribute("places", placesToJSON(filteredPlaces).toString());
 
         return "map_places";
