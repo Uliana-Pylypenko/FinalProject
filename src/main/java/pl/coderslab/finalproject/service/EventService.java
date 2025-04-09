@@ -102,4 +102,9 @@ public class EventService {
         return date;
     }
 
+    public EventDTO getLastElement() {
+        Event event = eventRepository.findByMaxId();
+        return EventDTO.toDTO(event);
+    }
+
 }

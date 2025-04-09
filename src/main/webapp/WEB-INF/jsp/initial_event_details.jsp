@@ -29,18 +29,20 @@
 </c:if>
 <a href="/">Back to home page</a><br>
 
-<h1>${event.title}</h1>
-${event.date} ${event.time}<br>
-${event.place.name} - ${event.place.placeDetails.country}, ${event.place.placeDetails.location}, ${event.place.placeDetails.address}<br>
-${event.description}<br>
-<a href="/event/update/${event.id}">Update event</a><br>
+<h1>${current_single_event.title}</h1>
+${current_single_event.date} ${current_single_event.time}<br>
+${current_place.name} - ${current_place.placeDetails.country}, ${current_place.placeDetails.location}, ${current_place.placeDetails.address}<br>
+${current_single_event.description}<br>
+<a href="/event/update/${current_single_event.id}">Update event</a><br>
 
 <h3>Other events in this place</h3>
-<c:forEach items="${event.place.events}" var="event">
-  ${event.date} ${event.time} ${event.title} ${event.place.placeDetails.location}<br>
+<c:forEach items="${current_place.events}" var="event">
+    <c:if test="${event.id != current_single_event.id}">
+        ${event.date} ${event.time} ${event.title} ${event.place.placeDetails.location}<br>
+    </c:if>
 </c:forEach>
 
-<c:if test="${empty event.place.events}">
+<c:if test="${current_place.events.size()-1 == 0}">
   No events<br>
 </c:if>
 

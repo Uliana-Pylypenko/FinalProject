@@ -9,7 +9,7 @@ import pl.coderslab.finalproject.entity.Place;
 import java.util.List;
 
 public interface PlaceRepository extends JpaRepository<Place, Long>, PlaceRepositoryCustom {
-    @Query("select p from Place p where p.id = max(p.id)")
+    @Query("select p from Place p order by p.id desc limit 1")
     Place findByMaxIndex();
 
 

@@ -18,16 +18,17 @@
       <input type="radio" name="place" value="${place.id}"><br>
     </c:forEach>
     Title
-    <input type="text" name="title" placeholder="Title" value="${event.title}"><br>
+    <input type="text" name="title" placeholder="Title" value="${current_single_event.title}"><br>
     Date
-    <input type="date" name="date" placeholder="Date" value="${event.date}"><br>
+    <input type="date" name="date" placeholder="Date" value="${current_single_event.date}"><br>
     Time
-    <input type="time" name="time" placeholder="Time" value="${event.time}"><br>
+    <input type="time" name="time" placeholder="Time" value="${current_single_event.time}"><br>
     Description
-    <input type="text" name="description" placeholder="Description" value="${event.description}"><br>
-    <button type="submit">Save</button>
+    <input type="text" name="description" placeholder="Description" value="${current_single_event.description}"><br>
+    <button type="submit">Save</button><br>
   </form>
   </c:if>
+${error_message}
 
 </body>
 </html>

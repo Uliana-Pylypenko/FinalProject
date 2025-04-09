@@ -89,7 +89,6 @@ public class PlaceController {
             if (placeDTOS == null) {
                 placeDTOS = new ArrayList<>();
             }
-
             placeDTOS.add(placeService.getLastElement());
 
             session.setAttribute("userPlaces", placeDTOS);

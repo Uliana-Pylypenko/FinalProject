@@ -12,5 +12,8 @@ import java.util.Optional;
 public interface EventRepository extends JpaRepository<Event, Long>, EventRepositoryCustom {
     List<Event> findAllByPlaceId(Long placeId);
 
+    @Query("select e from Event e order by e.id desc limit 1")
+    Event findByMaxId();
+
 
 }

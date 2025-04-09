@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class EventController {
     private final EventService eventService;
+    private final EventRepository eventRepository;
 
 //    @GetMapping
 //    public String getEvents(Model model) {
@@ -55,7 +56,8 @@ public class EventController {
 
     @GetMapping("/{id}")
     public String getEvent(@PathVariable Long id, Model model) {
-        model.addAttribute("event", eventService.getById(id));
+        model.addAttribute("current_single_event", eventService.getByIdDTO(id));
+        model.addAttribute("current_place", eventService.getById(id).getPlace());
         return "initial_event_details";
     }
 
@@ -88,7 +90,7 @@ public class EventController {
                 for (PlaceDTO placeDTO : placeDTOS) {
                     if (placeDTO.getId() == placeId) {
                         List<EventDTO> eventDTOS = placeDTO.getEventDTOS();
-                        eventDTOS.add(eventDTO);
+                        eventDTOS.add(eventService.getLastElement());
                         placeDTO.setEventDTOS(eventDTOS);
                     }
                 }
@@ -114,16 +116,23 @@ public class EventController {
 
     @GetMapping("/update/{id}")
     public String updateEvent(@PathVariable Long id, Model model) {
-        model.addAttribute("event", eventService.getByIdDTO(id));
+        model.addAttribute("current_single_event", eventService.getByIdDTO(id));
         return "initial_add_event";
     }
 
     @PostMapping("/update/{id}")
-    public String updateEvent(@PathVariable Long id, HttpServletRequest request) {
+    public String updateEvent(@PathVariable Long id, HttpServletRequest request, Model model) {
         EventDTO eventDTO = eventDTOForm(request);
-        eventService.updateEvent(id, eventDTO);
-        // place can't be null it gives an ugly error!
-        return "redirect:/event/" + id;
+        Long placeId = eventDTO.getPlaceId();
+        if (placeId != null) {
+            eventService.updateEvent(id, eventDTO);
+            return "redirect:/event/" + id;
+        } else {
+            model.addAttribute("error_message", "Choose a place");
+            model.addAttribute("event", eventService.getByIdDTO(id));
+            return "initial_add_event";
+        }
+
     }
 
     @DeleteMapping("/delete/{id}")
@@ -132,7 +141,8 @@ public class EventController {
     }
 
     public EventDTO eventDTOForm(HttpServletRequest request) {
-        Long placeId = Long.parseLong(request.getParameter("place"));
+        String placeIdString = request.getParameter("place");
+        Long placeId = placeIdString != null ? Long.parseLong(placeIdString) : null;
         String title = request.getParameter("title");
         LocalDate date = LocalDate.parse(request.getParameter("date"));
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
