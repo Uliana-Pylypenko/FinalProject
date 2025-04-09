@@ -31,18 +31,24 @@
 
 <h1>${current_single_event.title}</h1>
 ${current_single_event.date} ${current_single_event.time}<br>
-${current_place.name} - ${current_place.placeDetails.country}, ${current_place.placeDetails.location}, ${current_place.placeDetails.address}<br>
+${current_place.name} - ${current_details.country}, ${current_details.location}, ${current_details.address}<br>
 ${current_single_event.description}<br>
-<a href="/event/update/${current_single_event.id}">Update event</a><br>
+
+
+<c:if test="${current_place.userId == userDTO.id}">
+    <a href="/event/update/${current_single_event.id}">Update event</a><br>
+    <a href="/event/delete/${current_single_event.id}">Delete event</a><br>
+</c:if>
+
 
 <h3>Other events in this place</h3>
-<c:forEach items="${current_place.events}" var="event">
+<c:forEach items="${current_events}" var="event">
     <c:if test="${event.id != current_single_event.id}">
-        ${event.date} ${event.time} ${event.title} ${event.place.placeDetails.location}<br>
+        ${event.date} ${event.time} ${event.title} <br>
     </c:if>
 </c:forEach>
 
-<c:if test="${current_place.events.size()-1 == 0}">
+<c:if test="${current_events.size()-1 == 0}">
   No events<br>
 </c:if>
 

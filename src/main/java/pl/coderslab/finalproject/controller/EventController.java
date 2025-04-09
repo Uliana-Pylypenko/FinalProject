@@ -10,8 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.finalproject.dto.EventDTO;
 import pl.coderslab.finalproject.dto.PlaceDTO;
+import pl.coderslab.finalproject.dto.PlaceDetailsDTO;
+import pl.coderslab.finalproject.entity.Place;
 import pl.coderslab.finalproject.repository.EventRepository;
 import pl.coderslab.finalproject.service.EventService;
+import pl.coderslab.finalproject.service.PlaceService;
 
 import java.sql.Time;
 import java.text.ParseException;
@@ -28,6 +31,7 @@ import java.util.stream.Collectors;
 public class EventController {
     private final EventService eventService;
     private final EventRepository eventRepository;
+    private final PlaceService placeService;
 
 //    @GetMapping
 //    public String getEvents(Model model) {
@@ -57,7 +61,10 @@ public class EventController {
     @GetMapping("/{id}")
     public String getEvent(@PathVariable Long id, Model model) {
         model.addAttribute("current_single_event", eventService.getByIdDTO(id));
-        model.addAttribute("current_place", eventService.getById(id).getPlace());
+        Place place = eventService.getById(id).getPlace();
+        model.addAttribute("current_place", PlaceDTO.toDTO(place));
+        model.addAttribute("current_details", PlaceDetailsDTO.toDTO(place.getPlaceDetails()));
+        model.addAttribute("current_events", eventService.getAllEventsByPlaceId(place.getId()).getBody());
         return "initial_event_details";
     }
 
@@ -138,6 +145,34 @@ public class EventController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteEvent(@PathVariable Long id) {
         return eventService.deleteEvent(id);
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteEvent(@PathVariable Long id, Model model) {
+        String message = "Are you sure you want to delete this event?";
+        model.addAttribute("delete_message", message);
+        return "initial_delete";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String deleteEvent(@PathVariable Long id, HttpServletRequest request, Model model) {
+        boolean answer = Boolean.parseBoolean(request.getParameter("answer"));
+        if (answer) {
+            Long placeId = eventService.getByIdDTO(id).getPlaceId();
+            eventService.deleteEvent(id);
+
+            HttpSession session = request.getSession();
+            List<PlaceDTO> placeDTOS = (List<PlaceDTO>) session.getAttribute("userPlaces");
+            for (PlaceDTO placeDTO : placeDTOS) {
+                if (placeDTO.getId() == placeId) {
+                    placeDTO.setEventDTOS(eventService.getAllEventsByPlaceId(placeId).getBody());
+                }
+            }
+            session.setAttribute("userPlaces", placeDTOS);
+            return "redirect:/user/home";
+        } else {
+            return "redirect:/event/" + id;
+        }
     }
 
     public EventDTO eventDTOForm(HttpServletRequest request) {
