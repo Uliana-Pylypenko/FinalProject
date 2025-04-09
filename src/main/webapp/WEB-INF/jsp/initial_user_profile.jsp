@@ -37,7 +37,7 @@ ${userDTO.email}<br>
 <c:set var="counter" value="0" />
 <c:forEach items="${userPlaces}" var="place">
   <c:forEach items="${place.eventDTOS}" var="event">
-    ${event.date} ${event.time} ${event.title} <br>
+    ${event.date} ${event.time} ${event.title} <a href="/event/${event.id}">Details</a><br>
       <c:set var="counter" value="${counter + 1}" />
   </c:forEach>
 </c:forEach>

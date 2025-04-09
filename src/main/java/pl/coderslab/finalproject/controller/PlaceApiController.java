@@ -22,6 +22,7 @@ import java.util.List;
 public class PlaceApiController {
     private final PlaceService placeService;
 
+    // do app properties @value
     private static final String API_KEY
             = "9f97967260db4356adf1836958f7f9f8";
     private static final String API_URL

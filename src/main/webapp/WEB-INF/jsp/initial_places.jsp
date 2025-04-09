@@ -5,6 +5,21 @@
     <title>Places</title>
 </head>
 <body>
+<c:if test="${empty userDTO}">
+    <a href="/login">Log in</a><br>
+    <a href="/register">Registration</a><br>
+</c:if>
+
+<c:if test="${userDTO.admin}">
+    <a href="/admin/home">Admin profile</a><br>
+</c:if>
+
+<c:if test="${not empty userDTO && ! userDTO.admin}">
+    <a href="/user/home">User profile</a><br>
+</c:if>
+<c:if test="${not empty userDTO}">
+    <a href="/logout">Logout</a>
+</c:if>
 
 <a href="/">Back to home page</a><br>
 

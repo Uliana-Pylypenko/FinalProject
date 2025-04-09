@@ -5,6 +5,23 @@
     <title>Place Details</title>
 </head>
 <body>
+<c:if test="${empty userDTO}">
+    <a href="/login">Log in</a><br>
+    <a href="/register">Registration</a><br>
+</c:if>
+
+<c:if test="${userDTO.admin}">
+    <a href="/admin/home">Admin profile</a><br>
+</c:if>
+
+<c:if test="${not empty userDTO && ! userDTO.admin}">
+    <a href="/user/home">User profile</a><br>
+</c:if>
+<c:if test="${not empty userDTO}">
+    <a href="/logout">Logout</a>
+</c:if>
+
+<a href="/">Back to home page</a><br>
 
 <h1>${current_place.name}</h1>
 <c:if test="${empty current_details}">
@@ -27,7 +44,7 @@ ${current_details.description}<br>
 <h2>Events</h2>
 
 <c:forEach items="${current_events}" var="event">
-  ${event.date} ${event.time} ${event.title} <br>
+  ${event.date} ${event.time} ${event.title} <a href="/event/${event.id}"></a> <br>
 </c:forEach>
 
 <c:if test="${empty current_events}">
