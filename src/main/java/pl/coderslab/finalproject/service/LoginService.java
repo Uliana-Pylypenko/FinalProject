@@ -1,5 +1,6 @@
 package pl.coderslab.finalproject.service;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class LoginService {
     private final UserRepository userRepository;
+    private final UserService userService;
     private final PlaceRepository placeRepository;
     private final PlaceDetailsRepository placeDetailsRepository;
 
@@ -51,5 +53,15 @@ public class LoginService {
             model.addAttribute("error", "Invalid username or password");
             return "initial_login";
         }
+    }
+
+    public String register(String username, String email, String password) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername(username);
+        userDTO.setEmail(email);
+        userDTO.setPassword(password);
+        userDTO.setAdmin(false);
+        userService.create(userDTO);
+        return "redirect:/login";
     }
 }
