@@ -10,7 +10,7 @@
 <c:if test="${empty current_details}">
     No details provided<br>
     <c:if test="${current_place.userId == userDTO.id}">
-        Add details
+        <a href="/place-details/add/${current_place.id}">Add details</a>
     </c:if>
 </c:if>
 
@@ -20,7 +20,7 @@ ${current_details.address}<br>
 ${current_details.activites}<br>
 ${current_details.description}<br>
 
-<c:if test="${current_place.userId == userDTO.id}">
+<c:if test="${current_place.userId == userDTO.id && not empty current_place.detailsDTO}">
     Update details
 </c:if>
 

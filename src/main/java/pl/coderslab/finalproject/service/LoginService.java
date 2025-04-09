@@ -25,6 +25,7 @@ public class LoginService {
     private final UserService userService;
     private final PlaceRepository placeRepository;
     private final PlaceDetailsRepository placeDetailsRepository;
+    private final PlaceService placeService;
 
     public String login(String username, String password, HttpSession session, Model model) {
         Optional<User> userOptional = userRepository.findByUsernameAndPassword(username, password);
@@ -33,13 +34,15 @@ public class LoginService {
             User user = userOptional.get();
             UserDTO userDTO = UserDTO.toDTO(user);
             session.setAttribute("userDTO", userDTO);
-            List<PlaceDTO> placeDTOS = new ArrayList<>();
-            if (userDTO.getPlaceIds() != null) {
-                placeDTOS = placeRepository.findAllById(userDTO.getPlaceIds())
-                        .stream()
-                        .map(PlaceDTO::toDTO)
-                        .collect(Collectors.toList());
-            }
+//            List<PlaceDTO> placeDTOS = new ArrayList<>();
+//            if (userDTO.getPlaceIds() != null) {
+//                placeDTOS = placeRepository.findAllById(userDTO.getPlaceIds())
+//                        .stream()
+//                        .map(PlaceDTO::toDTO)
+//                        .collect(Collectors.toList());
+//            }
+
+            List<PlaceDTO> placeDTOS = placeService.getPlacesForUser(userDTO);
             session.setAttribute("userPlaces", placeDTOS);
 
             //store also user places, details and events DTOs

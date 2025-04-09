@@ -6,11 +6,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.coderslab.finalproject.dto.CategoryDTO;
 import pl.coderslab.finalproject.dto.PlaceDTO;
+import pl.coderslab.finalproject.dto.UserDTO;
 import pl.coderslab.finalproject.entity.Category;
 import pl.coderslab.finalproject.entity.Place;
 import pl.coderslab.finalproject.entity.User;
 import pl.coderslab.finalproject.repository.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -101,7 +103,16 @@ public class PlaceService {
         return new ResponseEntity<>("Place not found", HttpStatus.NOT_FOUND);
     }
 
-
+    public List<PlaceDTO> getPlacesForUser(UserDTO userDTO) {
+        List<PlaceDTO> placeDTOS = new ArrayList<>();
+        if (userDTO.getPlaceIds() != null) {
+            placeDTOS = placeRepository.findAllById(userDTO.getPlaceIds())
+                    .stream()
+                    .map(PlaceDTO::toDTO)
+                    .collect(Collectors.toList());
+        }
+        return placeDTOS;
+    }
 
 
 }

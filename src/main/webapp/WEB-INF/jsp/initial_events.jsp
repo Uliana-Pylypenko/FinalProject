@@ -27,6 +27,14 @@
     <button type="submit">Filter</button>
 </form>
 
+<c:if test="${empty userDTO}">
+    <a href="/login">Login or register to add a new event</a><br>
+</c:if>
+
+<c:if test="${not empty userDTO}">
+    <a href="event/create">Add new event</a><br>
+</c:if>
+
 <c:forEach items="${events}" var="event">
   ${event.date} ${event.time} ${event.title} <a href="/event/${event.id}">Details</a><br>
 </c:forEach>

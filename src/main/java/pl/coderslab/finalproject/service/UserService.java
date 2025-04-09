@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import pl.coderslab.finalproject.dto.PlaceDTO;
 import pl.coderslab.finalproject.dto.UserDTO;
 import pl.coderslab.finalproject.entity.Place;
 import pl.coderslab.finalproject.entity.User;
@@ -78,4 +79,6 @@ public class UserService {
         }
         return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
+
+
 }
