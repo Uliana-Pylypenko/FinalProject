@@ -41,12 +41,16 @@ public class EventController {
         String title = request.getParameter("title");
         LocalDate startDate = eventService.getDateFromString(request.getParameter("start_date"));
         LocalDate endDate = eventService.getDateFromString(request.getParameter("end_date"));
+        String country = request.getParameter("country");
+        String city = request.getParameter("city");
 
         model.addAttribute("filter_start_date", startDate);
         model.addAttribute("filter_end_date", endDate);
+        model.addAttribute("filter_country", country);
+        model.addAttribute("filter_city", city);
 
         List<EventDTO> filteredEvents = eventRepository
-                .findByFilters(title, startDate, endDate)
+                .findByFilters(title, startDate, endDate, country, city)
                 .stream()
                 .map(EventDTO::toDTO)
                 .collect(Collectors.toList());

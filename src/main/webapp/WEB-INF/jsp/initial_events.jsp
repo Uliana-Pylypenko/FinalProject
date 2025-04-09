@@ -21,7 +21,11 @@
     Start date
     <input type="date" name="start_date" value="${filter_start_date}">
     End date
-    <input type="date" name="end_date" value="${filter_end_date}">
+    <input type="date" name="end_date" value="${filter_end_date}"><br>
+    Country
+    <input type="text" name="country" value="${filter_country}"><br>
+    City
+    <input type="text" name="city" value="${filter_city}"><br>
     <button type="submit">Filter</button>
 </form>
 
@@ -32,6 +36,6 @@
 <a href="events/map?">Show as map</a>
 
 <h1>check</h1>
-${filter_start_date} ${filter_end_date}
+${filter_city}
 </body>
 </html>

@@ -15,7 +15,7 @@ public class EventRepositoryCustomImpl implements EventRepositoryCustom {
     private EntityManager entityManager;
 
     @Override
-    public List<Event> findByFilters(String title, LocalDate startDate, LocalDate endDate) {
+    public List<Event> findByFilters(String title, LocalDate startDate, LocalDate endDate, String country, String city) {
         StringBuilder queryBuilder = new StringBuilder("SELECT e FROM Event e WHERE 1=1");
 
         if (title != null && !title.isEmpty()) {
@@ -27,6 +27,12 @@ public class EventRepositoryCustomImpl implements EventRepositoryCustom {
         if (endDate != null) {
             queryBuilder.append(" AND e.date <= :endDate");
         }
+        if (country != null && !country.isEmpty()) {
+            queryBuilder.append(" AND e.place.placeDetails.country LIKE :country");
+        }
+        if (city != null && !city.isEmpty()) {
+            queryBuilder.append(" AND e.place.placeDetails.location LIKE :city");
+        }
 
         TypedQuery<Event> query = entityManager.createQuery(queryBuilder.toString(), Event.class);
         if (title != null && !title.isEmpty()) {
@@ -37,6 +43,12 @@ public class EventRepositoryCustomImpl implements EventRepositoryCustom {
         }
         if (endDate != null) {
             query.setParameter("endDate", endDate);
+        }
+        if (country != null && !country.isEmpty()) {
+            query.setParameter("country", "%" + country + "%");
+        }
+        if (city != null && !city.isEmpty()) {
+            query.setParameter("city", "%" + city + "%");
         }
         return query.getResultList();
     }
