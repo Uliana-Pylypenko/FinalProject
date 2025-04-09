@@ -34,7 +34,7 @@ public class AuthFilter implements Filter {
 
                 httpResponse.sendRedirect("/login");
             }
-            
+
         } else {
             if (((user.isAdmin() && requestURI.startsWith("/user")))
                     || (!user.isAdmin() && requestURI.startsWith("/admin")))  {

@@ -14,38 +14,48 @@ import pl.coderslab.finalproject.service.UserService;
 import java.util.List;
 
 @Controller  // only @Controller works with the views
-@RequestMapping("/user")
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/username/{username}")
+    @GetMapping("/user/home")
+    public String userHome() {
+        return "initial_user_profile";
+    }
+
+    @GetMapping("/admin/home")
+    public String adminHome() {
+        return "initial_admin_profile";
+    }
+
+    @GetMapping("/user/username/{username}")
     public String getUser(@PathVariable String username, Model model) {
         model.addAttribute("user", userService.findByUsername(username));
         return "initial_user_profile";
     }
 
-    @GetMapping
-    public ResponseEntity<List<UserDTO>> getAll() {
-        return userService.getAll();
+    @GetMapping("/admin/users")
+    public String getAll(Model model) {
+        model.addAttribute("all_users", userService.getAll().getBody());
+        return "initial_users";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/user/{id}")
     public ResponseEntity<UserDTO> getById(@PathVariable Long id) {
         return userService.getById(id);
     }
 
-    @PostMapping("/create")
+    @PostMapping("/user/create")
     public ResponseEntity<String> create(@RequestBody UserDTO userDTO) {
         return userService.create(userDTO);
     }
 
-    @GetMapping("/update/{id}")
+    @GetMapping("/user/update/{id}")
     public String update() {
         return "initial_update_profile";
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/user/update/{id}")
     public String update(@PathVariable Long id, HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         UserDTO userToUpdate = (UserDTO) session.getAttribute("userDTO");
@@ -69,12 +79,16 @@ public class UserController {
         }
     }
 
-    @PutMapping("/change-admin-rights/{id}")
-    public ResponseEntity<String> changeAdminRights(@PathVariable Long id) {
-        return userService.changeAdminRights(id);
+    @GetMapping("/admin/change-admin-rights/{id}")
+    public String changeAdminRights(@PathVariable Long id, Model model) {
+        ResponseEntity<String> response = userService.changeAdminRights(id);
+        if (! response.getStatusCode().is2xxSuccessful()) {
+            model.addAttribute("error_message", "Error changing admin rights");
+        }
+        return "redirect:/admin/users";
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/user/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         return userService.delete(id);
     }

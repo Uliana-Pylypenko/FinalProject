@@ -17,13 +17,5 @@ public class HomeController {
         return "map_places_nearby";
     }
 
-    @GetMapping("/user/home")
-    public String userHome() {
-        return "initial_user_profile";
-    }
 
-    @GetMapping("/admin/home")
-    public String adminHome() {
-        return "admin_home";
-    }
 }
