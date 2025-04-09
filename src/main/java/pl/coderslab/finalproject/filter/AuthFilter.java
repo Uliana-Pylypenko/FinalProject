@@ -22,11 +22,22 @@ public class AuthFilter implements Filter {
         String requestURI = httpRequest.getRequestURI();
         //User user = (User) session.getAttribute("user");
         UserDTO user = (UserDTO) session.getAttribute("userDTO");
+        System.out.println("USER NULL: " + user==null);
 
         if (user == null) {
-            httpResponse.sendRedirect("/login");
+            if (requestURI.startsWith("/user")
+                    || requestURI.startsWith("/admin")
+                    || requestURI.contains("/update/")
+                    || requestURI.contains("/delete/")
+                    || requestURI.contains("/add/")
+                    || requestURI.contains("/create/")) {
+
+                httpResponse.sendRedirect("/login");
+            }
+            
         } else {
-            if (((user.isAdmin() && requestURI.startsWith("/user"))) || (!user.isAdmin() && requestURI.startsWith("/admin")) )  {
+            if (((user.isAdmin() && requestURI.startsWith("/user")))
+                    || (!user.isAdmin() && requestURI.startsWith("/admin")))  {
                 httpResponse.sendRedirect("/access-denied");
             }
 
