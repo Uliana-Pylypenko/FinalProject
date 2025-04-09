@@ -50,6 +50,7 @@
     <a href="event/create">Add new event</a><br>
 </c:if>
 
+<%-- show only future events here --%>
 <c:forEach items="${events}" var="event">
   ${event.date} ${event.time} ${event.title} <a href="/event/${event.id}">Details</a><br>
 </c:forEach>

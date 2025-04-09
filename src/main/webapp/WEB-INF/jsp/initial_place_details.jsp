@@ -31,7 +31,12 @@
     </c:if>
 </c:if>
 
-<a href="/place/update/${current_place.id}">Update place</a>
+<c:if test="${current_place.userId == userDTO.id}">
+    <a href="/place/update/${current_place.id}">Update place</a><br>
+    <a href="/place/delete/${current_place.id}">Delete place</a><br>
+</c:if>
+
+
 
 ${current_details.country}<br>
 ${current_details.location}<br>

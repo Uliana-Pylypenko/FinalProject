@@ -124,6 +124,29 @@ public class PlaceController {
         return placeService.delete(id);
     }
 
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id, Model model) {
+        String message = "Are you sure you want to delete this place and all events related to it?";
+        model.addAttribute("delete_message", message);
+        return "initial_delete";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Long id, HttpServletRequest request) {
+        boolean answer = Boolean.parseBoolean(request.getParameter("answer"));
+        if (answer) {
+            placeService.delete(id);
+            HttpSession session = request.getSession();
+            List<PlaceDTO> placeDTOS = (List<PlaceDTO>) session.getAttribute("userPlaces");
+            PlaceDTO placeDTO = placeDTOS.stream().filter(placeDTO1 -> placeDTO1.getId() == id).findFirst().get();
+            placeDTOS.remove(placeDTO);
+            session.setAttribute("userPlaces", placeDTOS);
+            return "redirect:/user/home";
+        } else {
+            return "redirect:/place-details/place-id/" + id;
+        }
+    }
+
     public PlaceDTO placeDTOForm(HttpServletRequest request) {
         PlaceDTO placeDTO = new PlaceDTO();
         String name = request.getParameter("name");
