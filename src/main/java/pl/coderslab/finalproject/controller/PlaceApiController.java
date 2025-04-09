@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import pl.coderslab.finalproject.dto.PlaceApiDTO;
-import pl.coderslab.finalproject.dto.PlaceDTO;
 import pl.coderslab.finalproject.entity.Place;
 import pl.coderslab.finalproject.service.PlaceService;
 
@@ -69,7 +68,7 @@ public class PlaceApiController {
         JSONObject root = new JSONObject(exchange.getBody());
         List<PlaceApiDTO> placeApiDTOS = PlaceApiDTO.JSONtoDTOwithName(root);
         model.addAttribute("placeApiDTOS", placeApiDTOS);
-        return "map";
+        return "map_places_nearby";
 
     }
 

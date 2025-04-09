@@ -23,8 +23,6 @@
       height: 70%;
       margin: 0;
     }
-
-
   </style>
 
 </head>

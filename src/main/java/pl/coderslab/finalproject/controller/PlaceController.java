@@ -3,7 +3,8 @@ package pl.coderslab.finalproject.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpRequest;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,18 +13,12 @@ import org.springframework.web.bind.annotation.*;
 import pl.coderslab.finalproject.dto.CategoryDTO;
 import pl.coderslab.finalproject.dto.PlaceDTO;
 import pl.coderslab.finalproject.dto.UserDTO;
-import pl.coderslab.finalproject.entity.Category;
-import pl.coderslab.finalproject.entity.Place;
 import pl.coderslab.finalproject.repository.PlaceRepository;
 import pl.coderslab.finalproject.service.CategoryService;
 import pl.coderslab.finalproject.service.PlaceService;
-import pl.coderslab.finalproject.service.UserService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/place")
@@ -59,8 +54,58 @@ public class PlaceController {
         
         List<PlaceDTO> filteredPlaces = placeService.getFilteredPlaces(name, country, city, activity, checkedCategories).getBody();
         model.addAttribute("places", filteredPlaces);
+
         return "initial_places";
     }
+
+    @GetMapping("/map")
+    public String getFilteredPlacesMap(HttpServletRequest request, Model model) {
+        List<PlaceDTO> placeDTOS = placeService.getAllDTO().getBody();
+        JSONArray jsonArray = placesToJSON(placeDTOS);
+        model.addAttribute("places", jsonArray.toString());
+        List<CategoryDTO> categoryDTOS = categoryService.getAll().getBody();
+        model.addAttribute("all_categories", categoryDTOS);
+
+        String name = request.getParameter("name");
+        String country = request.getParameter("country");
+        String city = request.getParameter("city");
+        String activity = request.getParameter("activity");
+
+        List<CategoryDTO> checkedCategories = new ArrayList<>();
+        for (CategoryDTO categoryDTO : categoryDTOS) {
+            if (request.getParameter(categoryDTO.getName()) != null) {
+                checkedCategories.add(categoryDTO);
+            }
+        }
+
+        model.addAttribute("filter_name", name);
+        model.addAttribute("filter_country", country);
+        model.addAttribute("filter_city", city);
+        model.addAttribute("filter_activity", activity);
+        model.addAttribute("filter_category", checkedCategories);
+
+        List<PlaceDTO> filteredPlaces = placeService.getFilteredPlaces(name, country, city, activity, checkedCategories).getBody();
+        model.addAttribute("places", placesToJSON(filteredPlaces).toString());
+
+        return "map_places";
+    }
+
+    public JSONArray placesToJSON(List<PlaceDTO> placeDTOS) {
+        if (placeDTOS == null) {
+            return null;
+        } else {
+            JSONArray jsonArray = new JSONArray();
+            for (PlaceDTO placeDTO : placeDTOS) {
+                JSONObject placeJson = new JSONObject();
+                placeJson.put("latitude", placeDTO.getLatitude());
+                placeJson.put("longitude", placeDTO.getLongitude());
+                jsonArray.put(placeJson);
+            }
+            return jsonArray;
+        }
+
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<PlaceDTO> getById(@PathVariable Long id) {

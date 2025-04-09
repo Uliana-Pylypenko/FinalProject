@@ -14,7 +14,7 @@ public class HomeController {
 
     @GetMapping("/map")
     public String map() {
-        return "map";
+        return "map_places_nearby";
     }
 
     @GetMapping("/user/home")

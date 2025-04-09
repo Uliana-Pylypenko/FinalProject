@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>Places</title>
+
 </head>
 <body>
 <c:if test="${empty userDTO}">
@@ -53,6 +54,6 @@
   ${place.categoryDTO.name} ${place.name} <a href="/place-details/place-id/${place.id}">Details</a><br>
 </c:forEach>
 
-<a href="places/map?">Show as map</a>
+<a href="/place/map">Show as map</a>
 </body>
 </html>
