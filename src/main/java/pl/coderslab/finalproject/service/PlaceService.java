@@ -114,5 +114,10 @@ public class PlaceService {
         return placeDTOS;
     }
 
+    public PlaceDTO getLastElement() {
+        Place place = placeRepository.findByMaxIndex();
+        return PlaceDTO.toDTO(place);
+    }
+
 
 }

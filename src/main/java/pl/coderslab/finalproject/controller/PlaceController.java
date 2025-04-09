@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 public class PlaceController {
     private final PlaceService placeService;
     private final CategoryService categoryService;
+    private final PlaceRepository placeRepository;
 
     @GetMapping()
     public String getFilteredPlaces(Model model, HttpServletRequest request) {
@@ -74,20 +75,10 @@ public class PlaceController {
 
     @PostMapping("/create")
     public String create(HttpServletRequest request, Model model) {
-        PlaceDTO placeDTO = new PlaceDTO();
-        String name = request.getParameter("name");
-        double latitude = Double.parseDouble(request.getParameter("latitude"));
-        double longitude = Double.parseDouble(request.getParameter("longitude"));
-        Long categoryId = Long.parseLong(request.getParameter("category"));
-        CategoryDTO categoryDTO = categoryService.getCategoryById(categoryId);
+        PlaceDTO placeDTO = placeDTOForm(request);
         HttpSession session = request.getSession();
         UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
         Long userId = userDTO.getId();
-
-        placeDTO.setName(name);
-        placeDTO.setLatitude(latitude);
-        placeDTO.setLongitude(longitude);
-        placeDTO.setCategoryDTO(categoryDTO);
         placeDTO.setUserId(userId);
 
         ResponseEntity<String> createResponse = placeService.create(placeDTO);
@@ -98,7 +89,8 @@ public class PlaceController {
             if (placeDTOS == null) {
                 placeDTOS = new ArrayList<>();
             }
-            placeDTOS.add(placeDTO);
+
+            placeDTOS.add(placeService.getLastElement());
 
             session.setAttribute("userPlaces", placeDTOS);
 
@@ -123,6 +115,17 @@ public class PlaceController {
 
     @PostMapping("/update/{id}")
     public String update(@PathVariable Long id, HttpServletRequest request) {
+        PlaceDTO placeDTO = placeDTOForm(request);
+        placeService.update(id, placeDTO);
+        return "redirect:/place-details/place-id/" + id;
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        return placeService.delete(id);
+    }
+
+    public PlaceDTO placeDTOForm(HttpServletRequest request) {
         PlaceDTO placeDTO = new PlaceDTO();
         String name = request.getParameter("name");
         double latitude = Double.parseDouble(request.getParameter("latitude"));
@@ -133,13 +136,7 @@ public class PlaceController {
         placeDTO.setLatitude(latitude);
         placeDTO.setLongitude(longitude);
         placeDTO.setCategoryDTO(categoryDTO);
-        placeService.update(id, placeDTO);
-        return "redirect:/place-details/place-id/" + id;
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
-        return placeService.delete(id);
+        return placeDTO;
     }
 
 

@@ -51,17 +51,7 @@ public class PlaceDetailsController {
 
     @PostMapping("/add/{placeId}")
     public String addDetails(@PathVariable Long placeId, HttpServletRequest request, Model model) {
-        String country = request.getParameter("country");
-        String city = request.getParameter("city");
-        String address = request.getParameter("address");
-        String activities = request.getParameter("activities");
-        String description = request.getParameter("description");
-        PlaceDetailsDTO placeDetailsDTO = new PlaceDetailsDTO();
-        placeDetailsDTO.setCountry(country);
-        placeDetailsDTO.setLocation(city);
-        placeDetailsDTO.setAddress(address);
-        placeDetailsDTO.setActivites(activities);
-        placeDetailsDTO.setDescription(description);
+        PlaceDetailsDTO placeDetailsDTO = placeDetailsDTOForm(request);
         placeDetailsDTO.setPlaceId(placeId);
         ResponseEntity<String> addResponse = placeDetailsService.addDetails(placeId, placeDetailsDTO);
         if (addResponse.getStatusCode() == HttpStatus.CREATED) {
@@ -91,6 +81,17 @@ public class PlaceDetailsController {
 
     @PostMapping("/update/{placeId}")
     public String updateDetails(@PathVariable Long placeId, HttpServletRequest request, Model model) {
+        PlaceDetailsDTO placeDetailsDTO = placeDetailsDTOForm(request);
+        placeDetailsService.updateDetails(placeId, placeDetailsDTO);
+        return "redirect:/place-details/place-id/" + placeId;
+    }
+
+    @DeleteMapping("/delete/{placeId}")
+    public ResponseEntity<String> deleteDetails(@PathVariable Long placeId) {
+        return placeDetailsService.deleteDetails(placeId);
+    }
+
+    public PlaceDetailsDTO placeDetailsDTOForm(HttpServletRequest request) {
         String country = request.getParameter("country");
         String city = request.getParameter("city");
         String address = request.getParameter("address");
@@ -102,13 +103,7 @@ public class PlaceDetailsController {
         placeDetailsDTO.setAddress(address);
         placeDetailsDTO.setActivites(activities);
         placeDetailsDTO.setDescription(description);
-        placeDetailsService.updateDetails(placeId, placeDetailsDTO);
-        return "redirect:/place-details/place-id/" + placeId;
-    }
-
-    @DeleteMapping("/delete/{placeId}")
-    public ResponseEntity<String> deleteDetails(@PathVariable Long placeId) {
-        return placeDetailsService.deleteDetails(placeId);
+        return placeDetailsDTO;
     }
 
 }
