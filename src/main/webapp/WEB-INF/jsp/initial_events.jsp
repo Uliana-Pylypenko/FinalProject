@@ -16,8 +16,6 @@
 <a href="/">Back to home page</a><br>
 
 <form action="" method="get">
-    Title
-    <input type="text" name="title"><br>
     Start date
     <input type="date" name="start_date" value="${filter_start_date}">
     End date
@@ -35,7 +33,5 @@
 
 <a href="events/map?">Show as map</a>
 
-<h1>check</h1>
-${filter_city}
 </body>
 </html>

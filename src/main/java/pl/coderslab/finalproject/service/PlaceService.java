@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import pl.coderslab.finalproject.dto.CategoryDTO;
 import pl.coderslab.finalproject.dto.PlaceDTO;
 import pl.coderslab.finalproject.entity.Category;
 import pl.coderslab.finalproject.entity.Place;
@@ -45,6 +46,19 @@ public class PlaceService {
             return new ResponseEntity<>(placeDTO, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntity<List<PlaceDTO>> getFilteredPlaces(String name,
+                                                            String country,
+                                                            String city,
+                                                            String activity,
+                                                            List<CategoryDTO> checkedCategories) {
+        List<PlaceDTO> filteredPlaces = placeRepository
+                .findByFilters(name, country, city, activity, checkedCategories.stream().map(CategoryDTO::toEntity).collect(Collectors.toList()))
+                .stream()
+                .map(PlaceDTO::toDTO)
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(filteredPlaces, HttpStatus.OK);
     }
 
     // creates Place with PlaceDetails=null

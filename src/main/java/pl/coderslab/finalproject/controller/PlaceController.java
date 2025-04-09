@@ -31,7 +31,6 @@ import java.util.stream.Collectors;
 public class PlaceController {
     private final PlaceService placeService;
     private final CategoryService categoryService;
-    private final PlaceRepository placeRepository;
 
     @GetMapping()
     public String getFilteredPlaces(Model model, HttpServletRequest request) {
@@ -57,11 +56,7 @@ public class PlaceController {
         model.addAttribute("filter_activity", activity);
         model.addAttribute("filter_category", checkedCategories);
         
-        List<PlaceDTO> filteredPlaces = placeRepository
-                .findByFilters(name, country, city, activity, checkedCategories.stream().map(CategoryDTO::toEntity).collect(Collectors.toList()))
-                .stream()
-                .map(PlaceDTO::toDTO)
-                .collect(Collectors.toList());
+        List<PlaceDTO> filteredPlaces = placeService.getFilteredPlaces(name, country, city, activity, checkedCategories).getBody();
         model.addAttribute("places", filteredPlaces);
         return "initial_places";
     }

@@ -7,5 +7,5 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface EventRepositoryCustom {
-    List<Event> findByFilters(String title, LocalDate startDate, LocalDate endDate, String country, String city);
+    List<Event> findByFilters(LocalDate startDate, LocalDate endDate, String country, String city);
 }

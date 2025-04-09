@@ -48,8 +48,14 @@ public class EventService {
         return new ResponseEntity<>(eventDTOS, HttpStatus.OK);
     }
 
-    // get event by location
-    // get event by date, date range
+    public ResponseEntity<List<EventDTO>> getFilteredEvents(LocalDate startDate, LocalDate endDate, String country, String city) {
+        List<EventDTO> filteredEvents = eventRepository
+                .findByFilters(startDate, endDate, country, city)
+                .stream()
+                .map(EventDTO::toDTO)
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(filteredEvents, HttpStatus.OK);
+    }
 
     public ResponseEntity<String> addEvent(Long placeId, EventDTO eventDTO) {
         Optional<Place> place = placeRepository.findById(placeId);
@@ -90,4 +96,5 @@ public class EventService {
         LocalDate date = (dateString == null) || (dateString.isEmpty()) ? null : LocalDate.parse(dateString);
         return date;
     }
+
 }

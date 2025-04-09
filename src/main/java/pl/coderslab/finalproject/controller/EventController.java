@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class EventController {
     private final EventService eventService;
-    private final EventRepository eventRepository;
 
 //    @GetMapping
 //    public String getEvents(Model model) {
@@ -49,11 +48,7 @@ public class EventController {
         model.addAttribute("filter_country", country);
         model.addAttribute("filter_city", city);
 
-        List<EventDTO> filteredEvents = eventRepository
-                .findByFilters(title, startDate, endDate, country, city)
-                .stream()
-                .map(EventDTO::toDTO)
-                .collect(Collectors.toList());
+        List<EventDTO> filteredEvents = eventService.getFilteredEvents(startDate, endDate, country, city).getBody();
 
         model.addAttribute("events", filteredEvents);
         return "initial_events";
