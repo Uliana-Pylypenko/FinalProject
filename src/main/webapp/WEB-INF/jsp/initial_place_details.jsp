@@ -31,6 +31,8 @@
     </c:if>
 </c:if>
 
+<a href="/place/update/${current_place.id}">Update place</a>
+
 ${current_details.country}<br>
 ${current_details.location}<br>
 ${current_details.address}<br>

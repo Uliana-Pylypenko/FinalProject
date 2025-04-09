@@ -8,11 +8,11 @@
 <h1>Add place</h1>
 <form action="" method="post">
   Name
-  <input type="text" name="name" placeholder="Name"><br>
+  <input type="text" name="name" placeholder="Name" value="${current_place.name}"><br>
   Latitude
-  <input type="text" name="latitude" placeholder="Latitude"><br>
+  <input type="text" name="latitude" placeholder="Latitude" value="${current_place.latitude}"><br>
   Longitude
-  <input type="text" name="longitude" placeholder="Longitude"><br>
+  <input type="text" name="longitude" placeholder="Longitude" value="${current_place.longitude}"><br>
   Category<br>
   <c:forEach items="${categories}" var="category">
     ${category.name}

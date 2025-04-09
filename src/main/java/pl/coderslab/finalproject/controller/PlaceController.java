@@ -114,10 +114,34 @@ public class PlaceController {
         return placeService.update(id, placeDTO);
     }
 
+    @GetMapping("/update/{id}")
+    public String update(@PathVariable Long id, Model model) {
+        model.addAttribute("categories", categoryService.getAll().getBody());
+        model.addAttribute("current_place", placeService.getByIdDTO(id).getBody());
+        return "initial_add_place";
+    }
+
+    @PostMapping("/update/{id}")
+    public String update(@PathVariable Long id, HttpServletRequest request) {
+        PlaceDTO placeDTO = new PlaceDTO();
+        String name = request.getParameter("name");
+        double latitude = Double.parseDouble(request.getParameter("latitude"));
+        double longitude = Double.parseDouble(request.getParameter("longitude"));
+        Long categoryId = Long.parseLong(request.getParameter("category"));
+        CategoryDTO categoryDTO = categoryService.getCategoryById(categoryId);
+        placeDTO.setName(name);
+        placeDTO.setLatitude(latitude);
+        placeDTO.setLongitude(longitude);
+        placeDTO.setCategoryDTO(categoryDTO);
+        placeService.update(id, placeDTO);
+        return "redirect:/place-details/place-id/" + id;
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         return placeService.delete(id);
     }
+    
 
 //    @GetMapping("/categories")
 //    public List<Category> getAllCategories() {

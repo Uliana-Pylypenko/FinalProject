@@ -37,7 +37,6 @@ public class EventController {
     @GetMapping
     public String getFilteredEvents(Model model, HttpServletRequest request) {
         model.addAttribute("events", eventService.getAllEventsDTO().getBody());
-        String title = request.getParameter("title");
         LocalDate startDate = eventService.getDateFromString(request.getParameter("start_date"));
         LocalDate endDate = eventService.getDateFromString(request.getParameter("end_date"));
         String country = request.getParameter("country");
