@@ -11,6 +11,7 @@ import pl.coderslab.finalproject.entity.PlaceDetails;
 import pl.coderslab.finalproject.repository.EventRepository;
 import pl.coderslab.finalproject.repository.PlaceRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -83,5 +84,10 @@ public class EventService {
             return new ResponseEntity<>("Event deleted", HttpStatus.OK);
         }
         return new ResponseEntity<>("Event not found", HttpStatus.NOT_FOUND);
+    }
+
+    public LocalDate getDateFromString(String dateString) {
+        LocalDate date = (dateString == null) || (dateString.isEmpty()) ? null : LocalDate.parse(dateString);
+        return date;
     }
 }

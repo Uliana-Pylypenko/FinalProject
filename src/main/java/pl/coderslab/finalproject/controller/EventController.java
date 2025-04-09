@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.finalproject.dto.EventDTO;
 import pl.coderslab.finalproject.dto.PlaceDTO;
-import pl.coderslab.finalproject.entity.Event;
 import pl.coderslab.finalproject.repository.EventRepository;
 import pl.coderslab.finalproject.service.EventService;
 
@@ -18,6 +17,7 @@ import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,12 +38,15 @@ public class EventController {
     @GetMapping
     public String getFilteredEvents(Model model, HttpServletRequest request) {
         model.addAttribute("events", eventService.getAllEventsDTO().getBody());
-        String startDateString = request.getParameter("title");
-        //LocalDate startDate = startDateString == null ? null : LocalDate.parse(startDateString);
-        //model.addAttribute("start_date", startDate);
+        String title = request.getParameter("title");
+        LocalDate startDate = eventService.getDateFromString(request.getParameter("start_date"));
+        LocalDate endDate = eventService.getDateFromString(request.getParameter("end_date"));
+
+        model.addAttribute("filter_start_date", startDate);
+        model.addAttribute("filter_end_date", endDate);
 
         List<EventDTO> filteredEvents = eventRepository
-                .findByFilters(startDateString)
+                .findByFilters(title, startDate, endDate)
                 .stream()
                 .map(EventDTO::toDTO)
                 .collect(Collectors.toList());
