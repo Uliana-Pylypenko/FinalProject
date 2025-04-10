@@ -21,22 +21,12 @@
     <a href="/logout">Logout</a>
 </c:if>
 
-<a href="/">Back to home page</a><br>
-
 <h1>${current_place.name}</h1>
 <c:if test="${empty current_details}">
     No details provided<br>
     <c:if test="${current_place.userId == userDTO.id}">
         <a href="/place-details/add/${current_place.id}">Add details</a>
-    </c:if>
-</c:if>
-
-<c:if test="${current_place.userId == userDTO.id}">
-    <a href="/place/update/${current_place.id}">Update place</a><br>
-    <a href="/place/delete/${current_place.id}">Delete place</a><br>
-</c:if>
-
-
+    </c:if>>
 
 ${current_details.country}<br>
 ${current_details.location}<br>

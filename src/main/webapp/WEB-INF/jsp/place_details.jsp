@@ -2,66 +2,80 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ include file="header.jsp" %>
-<!-- Banner -->
-<section class="banner full">
-  <article>
-    <img src="/images/slide01.jpg" alt="" width="1440" height="961">
+<section id="One" class="wrapper style3">
   <div class="inner">
-<header>
-
-  <font size="30">
-    Explore best astrotouristic places and events
-  </font><br>
-  <p>Or register and submit your own!</p><br>
-
-  <a href="/place" class="button">Places</a> &nbsp; &nbsp; <a href="/event" class="button">Events</a>
-</header>
-</div>
-</article>
+    <header class="align-center">
+      <h2>${current_place.name}</h2>
+    </header>
+  </div>
 </section>
-<!-- One -->
-<section id="one" class="wrapper style2">
-  <div class="inner">
-<div class="grid-style">
+<br>
+<div class="align-center">
+<c:if test="${empty current_details}">
+    <h3>No details provided</h3><br>
+    <c:if test="${current_place.userId == userDTO.id}">
+        <a href="/place-details/add/${current_place.id}" class="button special">Add details</a>
+    </c:if>
+</c:if>
+</div>
+<div class="align-center">
+  Country: ${current_details.country}<br>
+  City: ${current_details.location}<br>
+  Address: ${current_details.address}<br>
+  Activities: ${current_details.activites}<br>
+  Description: ${current_details.description}<br>
+</div>
 
-  <div>
-    <div class="box">
-      <div class="image fit">
-        <img src="images/pic02.jpg" alt="" width="600" height="300"></div>
-      <div class="content">
-        <header class="align-center"><p>maecenas sapien feugiat ex purus</p>
-          <h2>Lorem ipsum dolor</h2>
-        </header><p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada.</p>
-        <footer class="align-center"><a href="/place" class="button alt">Places</a>
-        </footer></div>
+<br>
+
+<div class="align-center">
+<c:if test="${current_place.userId == userDTO.id && not empty current_details}">
+    <a href="/place-details/update/${current_place.id}" class="button special">Update details</a>
+</c:if>
+</div>
+
+<br>
+
+<section class="wrapper style2 align-center">
+
+  <div class="inner align-center">
+    <h2>Events</h2>
+    <c:if test="${empty current_events}">
+    <h4>No events</h4><br>
+  </c:if>
+    <div class="table-wrapper align-left">
+      <table>
+        <thead>
+        <tr>
+          <th>Date</th>
+        <th>Time</th>
+        <th>Title</th>
+      </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${current_events}" var="event">
+        <tr>
+        <td>${event.date}</td>
+        <td>${event.time}</td>
+        <td><a href="/event/${event.id}">${event.title}</a></td>
+      </tr>
+        </c:forEach>
+
+        </tbody>
+      </table>
     </div>
   </div>
-
-  <div>
-    <div class="box">
-      <div class="image fit">
-        <img src="images/pic03.jpg" alt="" width="600" height="300"></div>
-      <div class="content">
-        <header class="align-center"><p>mattis elementum sapien pretium tellus</p>
-          <h2>Vestibulum sit amet</h2>
-        </header><p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada.</p>
-        <footer class="align-center"><a href="/event" class="button alt">Events</a>
-        </footer></div>
-    </div>
-  </div>
-
-</div>
-</div>
 </section>
 
-<!-- Two -->
-<%--<section id="two" class="wrapper style3">--%>
-<%--  <div class="inner">--%>
-<%--<header class="align-center">--%>
-<%--  <p>Nam vel ante sit amet libero scelerisque facilisis eleifend vitae urna</p>--%>
-<%--  <h2>Morbi maximus justo</h2>--%>
-<%--</header>--%>
-<%--  </div>--%>
-<%--</section>--%>
+<section class="wrapper align-center">
+<div class="align-center">
+<a href="/geoapi/places/${current_place.id}/leisure" class="button special">Show other places nearby</a><br>
+</div>
 
+<c:if test="${userDTO.admin && !current_place.approved}">
+<div class="align-center">
+    <a href="/admin/approve/${current_place.id}" class="button special">Approve place</a><br>
+    </div>
+</c:if>
+</section>
 <%@ include file="footer.jsp" %>
