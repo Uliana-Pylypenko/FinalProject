@@ -13,6 +13,9 @@
 </head>
 <body>
 <h1>Welcome</h1>
+
+<%--<%@ include file="hello.jsp" %>--%>
+
 <c:if test="${empty userDTO}">
     <a href="/login">Log in</a><br>
     <a href="/register">Registration</a><br>
