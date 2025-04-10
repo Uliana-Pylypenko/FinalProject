@@ -100,8 +100,8 @@ public class PlaceController {
     }
 
     @GetMapping("/create")
-    public String create(Model model) {
-        model.addAttribute("categories", categoryService.getAll().getBody());
+    public String create(HttpSession session) {
+        session.setAttribute("categories", categoryService.getAll().getBody());
         return "initial_add_place";
     }
 
@@ -185,6 +185,7 @@ public class PlaceController {
     public PlaceDTO placeDTOForm(HttpServletRequest request) {
         PlaceDTO placeDTO = new PlaceDTO();
         String name = request.getParameter("name");
+        // try catch
         double latitude = Double.parseDouble(request.getParameter("latitude"));
         double longitude = Double.parseDouble(request.getParameter("longitude"));
         Long categoryId = Long.parseLong(request.getParameter("category"));

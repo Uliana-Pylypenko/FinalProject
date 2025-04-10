@@ -18,7 +18,8 @@
     ${category.name}
     <input type="radio" name="category" value="${category.id}"><br>
   </c:forEach>
-  <button type="submit">Save</button>
+  <button type="submit">Save</button><br>
+  ${error_message}
 </form>
 </body>
 </html>

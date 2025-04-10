@@ -7,6 +7,7 @@ import pl.coderslab.finalproject.entity.Category;
 import pl.coderslab.finalproject.entity.Place;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PlaceRepository extends JpaRepository<Place, Long>, PlaceRepositoryCustom {
     @Query("select p from Place p order by p.id desc limit 1")
@@ -14,6 +15,8 @@ public interface PlaceRepository extends JpaRepository<Place, Long>, PlaceReposi
 
     @Query("select p from Place p where p.isApproved = false")
     List<Place> findNotApproved();
+
+    Optional<Place> findByName(String name);
 
 
 

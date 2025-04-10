@@ -10,6 +10,7 @@ import pl.coderslab.finalproject.dto.UserDTO;
 import pl.coderslab.finalproject.entity.Category;
 import pl.coderslab.finalproject.entity.Place;
 import pl.coderslab.finalproject.entity.User;
+import pl.coderslab.finalproject.exception.DuplicatePlaceNameException;
 import pl.coderslab.finalproject.repository.*;
 
 import java.util.ArrayList;
@@ -26,6 +27,13 @@ public class PlaceService {
 
     public List<Place> getAll() {
         return placeRepository.findAll();
+    }
+
+    public void checkForDuplicate(PlaceDTO placeDTO) {
+        Optional<Place> place = placeRepository.findByName(placeDTO.getName());
+        if (place.isPresent() && place.get().getId() != placeDTO.getId()) {
+            throw new DuplicatePlaceNameException("Place with name " + placeDTO.getName() + " already exists");
+        }
     }
 
     public ResponseEntity<List<PlaceDTO>> getAllDTO() {
@@ -65,6 +73,7 @@ public class PlaceService {
 
     // creates Place with PlaceDetails=null
     public ResponseEntity<String> create(PlaceDTO placeDTO) {
+        checkForDuplicate(placeDTO);
         Long userId = placeDTO.getUserId();
         Optional<User> user = userRepository.findById(userId);
         Optional<Category> category = categoryRepository.findById(placeDTO.getCategoryDTO().getId());

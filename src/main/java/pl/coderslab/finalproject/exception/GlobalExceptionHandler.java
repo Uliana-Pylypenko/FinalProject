@@ -20,7 +20,15 @@ public class GlobalExceptionHandler {
     public ModelAndView handleDuplicateEmailException(DuplicateEmailException ex, Model model) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("error_message", ex.getMessage());
-        modelAndView.setViewName("initial_registration"); // Default to user creation view
+        modelAndView.setViewName("initial_registration");
+        return modelAndView;
+    }
+
+    @ExceptionHandler(DuplicatePlaceNameException.class)
+    public ModelAndView handleDuplicatePlaceName(DuplicatePlaceNameException ex, Model model) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("error_message", ex.getMessage());
+        modelAndView.setViewName("initial_add_place");
         return modelAndView;
     }
 
