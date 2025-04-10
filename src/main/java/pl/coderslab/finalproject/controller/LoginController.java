@@ -39,21 +39,23 @@ public class LoginController {
                         @RequestParam String password,
                         HttpSession session,
                         Model model) {
-        ResponseEntity<UserDTO> response = userService.findByUsernameAndPassword(username, password);
+        ResponseEntity<UserDTO> response = userService.findByUsername(username);
 
         if (response.getStatusCode() == HttpStatus.OK) {
             UserDTO userDTO = response.getBody();
-            session.setAttribute("userDTO", userDTO);
-            List<PlaceDTO> placeDTOS = placeService.getPlacesForUser(userDTO);
-            session.setAttribute("userPlaces", placeDTOS);
 
-            if (userDTO.isAdmin()) {
-                return "redirect:/admin/home";
+            if (loginService.checkPassword(password, userDTO.getPassword())) {
+                session.setAttribute("userDTO", userDTO);
+                List<PlaceDTO> placeDTOS = placeService.getPlacesForUser(userDTO);
+                session.setAttribute("userPlaces", placeDTOS);
+                String role = userDTO.isAdmin() ? "admin" : "user";
+                return "redirect:/" + role + "/home";
             } else {
-                return "redirect:/user/home";
+                model.addAttribute("login_error", "Invalid password");
+                return "initial_login";
             }
         } else {
-            model.addAttribute("login_error", "Invalid username or password");
+            model.addAttribute("login_error", "Invalid username");
             return "initial_login";
         }
     }

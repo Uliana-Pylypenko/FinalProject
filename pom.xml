@@ -93,8 +93,12 @@
             <version>3.0.1</version>
         </dependency>
         <!-- jsp -->
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
