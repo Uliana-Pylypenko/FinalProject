@@ -1,3 +1,4 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: upylypen
@@ -22,7 +23,7 @@
   <input type="password" name="password_check" placeholder="Repeat password"><br>
   <button type="submit">Register</button><br>
 
-  ${error_message}
+${error_message}
 </form>
 </body>
 </html>

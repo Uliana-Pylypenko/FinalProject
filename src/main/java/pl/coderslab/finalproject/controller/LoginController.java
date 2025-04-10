@@ -82,7 +82,6 @@ public class LoginController {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String passwordCheck = request.getParameter("password_check");
-
         if (password.equals(passwordCheck)) {
             return loginService.register(username, email, password);
         } else {
