@@ -15,8 +15,7 @@ import pl.coderslab.finalproject.dto.PlaceDTO;
 import pl.coderslab.finalproject.dto.UserDTO;
 import pl.coderslab.finalproject.exception.DuplicatePlaceNameException;
 import pl.coderslab.finalproject.repository.PlaceRepository;
-import pl.coderslab.finalproject.service.CategoryService;
-import pl.coderslab.finalproject.service.PlaceService;
+import pl.coderslab.finalproject.service.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,8 @@ import java.util.List;
 public class PlaceController {
     private final PlaceService placeService;
     private final CategoryService categoryService;
-    private final PlaceRepository placeRepository;
+    private final PlaceDetailsService placeDetailsService;
+    private final EventService eventService;
 
     @GetMapping()
     public String getFilteredPlaces(Model model, HttpServletRequest request) {
