@@ -108,7 +108,13 @@ public class PlaceController {
 
     @PostMapping("/create")
     public String create(HttpServletRequest request, Model model) {
-        PlaceDTO placeDTO = placeDTOForm(request);
+        PlaceDTO placeDTO = null;
+        try {
+            placeDTO = placeDTOForm(request, model);
+        } catch (NumberFormatException e) {
+            model.addAttribute("error_message", "Enter valid latitude and longitude");
+            return "initial_add_place";
+        }
         HttpSession session = request.getSession();
         UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
         Long userId = userDTO.getId();
@@ -144,20 +150,24 @@ public class PlaceController {
     @GetMapping("/update/{id}")
     public String update(@PathVariable Long id, Model model, HttpSession session) {
         session.setAttribute("categories", categoryService.getAll().getBody());
-        session.setAttribute("current_place", placeService.getByIdDTO(id).getBody());
+        model.addAttribute("current_place", placeService.getByIdDTO(id).getBody());
         return "initial_add_place";
     }
 
     @PostMapping("/update/{id}")
     public String update(@PathVariable Long id, HttpServletRequest request, Model model) {
         try {
-            PlaceDTO placeDTO = placeDTOForm(request);
+            PlaceDTO placeDTO = placeDTOForm(request, model);
+            placeDTO.setId(id);
             placeService.update(id, placeDTO);
             return "redirect:/place-details/place-id/" + id;
         } catch (DuplicatePlaceNameException e) {
             model.addAttribute("error_message", e.getMessage());
-            return "initial_add_place";
+        } catch (NumberFormatException e2) {
+            model.addAttribute("error_message", "Enter valid latitude and longitude");
         }
+        model.addAttribute("current_place", placeService.getByIdDTO(id).getBody());
+        return "initial_add_place";
     }
 
     @DeleteMapping("/delete/{id}")
@@ -188,10 +198,9 @@ public class PlaceController {
         }
     }
 
-    public PlaceDTO placeDTOForm(HttpServletRequest request) {
+    public PlaceDTO placeDTOForm(HttpServletRequest request, Model model) {
         PlaceDTO placeDTO = new PlaceDTO();
         String name = request.getParameter("name");
-        // try catch
         double latitude = Double.parseDouble(request.getParameter("latitude"));
         double longitude = Double.parseDouble(request.getParameter("longitude"));
         Long categoryId = Long.parseLong(request.getParameter("category"));
