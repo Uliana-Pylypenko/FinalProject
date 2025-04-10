@@ -5,7 +5,7 @@
 <!-- Banner -->
 <section class="banner full">
   <article>
-    <img src="images/slide01.jpg" alt="" width="1440" height="961">
+    <img src="/images/slide01.jpg" alt="" width="1440" height="961">
   <div class="inner">
 <header>
 
@@ -27,7 +27,7 @@
   <div>
     <div class="box">
       <div class="image fit">
-        <img src="images/pic02.jpg" alt="" width="600" height="300"></div>
+        <img src="/images/pic02.jpg" alt="" width="600" height="300"></div>
       <div class="content">
         <header class="align-center"><p>maecenas sapien feugiat ex purus</p>
           <h2>Lorem ipsum dolor</h2>
@@ -40,7 +40,7 @@
   <div>
     <div class="box">
       <div class="image fit">
-        <img src="images/pic03.jpg" alt="" width="600" height="300"></div>
+        <img src="/images/pic03.jpg" alt="" width="600" height="300"></div>
       <div class="content">
         <header class="align-center"><p>mattis elementum sapien pretium tellus</p>
           <h2>Vestibulum sit amet</h2>
@@ -49,7 +49,6 @@
         </footer></div>
     </div>
   </div>
-
 </div>
 </div>
 </section>

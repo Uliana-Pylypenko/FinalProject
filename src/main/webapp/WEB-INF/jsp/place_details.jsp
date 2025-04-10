@@ -5,7 +5,7 @@
 <!-- Banner -->
 <section class="banner full">
   <article>
-    <img src="images/slide01.jpg" alt="" width="1440" height="961">
+    <img src="/images/slide01.jpg" alt="" width="1440" height="961">
   <div class="inner">
 <header>
 
