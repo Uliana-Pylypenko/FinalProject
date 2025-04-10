@@ -1,22 +1,18 @@
 package pl.coderslab.finalproject.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.finalproject.dto.PlaceDTO;
 import pl.coderslab.finalproject.dto.UserDTO;
 import pl.coderslab.finalproject.exception.DuplicateEmailException;
 import pl.coderslab.finalproject.exception.DuplicateUserException;
 import pl.coderslab.finalproject.service.LoginService;
 import pl.coderslab.finalproject.service.PlaceService;
 import pl.coderslab.finalproject.service.UserService;
-
-import java.util.List;
 
 @Controller  // only @Controller works with the views
 @AllArgsConstructor
@@ -35,12 +31,6 @@ public class UserController {
         return "initial_admin_profile";
     }
 
-//    @GetMapping("/user/username/{username}")
-//    public String getUser(@PathVariable String username, Model model) {
-//        model.addAttribute("user", userService.findByUsername(username));
-//        return "initial_user_profile";
-//    }
-
     @GetMapping("/admin/users")
     public String getAll(Model model) {
         model.addAttribute("all_users", userService.getAll().getBody());
@@ -57,14 +47,7 @@ public class UserController {
         return userService.create(userDTO);
     }
 
-    @GetMapping("/user/update/{id}")
-    public String update() {
-        return "initial_update_profile";
-    }
-
-    @PostMapping("/user/update/{id}")
-    public String update(@PathVariable Long id, HttpServletRequest request, Model model) {
-
+    public String update(Long id, HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         UserDTO userToUpdate = (UserDTO) session.getAttribute("userDTO");
         String username = request.getParameter("username");
@@ -83,7 +66,8 @@ public class UserController {
             try {
                 userService.update(id, updatedUser);
                 session.setAttribute("userDTO", updatedUser);
-                return "redirect:/user/home";
+                String role = updatedUser.isAdmin() ? "admin" : "user";
+                return "redirect:/" + role + "/home";
             } catch (DuplicateUserException | DuplicateEmailException e ) {
                 session.setAttribute("userDTO", userToUpdate);
                 model.addAttribute("error_message", e.getMessage());
@@ -91,9 +75,27 @@ public class UserController {
         } else {
             model.addAttribute("error_message", "Wrong password");
         }
-
-
         return "initial_update_profile";
+    }
+
+    @GetMapping("/user/update/{id}")
+    public String updateUser() {
+        return "initial_update_profile";
+    }
+
+    @PostMapping("/user/update/{id}")
+    public String updateUser(@PathVariable Long id, HttpServletRequest request, Model model) {
+        return update(id, request, model);
+    }
+
+    @GetMapping("/admin/update/{id}")
+    public String updateAdmin() {
+        return "initial_update_profile";
+    }
+
+    @PostMapping("/admin/update/{id}")
+    public String updateAdmin(@PathVariable Long id, HttpServletRequest request, Model model) {
+        return update(id, request, model);
     }
 
     @GetMapping("/admin/change-admin-rights/{id}")
