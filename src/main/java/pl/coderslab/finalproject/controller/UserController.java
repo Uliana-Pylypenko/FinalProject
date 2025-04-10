@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.finalproject.dto.PlaceDTO;
 import pl.coderslab.finalproject.dto.UserDTO;
+import pl.coderslab.finalproject.exception.DuplicateEmailException;
+import pl.coderslab.finalproject.exception.DuplicateUserException;
 import pl.coderslab.finalproject.service.LoginService;
 import pl.coderslab.finalproject.service.PlaceService;
 import pl.coderslab.finalproject.service.UserService;
@@ -62,26 +64,36 @@ public class UserController {
 
     @PostMapping("/user/update/{id}")
     public String update(@PathVariable Long id, HttpServletRequest request, Model model) {
+
         HttpSession session = request.getSession();
         UserDTO userToUpdate = (UserDTO) session.getAttribute("userDTO");
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+
         if (loginService.checkPassword(password, userToUpdate.getPassword())) {
-            userToUpdate.setUsername(username);
-            userToUpdate.setEmail(email);
-            ResponseEntity<String> updateResponse = userService.update(id, userToUpdate);
-            if (updateResponse.getStatusCode().is2xxSuccessful()) {
-                session.setAttribute("userDTO", userToUpdate);
+            UserDTO updatedUser = new UserDTO();
+            updatedUser.setId(id);
+            updatedUser.setUsername(username);
+            updatedUser.setEmail(email);
+            updatedUser.setPassword(userToUpdate.getPassword());
+            updatedUser.setAdmin(userToUpdate.isAdmin());
+            updatedUser.setPlaceIds(userToUpdate.getPlaceIds());
+
+            try {
+                userService.update(id, updatedUser);
+                session.setAttribute("userDTO", updatedUser);
                 return "redirect:/user/home";
-            } else {
-                model.addAttribute("error_message", "Error updating user");
-                return "error";
+            } catch (DuplicateUserException | DuplicateEmailException e ) {
+                session.setAttribute("userDTO", userToUpdate);
+                model.addAttribute("error_message", e.getMessage());
             }
         } else {
             model.addAttribute("error_message", "Wrong password");
-            return "error";
         }
+
+
+        return "initial_update_profile";
     }
 
     @GetMapping("/admin/change-admin-rights/{id}")

@@ -20,7 +20,10 @@
     <input type="email" value="${userDTO.email}" name="email" placeholder="Email"><br>
     Password
     <input type="password" name="password" placeholder="Password"><br>
-    <button type="submit">Save changes</button>
+    <button type="submit">Save changes</button><br>
 </form>
+${error_message}<br>
+<a href="/user/home">Back to profile</a>
+
 </body>
 </html>

@@ -16,22 +16,14 @@ public class LoginService {
     private final UserRepository userRepository;
 
     public String register(String username, String email, String password) {
-        Optional<User> user1 = userRepository.findByUsername(username);
-        Optional<User> user2 = userRepository.findByEmail(email);
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername(username);
+        userDTO.setEmail(email);
+        userDTO.setPassword(hashPassword(password));
+        userDTO.setAdmin(false);
+        userService.create(userDTO);
+        return "redirect:/login";
 
-        if (user1.isPresent()) {
-            throw new DuplicateUserException("Username " + username + " already exists");
-        } else if (user2.isPresent()) {
-            throw new DuplicateUserException("Username " + username + " already exists");
-        } else {
-            UserDTO userDTO = new UserDTO();
-            userDTO.setUsername(username);
-            userDTO.setEmail(email);
-            userDTO.setPassword(hashPassword(password));
-            userDTO.setAdmin(false);
-            userService.create(userDTO);
-            return "redirect:/login";
-        }
 
     }
 

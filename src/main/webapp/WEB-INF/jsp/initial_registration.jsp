@@ -22,8 +22,9 @@
   Repeat password
   <input type="password" name="password_check" placeholder="Repeat password"><br>
   <button type="submit">Register</button><br>
+${error_message}<br>
+  <a href="/">Back to home page</a>
 
-${error_message}
 </form>
 </body>
 </html>

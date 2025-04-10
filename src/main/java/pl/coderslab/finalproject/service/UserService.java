@@ -8,6 +8,8 @@ import pl.coderslab.finalproject.dto.PlaceDTO;
 import pl.coderslab.finalproject.dto.UserDTO;
 import pl.coderslab.finalproject.entity.Place;
 import pl.coderslab.finalproject.entity.User;
+import pl.coderslab.finalproject.exception.DuplicateEmailException;
+import pl.coderslab.finalproject.exception.DuplicateUserException;
 import pl.coderslab.finalproject.repository.PlaceRepository;
 import pl.coderslab.finalproject.repository.UserRepository;
 
@@ -48,15 +50,27 @@ public class UserService {
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
+    public void checkForDuplicates(UserDTO userDTO) {
+        Optional<User> user1 = userRepository.findByUsername(userDTO.getUsername());
+        Optional<User> user2 = userRepository.findByEmail(userDTO.getEmail());
+        if (user1.isPresent() && user1.get().getId() != userDTO.getId()) {
+            throw new DuplicateUserException("Username " + userDTO.getUsername() + " already exists");
+        }
+        if (user2.isPresent() && user2.get().getId() != userDTO.getId()) {
+            throw new DuplicateEmailException("User with email " + userDTO.getEmail() + " already exists");
+        }
+    }
 
 
     public ResponseEntity<String> create(UserDTO userDTO) {
+        checkForDuplicates(userDTO);
         userRepository.save(UserDTO.toEntity(userDTO, placeRepository));
         return new ResponseEntity<>("User created successfully", HttpStatus.CREATED);
     }
 
     public ResponseEntity<String> update(Long id, UserDTO userDTO) {
         Optional<User> userToUpdate = userRepository.findById(id);
+        checkForDuplicates(userDTO);
         if (userToUpdate.isPresent()) {
             User user = UserDTO.toEntity(userDTO, placeRepository);
             user.setId(id);

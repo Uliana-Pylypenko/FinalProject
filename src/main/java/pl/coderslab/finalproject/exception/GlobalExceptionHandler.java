@@ -1,5 +1,6 @@
 package pl.coderslab.finalproject.exception;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -8,11 +9,21 @@ import org.springframework.web.servlet.ModelAndView;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(DuplicateUserException.class)
-    public ModelAndView handleUserAlreadyExistsException(DuplicateUserException ex) {
-        ModelAndView modelAndView = new ModelAndView("initial_registration"); // Change to your registration view name
+    public ModelAndView handleDuplicateUserException(DuplicateUserException ex, Model model) {
+        ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("error_message", ex.getMessage());
+        modelAndView.setViewName("initial_registration"); // Default to user creation view
         return modelAndView;
     }
 
-    // Handle other exceptions similarly
+    @ExceptionHandler(DuplicateEmailException.class)
+    public ModelAndView handleDuplicateEmailException(DuplicateEmailException ex, Model model) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("error_message", ex.getMessage());
+        modelAndView.setViewName("initial_registration"); // Default to user creation view
+        return modelAndView;
+    }
+
+
+
 }
