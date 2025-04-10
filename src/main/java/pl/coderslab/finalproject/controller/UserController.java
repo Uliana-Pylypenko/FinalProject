@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.finalproject.dto.PlaceDTO;
 import pl.coderslab.finalproject.dto.UserDTO;
+import pl.coderslab.finalproject.service.LoginService;
 import pl.coderslab.finalproject.service.PlaceService;
 import pl.coderslab.finalproject.service.UserService;
 
@@ -20,6 +21,7 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     private final PlaceService placeService;
+    private final LoginService loginService;
 
     @GetMapping("/user/home")
     public String userHome() {
@@ -65,7 +67,7 @@ public class UserController {
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        if (userToUpdate.getPassword().equals(password)) {
+        if (loginService.checkPassword(password, userToUpdate.getPassword())) {
             userToUpdate.setUsername(username);
             userToUpdate.setEmail(email);
             ResponseEntity<String> updateResponse = userService.update(id, userToUpdate);
