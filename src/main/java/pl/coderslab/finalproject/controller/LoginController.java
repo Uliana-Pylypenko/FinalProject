@@ -27,7 +27,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String loginPage() {
-        return "initial_login";
+        return "index";
     }
 
     @PostMapping("/login")
