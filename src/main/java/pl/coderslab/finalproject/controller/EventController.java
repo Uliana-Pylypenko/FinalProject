@@ -55,7 +55,7 @@ public class EventController {
         List<EventDTO> filteredEvents = eventService.getFilteredEvents(startDate, endDate, country, city).getBody();
 
         model.addAttribute("events", filteredEvents);
-        return "initial_events";
+        return "events";
     }
 
     @GetMapping("/{id}")
@@ -63,7 +63,8 @@ public class EventController {
         model.addAttribute("current_single_event", eventService.getByIdDTO(id));
         Place place = eventService.getById(id).getPlace();
         model.addAttribute("current_place", PlaceDTO.toDTO(place));
-        model.addAttribute("current_details", PlaceDetailsDTO.toDTO(place.getPlaceDetails()));
+        PlaceDetailsDTO current_details = place.getPlaceDetails() == null? null : PlaceDetailsDTO.toDTO(place.getPlaceDetails());
+        model.addAttribute("current_details", current_details);
         model.addAttribute("current_events", eventService.getAllEventsByPlaceId(place.getId()).getBody());
         return "initial_event_details";
     }

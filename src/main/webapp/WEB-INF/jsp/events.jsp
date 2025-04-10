@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: upylypen
   Date: 10/04/2025
-  Time: 20:04
+  Time: 21:59
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -13,7 +13,7 @@
 <section id="One" class="wrapper style3">
   <div class="inner">
     <header class="align-center">
-      <h2>Places</h2>
+      <h2>Events</h2>
     </header>
   </div>
 </section>
@@ -26,23 +26,14 @@
     <form method="get" action="">
       <div class="align-center">
         <div class="grid-style">
-            <div><input type="text" name="name" value="${filter_name}" placeholder="Place name"></div>
-          <div><input type="text" name="activity" value="${filter_activity}" placeholder="Activity"></div>
+            <div><h4>Start date</h4> <input type="date" name="start_date" value="${filter_start_date}"></div>
+          <div><h4>End date</h4><input type="date" name="end_date" value="${filter_end_date}"></div>
 
         </div>
         <div class="grid-style">
           <div><input type="text" name="country" value="${filter_country}" placeholder="Country"></div>
           <div><input type="text" name="city" value="${filter_city}" placeholder="City"></div>
         </div>
-
-        <div class="align-left">
-        <h4>Categories</h4>
-        </div>
-        <c:forEach items="${all_categories}" var="category">
-        <div class="align-left">
-          <input type="checkbox" name="${category.name}" id="${category.name}"><label for="${category.name}">${category.name}</label>
-        </div>
-        </c:forEach>
 
         <br>
         <div class="12u$">
@@ -60,28 +51,17 @@
       <table>
         <thead>
         <tr>
-          <th>Category</th>
-        <th>Name</th>
-        <th>City</th>
-          <th> </th>
+          <th>Date</th>
+        <th>Time</th>
+        <th>Title</th>
       </tr>
         </thead>
         <tbody>
-        <c:forEach items="${places}" var="place">
+        <c:forEach items="${events}" var="event">
         <tr>
-          <td><div class="${place.categoryDTO.name}">${place.categoryDTO.name}</div></td>
-        <td><a href="place-details/place-id/${place.id}">${place.name}</a></td>
-        <td>
-        ${place.detailsDTO.location}
-        <c:if test="${empty place.detailsDTO.location}">
-          -
-        </c:if>
-        </td>
-        <td>
-        <c:if test="${place.approved}">
-        <img src="images/approved.png" height="20">
-        </c:if>
-        </td>
+        <td>${event.date}</td>
+        <td>${event.time}</td>
+        <td><a href="/event/${event.id}">${event.title}</a></td>
       </tr>
         </c:forEach>
 
