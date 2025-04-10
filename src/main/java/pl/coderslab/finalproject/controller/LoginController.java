@@ -27,7 +27,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String loginPage() {
-        return "index";
+        return "login";
     }
 
     @PostMapping("/login")
@@ -48,11 +48,11 @@ public class LoginController {
                 return "redirect:/" + role + "/home";
             } else {
                 model.addAttribute("login_error", "Invalid password");
-                return "initial_login";
+                return "login";
             }
         } else {
             model.addAttribute("login_error", "Invalid username");
-            return "initial_login";
+            return "login";
         }
     }
 
@@ -69,7 +69,7 @@ public class LoginController {
 
     @GetMapping("/register")
     public String register() {
-        return "initial_registration";
+        return "registration";
     }
 
     @PostMapping("/register")
@@ -82,7 +82,7 @@ public class LoginController {
             return loginService.register(username, email, password);
         } else {
             model.addAttribute("error_message", "Passwords do not match");
-            return "initial_registration";
+            return "registration";
         }
 
     }

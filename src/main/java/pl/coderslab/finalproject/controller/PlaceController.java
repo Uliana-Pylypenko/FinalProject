@@ -38,7 +38,7 @@ public class PlaceController {
         List<PlaceDTO> filteredPlaces = filterPlaces(request, model);
         model.addAttribute("places", filteredPlaces);
 
-        return "initial_places";
+        return "places";
     }
 
     public List<PlaceDTO> filterPlaces(HttpServletRequest request, Model model) {
@@ -112,7 +112,7 @@ public class PlaceController {
         try {
             placeDTO = placeDTOForm(request, model);
         } catch (NumberFormatException e) {
-            model.addAttribute("error_message", "Enter valid latitude and longitude");
+            model.addAttribute("error_message", "Enter valid latitude and longitude and choose a category");
             return "initial_add_place";
         }
         HttpSession session = request.getSession();
@@ -164,7 +164,7 @@ public class PlaceController {
         } catch (DuplicatePlaceNameException e) {
             model.addAttribute("error_message", e.getMessage());
         } catch (NumberFormatException e2) {
-            model.addAttribute("error_message", "Enter valid latitude and longitude");
+            model.addAttribute("error_message", "Enter valid latitude and longitude and choose a category");
         }
         model.addAttribute("current_place", placeService.getByIdDTO(id).getBody());
         return "initial_add_place";
@@ -204,6 +204,7 @@ public class PlaceController {
         double latitude = Double.parseDouble(request.getParameter("latitude"));
         double longitude = Double.parseDouble(request.getParameter("longitude"));
         Long categoryId = Long.parseLong(request.getParameter("category"));
+        System.out.println("CATEGORY ID: " + categoryId);
         CategoryDTO categoryDTO = categoryService.getCategoryById(categoryId);
         placeDTO.setName(name);
         placeDTO.setLatitude(latitude);

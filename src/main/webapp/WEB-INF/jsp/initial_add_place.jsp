@@ -14,10 +14,16 @@
   Longitude
   <input type="text" name="longitude" placeholder="Longitude" value="${current_place.longitude}"><br>
   Category<br>
+  <select name="category">
+    <option value="">- Category -</option>
   <c:forEach items="${categories}" var="category">
-    ${category.name}
-    <input type="radio" name="category" value="${category.id}"><br>
+    <option value="${category.id}">${category.name}</option>
   </c:forEach>
+  </select>
+<%--  <c:forEach items="${categories}" var="category">--%>
+<%--    ${category.name}--%>
+<%--    <input type="radio" name="category" value="${category.id}"><br>--%>
+<%--  </c:forEach>--%>
   <button type="submit">Save</button><br>
   ${error_message}
 </form>
