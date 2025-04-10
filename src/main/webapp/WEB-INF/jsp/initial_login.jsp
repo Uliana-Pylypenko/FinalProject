@@ -24,7 +24,9 @@
   <div>
     <button type="submit">Login</button>
   </div>
-  <a href="/register">Register</a>
+  <a href="/register">Register</a><br>
+  <a href="/">Back to home</a><br>
+  ${login_error}
 </form>
 </body>
 </html>

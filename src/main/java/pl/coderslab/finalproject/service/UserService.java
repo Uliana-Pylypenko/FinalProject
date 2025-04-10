@@ -22,8 +22,13 @@ public class UserService {
     private final UserRepository userRepository;
     private final PlaceRepository placeRepository;
 
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username).orElse(null);
+    public ResponseEntity<UserDTO> findByUsernameAndPassword(String username, String password) {
+        Optional<User> user = userRepository.findByUsernameAndPassword(username, password);
+        if (user.isPresent()) {
+            return new ResponseEntity<>(UserDTO.toDTO(user.get()), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     public ResponseEntity<List<UserDTO>> getAll() {

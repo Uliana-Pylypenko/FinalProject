@@ -31,11 +31,11 @@ public class UserController {
         return "initial_admin_profile";
     }
 
-    @GetMapping("/user/username/{username}")
-    public String getUser(@PathVariable String username, Model model) {
-        model.addAttribute("user", userService.findByUsername(username));
-        return "initial_user_profile";
-    }
+//    @GetMapping("/user/username/{username}")
+//    public String getUser(@PathVariable String username, Model model) {
+//        model.addAttribute("user", userService.findByUsername(username));
+//        return "initial_user_profile";
+//    }
 
     @GetMapping("/admin/users")
     public String getAll(Model model) {

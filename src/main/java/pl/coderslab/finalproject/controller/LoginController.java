@@ -3,25 +3,30 @@ package pl.coderslab.finalproject.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.coderslab.finalproject.dto.PlaceDTO;
 import pl.coderslab.finalproject.dto.UserDTO;
 import pl.coderslab.finalproject.entity.User;
 import pl.coderslab.finalproject.repository.UserRepository;
 import pl.coderslab.finalproject.service.LoginService;
+import pl.coderslab.finalproject.service.PlaceService;
 import pl.coderslab.finalproject.service.UserService;
 import org.springframework.ui.Model;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
 public class LoginController {
     private final UserService userService;
-    private final UserRepository userRepository;
+    private final PlaceService placeService;
     private final LoginService loginService;
 
     @GetMapping("/login")
@@ -34,7 +39,23 @@ public class LoginController {
                         @RequestParam String password,
                         HttpSession session,
                         Model model) {
-        return loginService.login(username, password, session, model);
+        ResponseEntity<UserDTO> response = userService.findByUsernameAndPassword(username, password);
+
+        if (response.getStatusCode() == HttpStatus.OK) {
+            UserDTO userDTO = response.getBody();
+            session.setAttribute("userDTO", userDTO);
+            List<PlaceDTO> placeDTOS = placeService.getPlacesForUser(userDTO);
+            session.setAttribute("userPlaces", placeDTOS);
+
+            if (userDTO.isAdmin()) {
+                return "redirect:/admin/home";
+            } else {
+                return "redirect:/user/home";
+            }
+        } else {
+            model.addAttribute("login_error", "Invalid username or password");
+            return "initial_login";
+        }
     }
 
     @GetMapping("/logout")
