@@ -89,6 +89,7 @@ public class PlaceService {
     }
 
     public ResponseEntity<String> update(Long place_id, PlaceDTO placeDTO) {
+        checkForDuplicate(placeDTO);
         Optional<Place> place = placeRepository.findById(place_id);
         // userId can't be changed
         if (place.isPresent()) {

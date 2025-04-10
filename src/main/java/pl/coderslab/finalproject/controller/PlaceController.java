@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.coderslab.finalproject.dto.CategoryDTO;
 import pl.coderslab.finalproject.dto.PlaceDTO;
 import pl.coderslab.finalproject.dto.UserDTO;
+import pl.coderslab.finalproject.exception.DuplicatePlaceNameException;
 import pl.coderslab.finalproject.repository.PlaceRepository;
 import pl.coderslab.finalproject.service.CategoryService;
 import pl.coderslab.finalproject.service.PlaceService;
@@ -141,17 +142,22 @@ public class PlaceController {
     }
 
     @GetMapping("/update/{id}")
-    public String update(@PathVariable Long id, Model model) {
-        model.addAttribute("categories", categoryService.getAll().getBody());
-        model.addAttribute("current_place", placeService.getByIdDTO(id).getBody());
+    public String update(@PathVariable Long id, Model model, HttpSession session) {
+        session.setAttribute("categories", categoryService.getAll().getBody());
+        session.setAttribute("current_place", placeService.getByIdDTO(id).getBody());
         return "initial_add_place";
     }
 
     @PostMapping("/update/{id}")
-    public String update(@PathVariable Long id, HttpServletRequest request) {
-        PlaceDTO placeDTO = placeDTOForm(request);
-        placeService.update(id, placeDTO);
-        return "redirect:/place-details/place-id/" + id;
+    public String update(@PathVariable Long id, HttpServletRequest request, Model model) {
+        try {
+            PlaceDTO placeDTO = placeDTOForm(request);
+            placeService.update(id, placeDTO);
+            return "redirect:/place-details/place-id/" + id;
+        } catch (DuplicatePlaceNameException e) {
+            model.addAttribute("error_message", e.getMessage());
+            return "initial_add_place";
+        }
     }
 
     @DeleteMapping("/delete/{id}")
