@@ -87,7 +87,7 @@
     var latitude = place.latitude;
     var longitude = place.longitude;
     var marker = L.marker([latitude, longitude]).addTo(map);
-    marker.bindPopup("Category: " + place.category + ", Name: " + place.name + ", City: " + place.city + ", Address: " + place.address);
+    marker.bindPopup("Category: " + place.category + ", Name: " + place.name + ", Country: " + place.country + ", City: " + place.city + ", Address: " + place.address);
     marker.on('click', function (e) {
       marker.openPopup();
     });

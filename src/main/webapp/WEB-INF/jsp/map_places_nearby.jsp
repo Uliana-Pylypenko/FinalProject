@@ -34,16 +34,11 @@
             "https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}@2x.png?apiKey={apiKey}";
 
 
-    var marker = L.marker(new L.LatLng(${place.latitude}, ${place.longitude})).addTo(map);
-    marker.bindPopup("${place.latitude} ${place.longitude}");
-    marker.on('click', function (e) {
-      marker.openPopup();
-    });
+    marker = L.marker(new L.LatLng(${place.latitude}, ${place.longitude}));
 
     <c:forEach items="${placeApiDTOS}" var="placeApiDTO">
-    var marker = L.marker(new L.LatLng(${placeApiDTO.latitude}, ${placeApiDTO.longitude})).addTo(map);
+    marker = L.marker(new L.LatLng(${placeApiDTO.latitude}, ${placeApiDTO.longitude})).addTo(map);
     </c:forEach>
-
 
     // Add map tiles layer. Set 20 as the maximal zoom and provide map data attribution.
     L.tileLayer(isRetina ? retinaUrl : baseUrl, {

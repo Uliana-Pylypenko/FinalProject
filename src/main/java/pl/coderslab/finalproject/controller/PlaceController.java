@@ -91,9 +91,11 @@ public class PlaceController {
                 if (placeDTO.getDetailsDTO() != null) {
                     placeJson.put("city", placeDTO.getDetailsDTO().getLocation());
                     placeJson.put("address", placeDTO.getDetailsDTO().getAddress());
+                    placeJson.put("country", placeDTO.getDetailsDTO().getCountry());
                 } else {
                     placeJson.put("city", "none");
                     placeJson.put("address", "none");
+                    placeJson.put("country", "none");
                 }
                 placeJson.put("category", placeDTO.getCategoryDTO().getName());
                 jsonArray.put(placeJson);

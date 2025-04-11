@@ -19,6 +19,7 @@
 </c:if>
 <br>
 </div>
+<c:if test="${not empty current_place.detailsDTO}">
 <div class="align-center">
   <h4>Country: ${current_details.country}</h4>
   <h4>City: ${current_details.location}</h4>
@@ -29,17 +30,19 @@
   <h4>Description:</h4>
    <p>${current_details.description}</p>
     </div>
-
-
 </div>
-
+</c:if>
 <br>
 
 
 <div class="align-center">
 <c:if test="${current_place.userId == userDTO.id && not empty current_details}">
-    <a href="/place/update/${current_place.id}" class="button special">Update place</a>
     <a href="/place-details/update/${current_place.id}" class="button special">Update details</a>
+</c:if>
+<br>
+<br>
+<c:if test="${current_place.userId == userDTO.id}">
+<a href="/place/update/${current_place.id}" class="button special">Update place</a>
 </c:if>
 </div>
 
@@ -52,7 +55,7 @@
     <c:if test="${empty current_events}">
     <h4>No events</h4><br>
         <c:if test="${current_place.userId == userDTO.id}">
-        <a href="/event/create">Add event</a>
+        <a href="/event/create" class="button special">Add event</a>
         </c:if>
   </c:if>
     <div class="table-wrapper align-left">
