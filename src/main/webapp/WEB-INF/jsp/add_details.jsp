@@ -13,7 +13,7 @@
 <section id="One" class="wrapper style3">
     <div class="inner">
         <header class="align-center">
-            <h2>Registration</h2>
+            <h2>Add details for place: ${current_place.name}</h2>
         </header>
     </div>
 </section>
@@ -30,19 +30,23 @@
 
                 <br>
 
-                <input type="email" name="email" placeholder="Email">
+                <input type="text" name="city" placeholder="City" value="${current_details.location}">
 
                 <br>
 
-                <input type="password" name="password" placeholder="Password">
+                <input type="text" name="address" placeholder="Address" value="${current_details.address}">
 
                 <br>
 
-                <input type="password" name="password_check" placeholder="Repeat password">
+                <input type="text" name="activities" placeholder="Activities" value="${current_details.activites}">
+
+                <br>
+
+                <input type="text" name="description" placeholder="Description" value="${current_details.description}">
 
                 <br>
                 <div class="12u$">
-                    <input type="submit" value="Register">
+                    <input type="submit" value="Save">
                 </div>
             </div>
         </form>

@@ -14,7 +14,7 @@
 <c:if test="${empty current_details}">
     <h3>No details provided</h3><br>
     <c:if test="${current_place.userId == userDTO.id}">
-        <a href="/place-details/add/${current_place.id}" class="button special">Add details</a>
+        <a href="/place-details/add/${current_place.id}" class="button special">Add details</a><br>
     </c:if>
 </c:if>
 </div>

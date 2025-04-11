@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
     public ModelAndView handleDuplicatePlaceName(DuplicatePlaceNameException ex, Model model) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("error_message", ex.getMessage());
-        modelAndView.setViewName("initial_add_place");
+        modelAndView.setViewName("/WEB-INF/backup/initial_add_place.jsp");
         return modelAndView;
     }
 
