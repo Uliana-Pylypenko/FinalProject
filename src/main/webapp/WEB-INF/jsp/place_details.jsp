@@ -74,7 +74,7 @@
 
 <section class="wrapper align-center">
 <div class="align-center">
-<a href="/geoapi/places/${current_place.id}/leisure" class="button special">Show other places nearby</a><br>
+<a href="/geoapi/places/${current_place.id}/leisure" class="button special">Show other tourist places nearby</a><br>
 </div>
 
 <c:if test="${userDTO.admin && !current_place.approved}">

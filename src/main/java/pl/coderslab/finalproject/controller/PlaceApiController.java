@@ -30,7 +30,7 @@ public class PlaceApiController {
     private static final String API_URL1 = "https://api.geoapify.com/v2/places?categories="; //categories
     private static final String API_URL2 = "&filter=circle:"; //coords
     private static final String API_URL3 = ",5000&bias=proximity:";//coords
-    private static final String API_URL4 = "&limit=50&apiKey={apiKey}";
+    private static final String API_URL4 = "&limit=100&apiKey={apiKey}";
 
 
     @GetMapping("/test")
