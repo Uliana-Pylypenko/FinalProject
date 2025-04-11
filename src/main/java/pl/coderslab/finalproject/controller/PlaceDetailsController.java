@@ -53,7 +53,7 @@ public class PlaceDetailsController {
     @GetMapping("/place-details/add/{placeId}")
     public String addDetails(@PathVariable Long placeId, Model model) {
         model.addAttribute("current_place", placeService.getByIdDTO(placeId).getBody());
-        return "add_details";
+        return "initial_add_details";
     }
 
     @PostMapping("/place-details/add/{placeId}")
@@ -69,7 +69,7 @@ public class PlaceDetailsController {
             return "redirect:/place-details/place-id/" + placeId;
         } else {
             model.addAttribute("message", "Error");
-            return "add_details";
+            return "initial_add_details";
         }
     }
 

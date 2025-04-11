@@ -42,6 +42,9 @@
     <h2>Events</h2>
     <c:if test="${empty current_events}">
     <h4>No events</h4><br>
+        <c:if test="${current_place.userId == userDTO.id}">
+        <a href="/event/create">Add event</a>
+    </c:if>>
   </c:if>
     <div class="table-wrapper align-left">
       <table>

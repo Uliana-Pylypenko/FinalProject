@@ -204,7 +204,6 @@ public class PlaceController {
         double latitude = Double.parseDouble(request.getParameter("latitude"));
         double longitude = Double.parseDouble(request.getParameter("longitude"));
         Long categoryId = Long.parseLong(request.getParameter("category"));
-        System.out.println("CATEGORY ID: " + categoryId);
         CategoryDTO categoryDTO = categoryService.getCategoryById(categoryId);
         placeDTO.setName(name);
         placeDTO.setLatitude(latitude);

@@ -66,7 +66,7 @@ public class EventController {
         PlaceDetailsDTO current_details = place.getPlaceDetails() == null? null : PlaceDetailsDTO.toDTO(place.getPlaceDetails());
         model.addAttribute("current_details", current_details);
         model.addAttribute("current_events", eventService.getAllEventsByPlaceId(place.getId()).getBody());
-        return "initial_event_details";
+        return "event_details";
     }
 
 
