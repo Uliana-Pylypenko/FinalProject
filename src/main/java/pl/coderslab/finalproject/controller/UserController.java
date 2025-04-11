@@ -35,7 +35,7 @@ public class UserController {
     @GetMapping("/admin/users")
     public String getAll(Model model) {
         model.addAttribute("all_users", userService.getAll().getBody());
-        return "initial_users";
+        return "users";
     }
 
     @GetMapping("/user/{id}")
