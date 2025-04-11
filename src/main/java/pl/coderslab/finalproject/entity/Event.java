@@ -1,6 +1,9 @@
 package pl.coderslab.finalproject.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,8 +30,10 @@ public class Event {
 
     private String title;
 
+    @Size(max=1000)
     private String description;
 
+    //@FutureOrPresent
     private LocalDate date;
 
     private Time time;

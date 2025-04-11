@@ -26,15 +26,15 @@
     <form method="post" action="">
       <div class="align-center">
 
-        <input type="text" name="name" placeholder="Name" value="${current_place.name}">
+        <input type="text" name="name" placeholder="Name" value="${current_place.name}" required>
 
         <br>
 
-        <input type="text" name="latitude" placeholder="Latitude" value="${current_place.latitude}">
+        <input type="text" name="latitude" placeholder="Latitude" value="${current_place.latitude}" required>
 
         <br>
 
-        <input type="text" name="longitude" placeholder="Longitude" value="${current_place.longitude}">
+        <input type="text" name="longitude" placeholder="Longitude" value="${current_place.longitude}" required>
 
         <br>
 
@@ -55,7 +55,7 @@
 
     <br>
     <div class="align-center">
-      ${error_message}
+      <h4>${error_message}</h4>
     </div>
 
 

@@ -16,6 +16,7 @@ import pl.coderslab.finalproject.service.PlaceService;
 import pl.coderslab.finalproject.service.UserService;
 import org.springframework.ui.Model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller

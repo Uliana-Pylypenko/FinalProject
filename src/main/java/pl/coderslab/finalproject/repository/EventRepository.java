@@ -15,5 +15,8 @@ public interface EventRepository extends JpaRepository<Event, Long>, EventReposi
     @Query("select e from Event e order by e.id desc limit 1")
     Event findByMaxId();
 
+//    @Query("select e from Event e where e.date >= local_date")
+//    List<Event> findFutureEvents();
+//
 
 }

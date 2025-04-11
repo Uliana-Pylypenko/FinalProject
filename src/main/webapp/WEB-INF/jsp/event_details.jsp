@@ -66,8 +66,12 @@
     <c:if test="${current_events.size()-1 == 0}">
     <h4>No events</h4><br>
         <c:if test="${current_place.userId == userDTO.id}">
-        <a href="/event/create">Add event</a>
+        <a href="/event/create" class="button special">Add event</a>
         </c:if>
+  </c:if>
+
+  <c:if test="${current_place.userId == userDTO.id}">
+  <a href="/event/delete/${current_single_event.id}" class="button alt">Delete event</a>
   </c:if>
 </section>
 

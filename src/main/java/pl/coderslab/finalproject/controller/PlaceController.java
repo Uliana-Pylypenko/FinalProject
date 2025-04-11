@@ -186,13 +186,14 @@ public class PlaceController {
     public String delete(@PathVariable Long id, HttpServletRequest request) {
         boolean answer = Boolean.parseBoolean(request.getParameter("answer"));
         if (answer) {
-            placeService.delete(id);
             HttpSession session = request.getSession();
-            List<PlaceDTO> placeDTOS = (List<PlaceDTO>) session.getAttribute("userPlaces");
-            PlaceDTO placeDTO = placeDTOS.stream().filter(placeDTO1 -> placeDTO1.getId() == id).findFirst().get();
-            placeDTOS.remove(placeDTO);
-            session.setAttribute("userPlaces", placeDTOS);
+//            List<PlaceDTO> placeDTOS = (List<PlaceDTO>) session.getAttribute("userPlaces");
+//            PlaceDTO placeDTO = placeDTOS.stream().filter(placeDTO1 -> placeDTO1.getId() == id).findFirst().get();
+//            placeDTOS.remove(placeDTO);
+//            session.setAttribute("userPlaces", placeDTOS);
+            placeService.delete(id);
             UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
+            session.setAttribute("userPlaces", placeService.getPlacesForUser(userDTO));
             String role = userDTO.isAdmin() ? "admin" : "user";
             return "redirect:/" + role + "/home";
         } else {

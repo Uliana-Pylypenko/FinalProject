@@ -19,11 +19,17 @@
 </c:if>
 </div>
 <div class="align-center">
-  Country: ${current_details.country}<br>
-  City: ${current_details.location}<br>
-  Address: ${current_details.address}<br>
-  Activities: ${current_details.activites}<br>
-  Description: ${current_details.description}<br>
+  <h4>Country: ${current_details.country}</h4>
+  <h4>City: ${current_details.location}</h4>
+  <h4>Address: ${current_details.address}</h4>
+  <h4>Activities: ${current_details.activites}</h4>
+
+  <div class="custom_container">
+  <h4>Description:</h4>
+   <p>${current_details.description}</p>
+    </div>
+
+
 </div>
 
 <br>
@@ -83,9 +89,6 @@
     <a href="/admin/approve/${current_place.id}" class="button special">Approve place</a><br>
     </div>
 </c:if>
-</section>
-
-
 
 <c:if test="${current_place.userId == userDTO.id}">
 <br>
@@ -94,5 +97,10 @@
         </c:if>
 </div>
 <br>
+</section>
+
+
+
+
 
 <%@ include file="footer.jsp" %>

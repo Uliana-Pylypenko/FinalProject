@@ -26,7 +26,9 @@
     <form method="get" action="">
       <div class="align-center">
         <div class="grid-style">
-            <div><h4>Start date</h4> <input type="date" name="start_date" value="${filter_start_date}"></div>
+            <div>
+              <h4>Start date</h4> <input type="date" name="start_date" value="${filter_start_date}">
+            </div>
           <div><h4>End date</h4><input type="date" name="end_date" value="${filter_end_date}"></div>
 
         </div>

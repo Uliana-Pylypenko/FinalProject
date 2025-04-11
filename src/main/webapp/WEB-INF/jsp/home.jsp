@@ -5,7 +5,7 @@
 <!-- Banner -->
 <section class="banner full">
   <article>
-    <img src="/images/slide01.jpg" alt="" width="1440" height="961">
+    <img src="/images/slide04.jpg" alt="" width="1440" height="961">
   <div class="inner">
 <header>
 
@@ -27,11 +27,12 @@
   <div>
     <div class="box">
       <div class="image fit">
-        <img src="/images/pic02.jpg" alt="" width="600" height="300"></div>
+        <img src="/images/places2.jpg" alt="" width="600" height="300"></div>
       <div class="content">
-        <header class="align-center"><p>maecenas sapien feugiat ex purus</p>
-          <h2>Lorem ipsum dolor</h2>
-        </header><p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada.</p>
+          <h2>Explore Astrotourism Destinations</h2>
+        </header><p> Unveil the secrets of the universe at top astrotouristic locations.
+        Our platform offers a diverse range of places perfect for stargazing, astrophotography, and cosmic exploration.
+        Filter by region, type of activity, and more to find the ideal destination that aligns with your interests.</p>
         <footer class="align-center"><a href="/place" class="button alt">Places</a>
         </footer></div>
     </div>
@@ -40,11 +41,13 @@
   <div>
     <div class="box">
       <div class="image fit">
-        <img src="/images/pic03.jpg" alt="" width="600" height="300"></div>
+        <img src="/images/events.jpg" alt="" width="600" height="300"></div>
       <div class="content">
-        <header class="align-center"><p>mattis elementum sapien pretium tellus</p>
-          <h2>Vestibulum sit amet</h2>
-        </header><p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada.</p>
+          <h2>Discover Stellar Events Near You</h2>
+        </header><p> Dive into a calendar full of celestial events and experiences!
+        From thrilling meteor showers and mesmerizing aurora displays to insightful
+        astronomy workshops and festivals, there's always something happening under the stars.
+        Browse by location and category to find the perfect event for you!</p>
         <footer class="align-center"><a href="/event" class="button alt">Events</a>
         </footer></div>
     </div>

@@ -10,13 +10,14 @@
 
 <%@ include file="header.jsp" %>
 
-<section id="One" class="wrapper style3">
+<section class="wrapper style3">
   <div class="inner">
     <header class="align-center">
       <h2>Log in</h2>
     </header>
   </div>
 </section>
+
 
 <section class="wrapper style2 align-center">
   <div class="inner align-center">
@@ -33,6 +34,11 @@
         </div>
       </div>
     </form>
+
+    <br>
+
+    <h4>${login_error}</h4>
+
 
 
   </div>

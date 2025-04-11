@@ -30,7 +30,6 @@
 
       Place<br>
         <select name="place">
-          <option value="">- Place -</option>
         <c:forEach items="${userPlaces}" var="place">
           <option value="${place.id}">${place.name}</option>
         </c:forEach>
@@ -38,20 +37,19 @@
 
         <br>
 
-        <input type="text" name="title" placeholder="Title" value="${current_single_event.title}">
+        <input type="text" name="title" placeholder="Title" value="${current_single_event.title}" required>
 
         <br>
 
-        <input type="date" name="date" placeholder="Date" value="${current_single_event.date}">
+        <input type="date" name="date" placeholder="Date" value="${current_single_event.date}" required>
 
         &nbsp;
 
-        <input type="time" name="time" placeholder="Time" value="${current_single_event.time}">
+        <input type="time" name="time" placeholder="Time" value="${current_single_event.time}" required>
 
         <br><br>
 
-        <input type="text" name="description" placeholder="Description" value="${current_single_event.description}">
-
+        <textarea name="description" placeholder="Description" value="${current_single_event.description}" rows="6"></textarea>
 
         <br>
         <div class="12u$">

@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- Footer -->
-<div class="copyright">
+<div class="custom_footer">
   Made with <a href="https://templated.co/">Templated</a> Distributed by <a href="https://themewagon.com/">ThemeWagon</a>.
 </div>
 <!-- Scripts -->

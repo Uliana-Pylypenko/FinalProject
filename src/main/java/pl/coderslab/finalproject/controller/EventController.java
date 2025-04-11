@@ -12,6 +12,7 @@ import pl.coderslab.finalproject.dto.EventDTO;
 import pl.coderslab.finalproject.dto.PlaceDTO;
 import pl.coderslab.finalproject.dto.PlaceDetailsDTO;
 import pl.coderslab.finalproject.dto.UserDTO;
+import pl.coderslab.finalproject.entity.Event;
 import pl.coderslab.finalproject.entity.Place;
 import pl.coderslab.finalproject.repository.EventRepository;
 import pl.coderslab.finalproject.service.EventService;
@@ -22,6 +23,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -82,8 +84,8 @@ public class EventController {
     }
 
     @PostMapping("/create")
-    public String createEvent(HttpServletRequest request) {
-        EventDTO eventDTO = eventDTOForm(request);
+    public String createEvent(HttpServletRequest request, Model model) {
+        EventDTO eventDTO = eventDTOForm(request, model);
         Long placeId = eventDTO.getPlaceId();
 
         HttpSession session = request.getSession();
@@ -132,7 +134,7 @@ public class EventController {
 
     @PostMapping("/update/{id}")
     public String updateEvent(@PathVariable Long id, HttpServletRequest request, Model model) {
-        EventDTO eventDTO = eventDTOForm(request);
+        EventDTO eventDTO = eventDTOForm(request, model);
         Long placeId = eventDTO.getPlaceId();
         if (placeId != null) {
             eventService.updateEvent(id, eventDTO);
@@ -179,18 +181,20 @@ public class EventController {
         }
     }
 
-    public EventDTO eventDTOForm(HttpServletRequest request) {
+    public EventDTO eventDTOForm(HttpServletRequest request, Model model) {
         String placeIdString = request.getParameter("place");
-        Long placeId = placeIdString != "" ? Long.parseLong(placeIdString) : null;
+        Long placeId = Long.parseLong(placeIdString);
+
         String title = request.getParameter("title");
         LocalDate date = LocalDate.parse(request.getParameter("date"));
+
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         Time time = null;
         try {
             long ms = sdf.parse(request.getParameter("time")).getTime();
             time = new Time(ms);
         } catch (ParseException e) {
-            throw new RuntimeException(e);
+            model.addAttribute("error_message", "Please enter a valid time");
         }
         String description = request.getParameter("description");
 

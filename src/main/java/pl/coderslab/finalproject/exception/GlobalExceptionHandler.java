@@ -12,7 +12,7 @@ public class GlobalExceptionHandler {
     public ModelAndView handleDuplicateUserException(DuplicateUserException ex, Model model) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("error_message", ex.getMessage());
-        modelAndView.setViewName("/WEB-INF/backup/initial_registration.jsp"); // Default to user creation view
+        modelAndView.setViewName("registration"); // Default to user creation view
         return modelAndView;
     }
 
@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
     public ModelAndView handleDuplicateEmailException(DuplicateEmailException ex, Model model) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("error_message", ex.getMessage());
-        modelAndView.setViewName("/WEB-INF/backup/initial_registration.jsp");
+        modelAndView.setViewName("registration");
         return modelAndView;
     }
 
@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
     public ModelAndView handleDuplicatePlaceName(DuplicatePlaceNameException ex, Model model) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("error_message", ex.getMessage());
-        modelAndView.setViewName("/WEB-INF/backup/initial_add_place.jsp");
+        modelAndView.setViewName("add_place");
         return modelAndView;
     }
 

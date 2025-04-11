@@ -219,6 +219,12 @@
 
 	}
 
+.custom_container {
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 /* Grid */
 
 	.row {
@@ -3139,7 +3145,7 @@
 		.wrapper.style3 {
 			background-color: #000;
 			color: #bfbfbf;
-			background-image: url(../../images/bg.jpg);
+			background-image: url(../../images/eso.jpg);
 			background-size: cover;
 			background-attachment: fixed;
 			background-position: center;
@@ -4320,6 +4326,17 @@
 		}
 
 /* Footer */
+.custom_footer {
+	background: #000;
+	color: #bbb;
+	font-size: 0.9rem;
+	padding: 1rem 0 1rem 0;
+	text-align: center;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+}
 
 	#footer {
 		padding: 4rem 0 2rem 0 ;

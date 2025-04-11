@@ -42,7 +42,7 @@
 
                 <br>
 
-                <input type="text" name="description" placeholder="Description" value="${current_details.description}">
+                <textarea name="description" placeholder="Description (max 1000 characters)" rows="6">${current_details.description}</textarea>
 
                 <br>
                 <div class="12u$">

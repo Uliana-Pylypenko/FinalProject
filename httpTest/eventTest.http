@@ -1,5 +1,5 @@
 ### GET request to example server
-GET localhost:8080/event
+GET localhost:8080/event/future
 
 ###
 

@@ -22,9 +22,9 @@ public class EventService {
     private final EventRepository eventRepository;
     private final PlaceRepository placeRepository;
 
-    public List<Event> getAll() {
-        return eventRepository.findAll();
-    }
+//    public List<Event> getAll() {
+//        return eventRepository.findAll();
+//    }
 
     public Event getById(Long id) {
         return eventRepository.findById(id).orElse(null);
