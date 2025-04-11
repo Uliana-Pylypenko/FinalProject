@@ -17,6 +17,7 @@
         <a href="/place-details/add/${current_place.id}" class="button special">Add details</a><br>
     </c:if>
 </c:if>
+<br>
 </div>
 <div class="align-center">
   <h4>Country: ${current_details.country}</h4>

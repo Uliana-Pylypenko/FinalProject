@@ -37,7 +37,7 @@ public class EventRepositoryCustomImpl implements EventRepositoryCustom {
         } else {
             query.setParameter("startDate", LocalDate.now());
         }
-        
+
         if (endDate != null) {
             query.setParameter("endDate", endDate);
         }

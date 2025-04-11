@@ -17,6 +17,7 @@
 
     <c:if test="${empty places}">
     <h3>All places are approved</h3>
+    <a href="/admin/home" class="button">Back to profile</a>
     </c:if>
 
 

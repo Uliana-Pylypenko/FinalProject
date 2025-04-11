@@ -34,10 +34,14 @@
             "https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}@2x.png?apiKey={apiKey}";
 
 
-    marker = L.marker(new L.LatLng(${place.latitude}, ${place.longitude}));
+    var marker = L.marker(new L.LatLng(${place.latitude}, ${place.longitude})).addTo(map);
+    marker.bindPopup("${place.latitude} ${place.longitude}");
+    marker.on('click', function (e) {
+      marker.openPopup();
+    });
 
     <c:forEach items="${placeApiDTOS}" var="placeApiDTO">
-    marker = L.marker(new L.LatLng(${placeApiDTO.latitude}, ${placeApiDTO.longitude})).addTo(map);
+    var marker = L.marker(new L.LatLng(${placeApiDTO.latitude}, ${placeApiDTO.longitude})).addTo(map);
     </c:forEach>
 
 

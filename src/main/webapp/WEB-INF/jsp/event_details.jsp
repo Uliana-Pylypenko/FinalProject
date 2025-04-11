@@ -69,7 +69,8 @@
         <a href="/event/create" class="button special">Add event</a>
         </c:if>
   </c:if>
-
+<br>
+<br>
   <c:if test="${current_place.userId == userDTO.id}">
   <a href="/event/delete/${current_single_event.id}" class="button alt">Delete event</a>
   </c:if>

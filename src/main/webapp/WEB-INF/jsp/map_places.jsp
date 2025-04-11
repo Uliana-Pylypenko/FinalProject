@@ -45,14 +45,19 @@
   </div>
 
 
-
-  <div class="map-container">
+<div class="map-container">
     <div id="my-map"></div>
   </div>
+
+
 </section>
 
 <script type="text/javascript">
-  var map = L.map("my-map").setView([52.21, 20.97], 10);
+
+  var places = JSON.parse('${places}');
+  console.log(places);
+
+  var map = L.map("my-map").setView([places[0].latitude, places[0].longitude], 10);
 
   // Get your own API Key on https://myprojects.geoapify.com
   var myAPIKey = "9f97967260db4356adf1836958f7f9f8"
@@ -81,8 +86,11 @@
   places.forEach(function(place) {
     var latitude = place.latitude;
     var longitude = place.longitude;
-    L.marker([latitude, longitude]).addTo(map);
-    //console.log(longitude);
+    var marker = L.marker([latitude, longitude]).addTo(map);
+    marker.bindPopup("Category: " + place.category + ", Name: " + place.name + ", City: " + place.city + ", Address: " + place.address);
+    marker.on('click', function (e) {
+      marker.openPopup();
+    });
   });
 
   // Add map tiles layer. Set 20 as the maximal zoom and provide map data attribution.

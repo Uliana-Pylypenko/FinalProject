@@ -56,6 +56,7 @@
     <a href="place/map" class="button special">Show places on a map</a>
 
     <br>
+    <br>
 
 
 <%-- Table --%>

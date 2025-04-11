@@ -87,6 +87,15 @@ public class PlaceController {
                 JSONObject placeJson = new JSONObject();
                 placeJson.put("latitude", placeDTO.getLatitude());
                 placeJson.put("longitude", placeDTO.getLongitude());
+                placeJson.put("name", placeDTO.getName());
+                if (placeDTO.getDetailsDTO() != null) {
+                    placeJson.put("city", placeDTO.getDetailsDTO().getLocation());
+                    placeJson.put("address", placeDTO.getDetailsDTO().getAddress());
+                } else {
+                    placeJson.put("city", "none");
+                    placeJson.put("address", "none");
+                }
+                placeJson.put("category", placeDTO.getCategoryDTO().getName());
                 jsonArray.put(placeJson);
             }
             return jsonArray;
