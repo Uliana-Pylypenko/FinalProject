@@ -1,18 +1,9 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: upylypen
-  Date: 07/04/2025
-  Time: 13:56
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Access Denied</title>
-</head>
-<body>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ include file="header.jsp" %>
+<section class="align-center">
 <h2>Access Denied</h2>
 <p>You do not have permission to access this page.</p>
-<a href="/">Go to Home</a>
-</body>
-</html>
+</section>
+<%@ include file="footer.jsp" %>
