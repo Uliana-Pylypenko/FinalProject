@@ -76,12 +76,12 @@ public class UserController {
         } else {
             model.addAttribute("error_message", "Wrong password");
         }
-        return "initial_update_profile";
+        return "update_profile";
     }
 
     @GetMapping("/user/update/{id}")
     public String updateUser() {
-        return "initial_update_profile";
+        return "update_profile";
     }
 
     @PostMapping("/user/update/{id}")
@@ -91,7 +91,7 @@ public class UserController {
 
     @GetMapping("/admin/update/{id}")
     public String updateAdmin() {
-        return "initial_update_profile";
+        return "update_profile";
     }
 
     @PostMapping("/admin/update/{id}")

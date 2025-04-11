@@ -12,7 +12,15 @@
 <div class="align-center">
   <h3> Username: ${userDTO.username}</h3>
   <h3> Email: ${userDTO.email}<br></h3>
+
+  <c:if test="${userDTO.admin}">
+  <a href="/admin/update/${userDTO.id}" class="button special">Update profile</a>
+  </c:if>
+  <c:if test="${!userDTO.admin}">
   <a href="/user/update/${userDTO.id}" class="button special">Update profile</a>
+  </c:if>
+
+
 </div>
 <br>
 
