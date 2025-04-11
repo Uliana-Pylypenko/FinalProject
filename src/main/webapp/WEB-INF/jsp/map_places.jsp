@@ -1,54 +1,56 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: upylypen
-  Date: 09/04/2025
-  Time: 19:26
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Map</title>
-  <form action="" method="get">
-    Place name
-    <input type="text" name="name" value="${filter_name}" placeholder="Place name"><br>
-    Country
-    <input type="text" name="country" value="${filter_country}" placeholder="Country"><br>
-    City
-    <input type="text" name="city" value="${filter_city}" placeholder="City"><br>
-    Activity
-    <input type="text" name="activity" value="${filter_activity}" placeholder="Activity"><br>
-    Categories<br>
-    <c:forEach items="${all_categories}" var="category">
-      <input type="checkbox" name="${category.name}">
-      ${category.name}<br>
-    </c:forEach>
+<%@ include file="map_header.jsp" %>
 
-    <button type="submit">Filter</button>
-  </form>
-  <script
-          type="text/javascript"
-          src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"
-  ></script>
-  <link
-          rel="stylesheet"
-          type="text/css"
-          href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css"
-  />
+<section class="wrapper style3">
+  <div class="inner">
+    <header class="align-center">
+      <h2>Places</h2>
+    </header>
+  </div>
+</section>
 
-  <style id="compiled-css" type="text/css">
-    html,
-    body,
-    #my-map {
-      width: 70%;
-      height: 70%;
-      margin: 0;
-    }
-  </style>
-</head>
-<body data-new-gr-c-s-check-loaded="14.991.0" data-gr-ext-installed="">
-<div id="my-map"></div>
+
+<section class="wrapper style2 align-center">
+  <!-- Form -->
+    <form method="get" action="">
+      <div class="align-center">
+        <div class="grid-style">
+            <div><input type="text" name="name" value="${filter_name}" placeholder="Place name"></div>
+          <div><input type="text" name="activity" value="${filter_activity}" placeholder="Activity"></div>
+
+        </div>
+        <div class="grid-style">
+          <div><input type="text" name="country" value="${filter_country}" placeholder="Country"></div>
+          <div><input type="text" name="city" value="${filter_city}" placeholder="City"></div>
+        </div>
+
+        <div class="align-left">
+        <h4>Categories</h4>
+        </div>
+        <c:forEach items="${all_categories}" var="category">
+        <div class="align-left">
+          <input type="checkbox" name="${category.name}" id="${category.name}"><label for="${category.name}">${category.name}</label>
+        </div>
+        </c:forEach>
+
+        <br>
+        <div class="12u$">
+          <input type="submit" value="Filter">
+        </div>
+      </div>
+    </form>
+
+  <div class="align-center">
+    <br>
+    <a href="/place" class="button special">Show places in a list</a>
+  </div>
+
+
+
+  <div class="map-container">
+    <div id="my-map"></div>
+  </div>
+</section>
+
 <script type="text/javascript">
   var map = L.map("my-map").setView([52.21, 20.97], 10);
 
@@ -95,6 +97,16 @@
 
 </script>
 
+<!-- Footer -->
+<div class="copyright">
+  Made with <a href="https://templated.co/">Templated</a> Distributed by <a href="https://themewagon.com/">ThemeWagon</a>.
+</div>
+<!-- Scripts -->
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/jquery.scrollex.min.js"></script>
+<script src="/assets/js/skel.min.js">
 
+</script><script src="/assets/js/util.js"></script>
+<script src="/assets/js/main.js"></script>
 </body>
 </html>
