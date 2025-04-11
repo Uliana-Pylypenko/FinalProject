@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.finalproject.dto.PlaceDTO;
 import pl.coderslab.finalproject.dto.UserDTO;
 import pl.coderslab.finalproject.exception.DuplicateEmailException;
 import pl.coderslab.finalproject.exception.DuplicateUserException;
@@ -15,7 +14,6 @@ import pl.coderslab.finalproject.service.LoginService;
 import pl.coderslab.finalproject.service.PlaceService;
 import pl.coderslab.finalproject.service.UserService;
 
-import java.util.List;
 
 @Controller  // only @Controller works with the views
 @AllArgsConstructor
@@ -31,7 +29,7 @@ public class UserController {
 
     @GetMapping("/admin/home")
     public String adminHome() {
-        return "initial_admin_profile";
+        return "admin_profile";
     }
 
     @GetMapping("/admin/users")
