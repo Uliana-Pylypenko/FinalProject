@@ -78,13 +78,17 @@
 </div>
 
 <c:if test="${userDTO.admin && !current_place.approved}">
+<br>
 <div class="align-center">
     <a href="/admin/approve/${current_place.id}" class="button special">Approve place</a><br>
     </div>
 </c:if>
 </section>
 
+
+
 <c:if test="${current_place.userId == userDTO.id}">
+<br>
 <div class="align-center">
         <a href="/place/delete/${current_place.id}" class="button">Delete place</a>
         </c:if>

@@ -116,7 +116,7 @@ public class UserController {
     @GetMapping("/admin/places-to-approve")
     public String placesToApprove(Model model) {
         model.addAttribute("places", placeService.getNotApprovedPlaces());
-        return "initial_approve";
+        return "approve";
     }
 
     @GetMapping("/admin/approve/{id}")
