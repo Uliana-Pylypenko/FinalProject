@@ -155,7 +155,7 @@ public class EventController {
     public String deleteEvent(@PathVariable Long id, Model model) {
         String message = "Are you sure you want to delete this event?";
         model.addAttribute("delete_message", message);
-        return "initial_delete";
+        return "delete";
     }
 
     @PostMapping("/delete/{id}")

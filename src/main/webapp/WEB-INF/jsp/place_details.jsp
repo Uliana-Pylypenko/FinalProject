@@ -46,7 +46,7 @@
     <h4>No events</h4><br>
         <c:if test="${current_place.userId == userDTO.id}">
         <a href="/event/create">Add event</a>
-    </c:if>>
+        </c:if>
   </c:if>
     <div class="table-wrapper align-left">
       <table>
@@ -83,4 +83,12 @@
     </div>
 </c:if>
 </section>
+
+<c:if test="${current_place.userId == userDTO.id}">
+<div class="align-center">
+        <a href="/place/delete/${current_place.id}" class="button">Delete place</a>
+        </c:if>
+</div>
+<br>
+
 <%@ include file="footer.jsp" %>

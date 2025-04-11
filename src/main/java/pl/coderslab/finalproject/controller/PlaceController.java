@@ -179,7 +179,7 @@ public class PlaceController {
     public String delete(@PathVariable Long id, Model model) {
         String message = "Are you sure you want to delete this place and all events related to it?";
         model.addAttribute("delete_message", message);
-        return "initial_delete";
+        return "delete";
     }
 
     @PostMapping("/delete/{id}")
@@ -192,7 +192,9 @@ public class PlaceController {
             PlaceDTO placeDTO = placeDTOS.stream().filter(placeDTO1 -> placeDTO1.getId() == id).findFirst().get();
             placeDTOS.remove(placeDTO);
             session.setAttribute("userPlaces", placeDTOS);
-            return "redirect:/user/home";
+            UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
+            String role = userDTO.isAdmin() ? "admin" : "user";
+            return "redirect:/" + role + "/home";
         } else {
             return "redirect:/place-details/place-id/" + id;
         }
