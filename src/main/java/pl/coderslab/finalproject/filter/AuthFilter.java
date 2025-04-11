@@ -30,7 +30,7 @@ public class AuthFilter implements Filter {
                     || requestURI.contains("/update/")
                     || requestURI.contains("/delete/")
                     || requestURI.contains("/add/")
-                    || requestURI.contains("/create/")) {
+                    || requestURI.contains("/create")) {
 
                 httpResponse.sendRedirect("/login");
             }

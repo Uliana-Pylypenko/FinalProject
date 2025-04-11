@@ -103,7 +103,7 @@ public class PlaceController {
     @GetMapping("/create")
     public String create(HttpSession session) {
         session.setAttribute("categories", categoryService.getAll().getBody());
-        return "initial_add_place";
+        return "add_place";
     }
 
     @PostMapping("/create")
@@ -113,7 +113,7 @@ public class PlaceController {
             placeDTO = placeDTOForm(request, model);
         } catch (NumberFormatException e) {
             model.addAttribute("error_message", "Enter valid latitude and longitude and choose a category");
-            return "initial_add_place";
+            return "add_place";
         }
         HttpSession session = request.getSession();
         UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
@@ -151,7 +151,7 @@ public class PlaceController {
     public String update(@PathVariable Long id, Model model, HttpSession session) {
         session.setAttribute("categories", categoryService.getAll().getBody());
         model.addAttribute("current_place", placeService.getByIdDTO(id).getBody());
-        return "initial_add_place";
+        return "add_place";
     }
 
     @PostMapping("/update/{id}")
@@ -167,7 +167,7 @@ public class PlaceController {
             model.addAttribute("error_message", "Enter valid latitude and longitude and choose a category");
         }
         model.addAttribute("current_place", placeService.getByIdDTO(id).getBody());
-        return "initial_add_place";
+        return "add_place";
     }
 
     @DeleteMapping("/delete/{id}")
