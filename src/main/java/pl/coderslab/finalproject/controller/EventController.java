@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.coderslab.finalproject.dto.EventDTO;
 import pl.coderslab.finalproject.dto.PlaceDTO;
 import pl.coderslab.finalproject.dto.PlaceDetailsDTO;
+import pl.coderslab.finalproject.dto.UserDTO;
 import pl.coderslab.finalproject.entity.Place;
 import pl.coderslab.finalproject.repository.EventRepository;
 import pl.coderslab.finalproject.service.EventService;
@@ -77,7 +78,7 @@ public class EventController {
 
     @GetMapping("/create")
     public String createEvent() {
-        return "initial_add_event";
+        return "add_event";
     }
 
     @PostMapping("/create")
@@ -89,7 +90,6 @@ public class EventController {
 
         ResponseEntity<String> createResponse = eventService.addEvent(placeId, eventDTO);
 
-        //this can be simplified
         if (createResponse.getStatusCode() == HttpStatus.CREATED) {
             List<PlaceDTO> placeDTOS = (List<PlaceDTO>) session.getAttribute("userPlaces");
             if (placeDTOS == null) {
@@ -104,7 +104,9 @@ public class EventController {
                 }
             }
             session.setAttribute("userPlaces", placeDTOS);
-            return "redirect:/user/home";
+            UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
+            String role = userDTO.isAdmin() ? "admin" : "user";
+            return "redirect:/" + role + "/home";
         } else {
             return "error";
         }
@@ -125,7 +127,7 @@ public class EventController {
     @GetMapping("/update/{id}")
     public String updateEvent(@PathVariable Long id, Model model) {
         model.addAttribute("current_single_event", eventService.getByIdDTO(id));
-        return "initial_add_event";
+        return "add_event";
     }
 
     @PostMapping("/update/{id}")
@@ -134,11 +136,12 @@ public class EventController {
         Long placeId = eventDTO.getPlaceId();
         if (placeId != null) {
             eventService.updateEvent(id, eventDTO);
+            model.addAttribute("current_single_event", eventService.getByIdDTO(id));
             return "redirect:/event/" + id;
         } else {
             model.addAttribute("error_message", "Choose a place");
-            model.addAttribute("event", eventService.getByIdDTO(id));
-            return "initial_add_event";
+            model.addAttribute("current_single_event", eventService.getByIdDTO(id));
+            return "add_event";
         }
 
     }
@@ -178,7 +181,7 @@ public class EventController {
 
     public EventDTO eventDTOForm(HttpServletRequest request) {
         String placeIdString = request.getParameter("place");
-        Long placeId = placeIdString != null ? Long.parseLong(placeIdString) : null;
+        Long placeId = placeIdString != "" ? Long.parseLong(placeIdString) : null;
         String title = request.getParameter("title");
         LocalDate date = LocalDate.parse(request.getParameter("date"));
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");

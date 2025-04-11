@@ -48,7 +48,7 @@
 
         <br>
         <div class="12u$">
-          <input type="submit" value="Register">
+          <input type="submit" value="Save">
         </div>
       </div>
     </form>

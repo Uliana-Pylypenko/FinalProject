@@ -28,8 +28,10 @@
 
 <br>
 
+
 <div class="align-center">
 <c:if test="${current_place.userId == userDTO.id && not empty current_details}">
+    <a href="/place/update/${current_place.id}" class="button special">Update place</a>
     <a href="/place-details/update/${current_place.id}" class="button special">Update details</a>
 </c:if>
 </div>
