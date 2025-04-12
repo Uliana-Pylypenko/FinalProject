@@ -92,4 +92,16 @@ public class PlaceApiDTO {
         return placeApiDTOS;
 
     }
+
+    public static JSONArray JSONWithNames(JSONObject root) {
+        JSONArray array = root.getJSONArray("features");
+        JSONArray resultArray = new JSONArray();
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject jsonObject = array.getJSONObject(i).optJSONObject("properties");
+            if (jsonObject.has("name")) {
+                resultArray.put(jsonObject);
+            }
+        }
+        return resultArray;
+    }
 }

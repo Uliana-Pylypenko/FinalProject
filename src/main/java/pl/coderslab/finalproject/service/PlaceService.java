@@ -1,6 +1,8 @@
 package pl.coderslab.finalproject.service;
 
 import lombok.AllArgsConstructor;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -150,5 +152,43 @@ public class PlaceService {
         return new ResponseEntity<>("Place not found", HttpStatus.NOT_FOUND);
     }
 
+    public static JSONObject singlePlaceToJSON(PlaceDTO placeDTO) {
+        if (placeDTO == null) {
+            return null;
+        } else {
+            JSONObject placeJson = new JSONObject();
+            placeJson.put("latitude", placeDTO.getLatitude());
+            placeJson.put("longitude", placeDTO.getLongitude());
+            placeJson.put("name", placeDTO.getName());
+            if (placeDTO.getDetailsDTO() != null) {
+                placeJson.put("city", placeDTO.getDetailsDTO().getLocation());
+                placeJson.put("address", placeDTO.getDetailsDTO().getAddress());
+                placeJson.put("country", placeDTO.getDetailsDTO().getCountry());
+            } else {
+                placeJson.put("city", "none");
+                placeJson.put("address", "none");
+                placeJson.put("country", "none");
+            }
+            placeJson.put("category", placeDTO.getCategoryDTO().getName());
+            return placeJson;
+        }
+
+
+    }
+
+
+    public static JSONArray placesToJSON(List<PlaceDTO> placeDTOS) {
+        if (placeDTOS == null) {
+            return null;
+        } else {
+            JSONArray jsonArray = new JSONArray();
+            for (PlaceDTO placeDTO : placeDTOS) {
+                JSONObject placeJson = singlePlaceToJSON(placeDTO);
+                jsonArray.put(placeJson);
+            }
+            return jsonArray;
+        }
+
+    }
 
 }

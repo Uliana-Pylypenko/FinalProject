@@ -10,10 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import pl.coderslab.finalproject.dto.PlaceApiDTO;
+import pl.coderslab.finalproject.dto.PlaceDTO;
 import pl.coderslab.finalproject.entity.Place;
 import pl.coderslab.finalproject.service.PlaceService;
 
 import java.util.List;
+import static pl.coderslab.finalproject.service.PlaceService.singlePlaceToJSON;
 
 @Controller
 @AllArgsConstructor
@@ -48,9 +50,10 @@ public class PlaceApiController {
 
     @GetMapping("/places/{placeId}/{categories}")
     public String getPlaces(@PathVariable Long placeId, @PathVariable String categories, Model model) {
-        Place place = placeService.getById(placeId);
-        model.addAttribute("place", place);
-        String coords =  place.getLongitude() + "," + place.getLatitude();
+        PlaceDTO placeDTO = placeService.getByIdDTO(placeId).getBody();
+        model.addAttribute("place", placeDTO);
+        model.addAttribute("placeJSON", singlePlaceToJSON(placeDTO));
+        String coords =  placeDTO.getLongitude() + "," + placeDTO.getLatitude();
 
         RestTemplate rest = new RestTemplate();
         String API_URL = API_URL1 + categories
@@ -66,8 +69,9 @@ public class PlaceApiController {
                 API_KEY);
 
         JSONObject root = new JSONObject(exchange.getBody());
-        List<PlaceApiDTO> placeApiDTOS = PlaceApiDTO.JSONtoDTOwithName(root);
-        model.addAttribute("placeApiDTOS", placeApiDTOS);
+//        List<PlaceApiDTO> placeApiDTOS = PlaceApiDTO.JSONtoDTOwithName(root);
+//        model.addAttribute("placeApiDTOS", placeApiDTOS);
+        model.addAttribute("placeApiDTOS", PlaceApiDTO.JSONWithNames(root));
         return "map_places_nearby";
 
     }

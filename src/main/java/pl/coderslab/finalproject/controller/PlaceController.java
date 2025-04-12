@@ -20,6 +20,8 @@ import pl.coderslab.finalproject.service.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static pl.coderslab.finalproject.service.PlaceService.placesToJSON;
+
 @Controller
 @RequestMapping("/place")
 @AllArgsConstructor
@@ -78,32 +80,7 @@ public class PlaceController {
         return "map_places";
     }
 
-    public JSONArray placesToJSON(List<PlaceDTO> placeDTOS) {
-        if (placeDTOS == null) {
-            return null;
-        } else {
-            JSONArray jsonArray = new JSONArray();
-            for (PlaceDTO placeDTO : placeDTOS) {
-                JSONObject placeJson = new JSONObject();
-                placeJson.put("latitude", placeDTO.getLatitude());
-                placeJson.put("longitude", placeDTO.getLongitude());
-                placeJson.put("name", placeDTO.getName());
-                if (placeDTO.getDetailsDTO() != null) {
-                    placeJson.put("city", placeDTO.getDetailsDTO().getLocation());
-                    placeJson.put("address", placeDTO.getDetailsDTO().getAddress());
-                    placeJson.put("country", placeDTO.getDetailsDTO().getCountry());
-                } else {
-                    placeJson.put("city", "none");
-                    placeJson.put("address", "none");
-                    placeJson.put("country", "none");
-                }
-                placeJson.put("category", placeDTO.getCategoryDTO().getName());
-                jsonArray.put(placeJson);
-            }
-            return jsonArray;
-        }
 
-    }
 
 
     @GetMapping("/{id}")
