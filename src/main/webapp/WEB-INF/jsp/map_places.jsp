@@ -56,7 +56,6 @@
 <script type="text/javascript">
 
   var places = JSON.parse('${places}');
-  //console.log(places[0]['latitude']);
 
   var map = L.map("my-map").setView([places[0]['latitude'], places[0]['longitude']], 10);
 
