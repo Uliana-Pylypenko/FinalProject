@@ -33,6 +33,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class EventController {
     private final EventService eventService;
+    private final PlaceService placeService;
 
 
     @GetMapping
@@ -99,8 +100,6 @@ public class EventController {
         } else {
             return "error";
         }
-
-
     }
 
 
@@ -111,11 +110,13 @@ public class EventController {
     }
 
     @PostMapping("/update/{id}")
-    public String updateEvent(@PathVariable Long id, HttpServletRequest request, Model model) {
+    public String updateEvent(@PathVariable Long id, HttpServletRequest request, HttpSession session, Model model) {
         EventDTO eventDTO = eventDTOForm(request, model);
         Long placeId = eventDTO.getPlaceId();
         if (placeId != null) {
             eventService.updateEvent(id, eventDTO);
+            UserDTO userDTO = (UserDTO) request.getSession().getAttribute("userDTO");
+            session.setAttribute("userPlaces", placeService.getPlacesForUser(userDTO));
             model.addAttribute("current_single_event", eventService.getByIdDTO(id));
             return "redirect:/event/" + id;
         } else {

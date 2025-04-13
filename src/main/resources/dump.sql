@@ -8,7 +8,6 @@ INSERT INTO places(is_approved, latitude, longitude, name, category_id, user_id)
 INSERT INTO places(is_approved, latitude, longitude, name, category_id, user_id) VALUES (true, 52.08972, 21.42, 'Observational station in Ostrowik', 1, 1);
 INSERT INTO places(is_approved, latitude, longitude, name, category_id, user_id) VALUES (false, 48.580372, 27.036896, 'House of traveller', 2, 2);
 INSERT INTO places(is_approved, latitude, longitude, name, category_id, user_id) VALUES (false, 50.856307, 15.355506, 'Izera Dark Sky Park', 3, 2);
-# uj for demo
 
 # Place details
 INSERT INTO place_details(activities, address, country, description, location, place_id) VALUES ('observations, stargazing, workshops', 'al. Ujazdowskie 4', 'Poland', '200-year old astronomical observatory near Lazienki park.', 'Warsaw', 1);

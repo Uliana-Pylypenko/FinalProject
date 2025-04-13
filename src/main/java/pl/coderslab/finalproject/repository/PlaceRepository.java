@@ -16,6 +16,9 @@ public interface PlaceRepository extends JpaRepository<Place, Long>, PlaceReposi
 
     Optional<Place> findByName(String name);
 
+    @Query("select p from Place p where p.user.id = ?1")
+    List<Place> findByUserId(Long userId);
+
 
 
 }

@@ -17,6 +17,7 @@ import pl.coderslab.finalproject.service.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static pl.coderslab.finalproject.service.PlaceService.placesToJSON;
 
@@ -128,11 +129,17 @@ public class PlaceController {
     }
 
     @PostMapping("/update/{id}")
-    public String update(@PathVariable Long id, HttpServletRequest request, Model model) {
+    public String update(@PathVariable Long id, HttpServletRequest request, HttpSession session, Model model) {
         try {
             PlaceDTO placeDTO = placeDTOForm(request, model);
             placeDTO.setId(id);
             placeService.update(id, placeDTO);
+            UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
+
+            session.setAttribute("userPlaces", placeService.getPlacesForUser(userDTO));
+
+            System.out.println("AAAA");
+            System.out.println(placeService.getPlacesForUser(userDTO).stream().map(PlaceDTO::getId).collect(Collectors.toUnmodifiableList()));
             return "redirect:/place-details/place-id/" + id;
         } catch (DuplicatePlaceNameException e) {
             model.addAttribute("error_message", e.getMessage());

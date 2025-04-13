@@ -45,7 +45,7 @@ public class PlaceDetailsController {
         PlaceDetailsDTO placeDetailsDTO = placeDetailsDTOForm(request);
         placeDetailsDTO.setPlaceId(placeId);
         ResponseEntity<String> addResponse = placeDetailsService.addDetails(placeId, placeDetailsDTO);
-        if (addResponse.getStatusCode() == HttpStatus.CREATED) {
+        if (addResponse.getStatusCode().is2xxSuccessful()) {
             HttpSession session = request.getSession();
             UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
             List<PlaceDTO> placeDTOS = placeService.getPlacesForUser(userDTO);
@@ -71,9 +71,11 @@ public class PlaceDetailsController {
     }
 
     @PostMapping("/update/{placeId}")
-    public String updateDetails(@PathVariable Long placeId, HttpServletRequest request, Model model) {
+    public String updateDetails(@PathVariable Long placeId, HttpServletRequest request, HttpSession session) {
         PlaceDetailsDTO placeDetailsDTO = placeDetailsDTOForm(request);
         placeDetailsService.updateDetails(placeId, placeDetailsDTO);
+        UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
+        session.setAttribute("userPlaces", placeService.getPlacesForUser(userDTO));
         return "redirect:/place-details/place-id/" + placeId;
     }
 

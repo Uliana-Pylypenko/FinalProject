@@ -103,14 +103,23 @@ public class PlaceService {
         return new ResponseEntity<>("Place not found", HttpStatus.NOT_FOUND);
     }
 
+//    public List<PlaceDTO> getPlacesForUser(UserDTO userDTO) {
+//        List<PlaceDTO> placeDTOS = new ArrayList<>();
+//        if (userDTO.getPlaceIds() != null) {
+//            placeDTOS = placeRepository.findAllById(userDTO.getPlaceIds())
+//                    .stream()
+//                    .map(PlaceDTO::toDTO)
+//                    .collect(Collectors.toList());
+//        }
+//        return placeDTOS;
+//    }
+
     public List<PlaceDTO> getPlacesForUser(UserDTO userDTO) {
-        List<PlaceDTO> placeDTOS = new ArrayList<>();
-        if (userDTO.getPlaceIds() != null) {
-            placeDTOS = placeRepository.findAllById(userDTO.getPlaceIds())
-                    .stream()
-                    .map(PlaceDTO::toDTO)
-                    .collect(Collectors.toList());
-        }
+        List<PlaceDTO> placeDTOS = placeRepository
+                .findByUserId(userDTO.getId())
+                .stream()
+                .map(PlaceDTO::toDTO)
+                .collect(Collectors.toList());
         return placeDTOS;
     }
 
