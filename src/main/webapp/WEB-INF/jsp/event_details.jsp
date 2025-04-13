@@ -38,7 +38,7 @@
 
   <div class="inner align-center">
     <h2>Other events in this place</h2>
-<c:if test="${current_events.size()-1 == 0}">
+<c:if test="${current_events.size()-1 != 0}">
     <div class="table-wrapper align-left">
       <table>
         <thead>

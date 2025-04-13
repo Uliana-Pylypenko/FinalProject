@@ -33,7 +33,6 @@ public class Event {
     @Size(max=1000)
     private String description;
 
-    //@FutureOrPresent
     private LocalDate date;
 
     private Time time;

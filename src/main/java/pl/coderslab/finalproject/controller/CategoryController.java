@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.finalproject.dto.CategoryDTO;
-import pl.coderslab.finalproject.entity.Category;
 import pl.coderslab.finalproject.service.CategoryService;
 
 import java.util.List;

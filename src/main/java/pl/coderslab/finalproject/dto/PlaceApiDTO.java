@@ -27,6 +27,28 @@ public class PlaceApiDTO {
     private List<String> categories;
     private int distance; //m
 
+    public static JSONArray JSONWithNames(JSONObject root) {
+        JSONArray array = root.getJSONArray("features");
+        JSONArray resultArray = new JSONArray();
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject jsonObject = array.getJSONObject(i).optJSONObject("properties");
+            if (jsonObject.has("name")) {
+                JSONObject resultJSON = new JSONObject();
+                resultJSON.put("lat", jsonObject.getDouble("lat"));
+                resultJSON.put("lon", jsonObject.getDouble("lon"));
+                resultJSON.put("name", jsonObject.getString("name").replace("\"", ""));
+                if (jsonObject.has("formatted")) {
+                    resultJSON.put("address", jsonObject.getString("formatted").replace("\"", ""));
+                }
+                if (jsonObject.has("distance")) {
+                    resultJSON.put("distance", jsonObject.getInt("distance"));
+                }
+                resultArray.put(resultJSON);
+            }
+        }
+        return resultArray;
+    }
+
     public static List<PlaceApiDTO> JSONtoDTO(JSONObject root) {
         JSONArray array = root.getJSONArray("features");
 
@@ -91,27 +113,5 @@ public class PlaceApiDTO {
         }
         return placeApiDTOS;
 
-    }
-
-    public static JSONArray JSONWithNames(JSONObject root) {
-        JSONArray array = root.getJSONArray("features");
-        JSONArray resultArray = new JSONArray();
-        for (int i = 0; i < array.length(); i++) {
-            JSONObject jsonObject = array.getJSONObject(i).optJSONObject("properties");
-            if (jsonObject.has("name")) {
-                JSONObject resultJSON = new JSONObject();
-                resultJSON.put("lat", jsonObject.getDouble("lat"));
-                resultJSON.put("lon", jsonObject.getDouble("lon"));
-                resultJSON.put("name", jsonObject.getString("name").replace("\"", ""));
-                if (jsonObject.has("formatted")) {
-                    resultJSON.put("address", jsonObject.getString("formatted").replace("\"", ""));
-                }
-                if (jsonObject.has("distance")) {
-                    resultJSON.put("distance", jsonObject.getInt("distance"));
-                }
-                resultArray.put(resultJSON);
-            }
-        }
-        return resultArray;
     }
 }

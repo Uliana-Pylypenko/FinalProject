@@ -3,17 +3,12 @@ import lombok.AllArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import pl.coderslab.finalproject.dto.UserDTO;
-import pl.coderslab.finalproject.entity.User;
-import pl.coderslab.finalproject.exception.DuplicateUserException;
-import pl.coderslab.finalproject.repository.UserRepository;
 
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class LoginService {
     private final UserService userService;
-    private final UserRepository userRepository;
 
     public String register(String username, String email, String password) {
         UserDTO userDTO = new UserDTO();
@@ -23,8 +18,6 @@ public class LoginService {
         userDTO.setAdmin(false);
         userService.create(userDTO);
         return "redirect:/login";
-
-
     }
 
     public String hashPassword(String password) {

@@ -4,10 +4,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import pl.coderslab.finalproject.entity.Event;
-import pl.coderslab.finalproject.entity.Place;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class EventRepositoryCustomImpl implements EventRepositoryCustom {

@@ -18,10 +18,6 @@ public class PlaceDetailsService {
     private final PlaceRepository placeRepository;
     private final PlaceDetailsRepository placeDetailsRepository;
 
-    public PlaceDetails getDetailsByPlaceId(Long placeId) {
-        Optional<PlaceDetails> placeDetails = placeDetailsRepository.findByPlaceId(placeId);
-        return placeDetails.orElse(null);
-    }
 
     public ResponseEntity<PlaceDetailsDTO> getDetailsByPlaceIdDTO(Long placeId) {
         Optional<PlaceDetails> placeDetails = placeDetailsRepository.findByPlaceId(placeId);
@@ -41,7 +37,6 @@ public class PlaceDetailsService {
             return new ResponseEntity<>("Details added successfully", HttpStatus.CREATED);
         }
         return new ResponseEntity<>("Place not found", HttpStatus.NOT_FOUND);
-        // add some message for duplicate entry
     }
 
     public ResponseEntity<String> updateDetails(Long placeId, PlaceDetailsDTO placeDetailsDTO) {

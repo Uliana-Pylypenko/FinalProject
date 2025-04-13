@@ -15,7 +15,7 @@ import pl.coderslab.finalproject.service.PlaceService;
 import pl.coderslab.finalproject.service.UserService;
 
 
-@Controller  // only @Controller works with the views
+@Controller
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -120,7 +120,7 @@ public class UserController {
     }
 
     @GetMapping("/admin/approve/{id}")
-    public String approve(@PathVariable Long id, HttpServletRequest request, Model model) {
+    public String approve(@PathVariable Long id, HttpSession session, Model model) {
         ResponseEntity<String> response = placeService.approvePlace(id);
         if (! response.getStatusCode().is2xxSuccessful()) {
             model.addAttribute("error_message", "Error approving place");

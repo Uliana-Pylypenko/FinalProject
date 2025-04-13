@@ -33,14 +33,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class EventController {
     private final EventService eventService;
-    private final EventRepository eventRepository;
-    private final PlaceService placeService;
 
-//    @GetMapping
-//    public String getEvents(Model model) {
-//        model.addAttribute("events", eventService.getAll());
-//        return "initial_events";
-//    }
 
     @GetMapping
     public String getFilteredEvents(Model model, HttpServletRequest request) {
@@ -70,12 +63,6 @@ public class EventController {
         model.addAttribute("current_details", current_details);
         model.addAttribute("current_events", eventService.getAllEventsByPlaceId(place.getId()).getBody());
         return "event_details";
-    }
-
-
-    @GetMapping("/place-id/{placeId}")
-    public ResponseEntity<List<EventDTO>> getEventsByPlaceId(@PathVariable Long placeId) {
-        return eventService.getAllEventsByPlaceId(placeId);
     }
 
     @GetMapping("/create")
@@ -116,15 +103,6 @@ public class EventController {
 
     }
 
-    @PostMapping("/create/{placeId}")
-    public ResponseEntity<String> createEvent(@PathVariable Long placeId, @RequestBody EventDTO eventDTO) {
-        return eventService.addEvent(placeId, eventDTO);
-    }
-
-//    @PutMapping("/update/{id}")
-//    public ResponseEntity<String> updateEvent(@PathVariable Long id, @RequestBody EventDTO eventDTO) {
-//        return eventService.updateEvent(id, eventDTO);
-//    }
 
     @GetMapping("/update/{id}")
     public String updateEvent(@PathVariable Long id, Model model) {
@@ -145,13 +123,8 @@ public class EventController {
             model.addAttribute("current_single_event", eventService.getByIdDTO(id));
             return "add_event";
         }
-
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteEvent(@PathVariable Long id) {
-        return eventService.deleteEvent(id);
-    }
 
     @GetMapping("/delete/{id}")
     public String deleteEvent(@PathVariable Long id, Model model) {
@@ -207,5 +180,27 @@ public class EventController {
         eventDTO.setDescription(description);
         eventDTO.setPlaceId(placeId);
         return eventDTO;
+    }
+
+
+    // Methods which are not used now, but may be used later
+    @GetMapping("/place-id/{placeId}")
+    public ResponseEntity<List<EventDTO>> getEventsByPlaceId(@PathVariable Long placeId) {
+        return eventService.getAllEventsByPlaceId(placeId);
+    }
+
+    @PostMapping("/create/{placeId}")
+    public ResponseEntity<String> createEvent(@PathVariable Long placeId, @RequestBody EventDTO eventDTO) {
+        return eventService.addEvent(placeId, eventDTO);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> updateEvent(@PathVariable Long id, @RequestBody EventDTO eventDTO) {
+        return eventService.updateEvent(id, eventDTO);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteEvent(@PathVariable Long id) {
+        return eventService.deleteEvent(id);
     }
 }

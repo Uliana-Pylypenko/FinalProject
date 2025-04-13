@@ -11,8 +11,7 @@ import pl.coderslab.finalproject.entity.User;
 
 import java.io.IOException;
 
-//@Component
-//@WebFilter("/user/*")
+
 public class AuthFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain filterChain) throws IOException, ServletException {
@@ -20,7 +19,6 @@ public class AuthFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         HttpSession session = httpRequest.getSession();
         String requestURI = httpRequest.getRequestURI();
-        //User user = (User) session.getAttribute("user");
         UserDTO user = (UserDTO) session.getAttribute("userDTO");
         System.out.println("USER NULL: " + user==null);
 

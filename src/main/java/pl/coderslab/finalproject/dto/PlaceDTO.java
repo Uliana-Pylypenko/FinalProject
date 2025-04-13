@@ -35,7 +35,6 @@ public class PlaceDTO {
         placeDTO.setLatitude(place.getLatitude());
         placeDTO.setLongitude(place.getLongitude());
         placeDTO.setApproved(place.isApproved());
-        //placeDTO.setDetailsId(place.getPlaceDetails().getId()); // can't be null for some reason
         PlaceDetails placeDetails = place.getPlaceDetails();
         if (placeDetails != null) {
             placeDTO.setDetailsDTO(PlaceDetailsDTO.toDTO(placeDetails));
@@ -58,31 +57,6 @@ public class PlaceDTO {
         return placeDTO;
     }
 
-//    public static Place toEntity(PlaceDTO placeDTO,
-//                                 UserRepository userRepository,
-//                                 PlaceDetailsRepository placeDetailsRepository,
-//                                 CategoryRepository categoryRepository,
-//                                 EventRepository eventRepository) {
-//        Place place = new Place();
-//        place.setId(placeDTO.getId());
-//        place.setName(placeDTO.getName());
-//        Long detailsId = placeDTO.getDetailsId();
-//        if (detailsId != null) {
-//            place.setPlaceDetails(placeDetailsRepository.findById(detailsId).orElse(null));
-//        } else {
-//            place.setPlaceDetails(null);
-//        }
-//        place.setUser(userRepository.findById(placeDTO.getUserId()).orElse(null));
-//        place.setCategory(categoryRepository.findById(placeDTO.getCategoryId()).orElse(null));
-//        List<Long> eventIds = placeDTO.getEventIds();
-//        if (eventIds != null) {
-//            place.setEvents(eventRepository.findAllById(placeDTO.getEventIds()));
-//        } else {
-//            place.setEvents(null);
-//        }
-//        return place;
-//    }
-
     public static Place toEntityUserCategory(PlaceDTO placeDTO,
                                              UserRepository userRepository) {
         Place place = new Place();
@@ -103,18 +77,6 @@ public class PlaceDTO {
             Place place = toEntityUserCategory(placeDTO, userRepository);
             PlaceDetails placeDetails = PlaceDetailsDTO.toEntity(placeDTO.getDetailsDTO(), placeRepository);
             place.setPlaceDetails(placeDetails);
-//            Long detailsId = placeDTO.getDetailsId();
-//            if (detailsId != null) {
-//                place.setPlaceDetails(placeDetailsRepository.findById(detailsId).orElse(null));
-//            } else {
-//                place.setPlaceDetails(null);
-//            }
-//            List<Long> eventIds = placeDTO.getEventIds();
-//            if (eventIds != null) {
-//                place.setEvents(eventRepository.findAllById(placeDTO.getEventIds()));
-//            } else {
-//                place.setEvents(null);
-//            }
             List<Event> events = placeDTO
                     .getEventDTOS()
                     .stream()

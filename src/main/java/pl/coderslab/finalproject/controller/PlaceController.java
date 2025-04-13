@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,7 +13,6 @@ import pl.coderslab.finalproject.dto.CategoryDTO;
 import pl.coderslab.finalproject.dto.PlaceDTO;
 import pl.coderslab.finalproject.dto.UserDTO;
 import pl.coderslab.finalproject.exception.DuplicatePlaceNameException;
-import pl.coderslab.finalproject.repository.PlaceRepository;
 import pl.coderslab.finalproject.service.*;
 
 import java.util.ArrayList;
@@ -81,13 +79,6 @@ public class PlaceController {
     }
 
 
-
-
-    @GetMapping("/{id}")
-    public ResponseEntity<PlaceDTO> getById(@PathVariable Long id) {
-        return placeService.getByIdDTO(id);
-    }
-
     @GetMapping("/create")
     public String create(HttpSession session) {
         session.setAttribute("categories", categoryService.getAll().getBody());
@@ -117,7 +108,6 @@ public class PlaceController {
                 placeDTOS = new ArrayList<>();
             }
             placeDTOS.add(placeService.getLastElement());
-
             session.setAttribute("userPlaces", placeDTOS);
 
             String role = userDTO.isAdmin() ? "admin" : "user";
@@ -128,11 +118,6 @@ public class PlaceController {
             model.addAttribute("error_message", "Can't create place");
             return "error";
         }
-    }
-
-    @PutMapping("/update/{id}")
-    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody PlaceDTO placeDTO) {
-        return placeService.update(id, placeDTO);
     }
 
     @GetMapping("/update/{id}")
@@ -158,10 +143,6 @@ public class PlaceController {
         return "add_place";
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
-        return placeService.delete(id);
-    }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id, Model model) {
@@ -175,10 +156,6 @@ public class PlaceController {
         boolean answer = Boolean.parseBoolean(request.getParameter("answer"));
         if (answer) {
             HttpSession session = request.getSession();
-//            List<PlaceDTO> placeDTOS = (List<PlaceDTO>) session.getAttribute("userPlaces");
-//            PlaceDTO placeDTO = placeDTOS.stream().filter(placeDTO1 -> placeDTO1.getId() == id).findFirst().get();
-//            placeDTOS.remove(placeDTO);
-//            session.setAttribute("userPlaces", placeDTOS);
             placeService.delete(id);
             UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
             session.setAttribute("userPlaces", placeService.getPlacesForUser(userDTO));
@@ -203,9 +180,4 @@ public class PlaceController {
         return placeDTO;
     }
 
-
-//    @GetMapping("/categories")
-//    public List<Category> getAllCategories() {
-//        return placeService.getAllCategories();
-//    }
 }

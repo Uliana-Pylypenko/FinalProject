@@ -12,7 +12,7 @@ public class GlobalExceptionHandler {
     public ModelAndView handleDuplicateUserException(DuplicateUserException ex, Model model) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("error_message", ex.getMessage());
-        modelAndView.setViewName("registration"); // Default to user creation view
+        modelAndView.setViewName("registration");
         return modelAndView;
     }
 

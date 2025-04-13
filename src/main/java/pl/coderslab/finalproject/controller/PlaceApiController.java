@@ -11,10 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import pl.coderslab.finalproject.dto.PlaceApiDTO;
 import pl.coderslab.finalproject.dto.PlaceDTO;
-import pl.coderslab.finalproject.entity.Place;
 import pl.coderslab.finalproject.service.PlaceService;
 
-import java.util.List;
 import static pl.coderslab.finalproject.service.PlaceService.singlePlaceToJSON;
 
 @Controller
@@ -23,7 +21,6 @@ import static pl.coderslab.finalproject.service.PlaceService.singlePlaceToJSON;
 public class PlaceApiController {
     private final PlaceService placeService;
 
-    // do app properties @value
     private static final String API_KEY
             = "9f97967260db4356adf1836958f7f9f8";
     private static final String API_URL
@@ -34,19 +31,6 @@ public class PlaceApiController {
     private static final String API_URL3 = ",5000&bias=proximity:";//coords
     private static final String API_URL4 = "&limit=100&apiKey={apiKey}";
 
-
-    @GetMapping("/test")
-    public String callGet() {
-        RestTemplate rest = new RestTemplate();
-        ResponseEntity<String> exchange = rest.exchange(
-                API_URL,
-                HttpMethod.GET,
-                HttpEntity.EMPTY,
-                String.class,
-                API_KEY);
-
-        return exchange.getBody();
-    }
 
     @GetMapping("/places/{placeId}/{categories}")
     public String getPlaces(@PathVariable Long placeId, @PathVariable String categories, Model model) {
@@ -69,11 +53,21 @@ public class PlaceApiController {
                 API_KEY);
 
         JSONObject root = new JSONObject(exchange.getBody());
-//        List<PlaceApiDTO> placeApiDTOS = PlaceApiDTO.JSONtoDTOwithName(root);
-//        model.addAttribute("placeApiDTOS", placeApiDTOS);
         model.addAttribute("placeApiDTOS", PlaceApiDTO.JSONWithNames(root));
         return "map_places_nearby";
+    }
 
+    @GetMapping("/test")
+    public String callGet() {
+        RestTemplate rest = new RestTemplate();
+        ResponseEntity<String> exchange = rest.exchange(
+                API_URL,
+                HttpMethod.GET,
+                HttpEntity.EMPTY,
+                String.class,
+                API_KEY);
+
+        return exchange.getBody();
     }
 
 }

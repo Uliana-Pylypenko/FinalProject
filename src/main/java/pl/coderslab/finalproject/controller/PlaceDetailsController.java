@@ -18,20 +18,15 @@ import pl.coderslab.finalproject.service.PlaceService;
 import java.util.List;
 
 @Controller
-//@RequestMapping("/place-details")
+@RequestMapping("/place-details")
 @AllArgsConstructor
 public class PlaceDetailsController {
     private final PlaceDetailsService placeDetailsService;
     private final PlaceService placeService;
     private final EventService eventService;
 
-//    @GetMapping("/place-id/{placeId}")
-//    public String getDetailsByPlaceId(@PathVariable Long placeId, Model model) {
-//        model.addAttribute("placeDetails", placeDetailsService.getDetailsByPlaceId(placeId));
-//        return "initial_place_details";
-//    }
 
-    @GetMapping("/place-details/place-id/{placeId}")
+    @GetMapping("/place-id/{placeId}")
     public String getDetailsByPlaceId(@PathVariable Long placeId, Model model) {
         model.addAttribute("current_place", placeService.getByIdDTO(placeId).getBody());
         model.addAttribute("current_details", placeDetailsService.getDetailsByPlaceIdDTO(placeId).getBody());
@@ -39,24 +34,13 @@ public class PlaceDetailsController {
         return "place_details";
     }
 
-    @GetMapping({"/hello"})
-    public String hello() {
-        //model.addAttribute("name", name);
-        return "place_details";
-    }
-
-//    @PostMapping("/create/{placeId}")
-//    public ResponseEntity<String> addDetails( @PathVariable Long placeId, @RequestBody PlaceDetailsDTO placeDetailsDTO) {
-//        return placeDetailsService.addDetails(placeId, placeDetailsDTO);
-//    }
-
-    @GetMapping("/place-details/add/{placeId}")
+    @GetMapping("/add/{placeId}")
     public String addDetails(@PathVariable Long placeId, Model model) {
         model.addAttribute("current_place", placeService.getByIdDTO(placeId).getBody());
         return "add_details";
     }
 
-    @PostMapping("/place-details/add/{placeId}")
+    @PostMapping("/add/{placeId}")
     public String addDetails(@PathVariable Long placeId, HttpServletRequest request, Model model) {
         PlaceDetailsDTO placeDetailsDTO = placeDetailsDTOForm(request);
         placeDetailsDTO.setPlaceId(placeId);
@@ -74,26 +58,26 @@ public class PlaceDetailsController {
     }
 
 
-    @PutMapping("/place-details/update/{placeId}")
+    @PutMapping("/update/{placeId}")
     public ResponseEntity<String> updateDetails(@PathVariable Long placeId, @RequestBody PlaceDetailsDTO placeDetailsDTO) {
         return placeDetailsService.updateDetails(placeId, placeDetailsDTO);
     }
 
-    @GetMapping("/place-details/update/{placeId}")
+    @GetMapping("/update/{placeId}")
     public String updateDetails(@PathVariable Long placeId, Model model) {
         model.addAttribute("current_place", placeService.getByIdDTO(placeId).getBody());
         model.addAttribute("current_details", placeDetailsService.getDetailsByPlaceIdDTO(placeId).getBody());
         return "add_details";
     }
 
-    @PostMapping("/place-details/update/{placeId}")
+    @PostMapping("/update/{placeId}")
     public String updateDetails(@PathVariable Long placeId, HttpServletRequest request, Model model) {
         PlaceDetailsDTO placeDetailsDTO = placeDetailsDTOForm(request);
         placeDetailsService.updateDetails(placeId, placeDetailsDTO);
         return "redirect:/place-details/place-id/" + placeId;
     }
 
-    @DeleteMapping("/place-details/delete/{placeId}")
+    @DeleteMapping("/delete/{placeId}")
     public ResponseEntity<String> deleteDetails(@PathVariable Long placeId) {
         return placeDetailsService.deleteDetails(placeId);
     }

@@ -16,7 +16,6 @@ import pl.coderslab.finalproject.service.PlaceService;
 import pl.coderslab.finalproject.service.UserService;
 import org.springframework.ui.Model;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -25,6 +24,11 @@ public class LoginController {
     private final UserService userService;
     private final PlaceService placeService;
     private final LoginService loginService;
+
+    @GetMapping
+    public String home() {
+        return "home";
+    }
 
     @GetMapping("/login")
     public String loginPage() {
@@ -60,7 +64,7 @@ public class LoginController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/login"; // Redirect to login page
+        return "redirect:/login";
     }
 
     @GetMapping("/access-denied")

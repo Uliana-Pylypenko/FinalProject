@@ -17,10 +17,6 @@ public class FilterConfig {
         registrationBean.setFilter(new AuthFilter());
 //        registrationBean.addUrlPatterns("/user/*");
 //        registrationBean.addUrlPatterns("/admin/*");
-        //registrationBean.addUrlPatterns("/*/update/*");
-        //registrationBean.addUrlPatterns("/*/add"); ???
-        //registrationBean.setOrder(2);
-
         return registrationBean;
     }
 }

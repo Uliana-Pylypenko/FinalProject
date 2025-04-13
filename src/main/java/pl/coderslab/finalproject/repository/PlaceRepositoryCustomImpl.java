@@ -3,17 +3,9 @@ package pl.coderslab.finalproject.repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
-import pl.coderslab.finalproject.dto.CategoryDTO;
 import pl.coderslab.finalproject.entity.Category;
 import pl.coderslab.finalproject.entity.Place;
 
-import java.util.Map;
-import java.util.function.Predicate;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class PlaceRepositoryCustomImpl implements PlaceRepositoryCustom{

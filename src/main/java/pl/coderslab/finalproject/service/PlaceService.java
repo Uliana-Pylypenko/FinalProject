@@ -27,16 +27,6 @@ public class PlaceService {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
 
-    public List<Place> getAll() {
-        return placeRepository.findAll();
-    }
-
-    public void checkForDuplicate(PlaceDTO placeDTO) {
-        Optional<Place> place = placeRepository.findByName(placeDTO.getName());
-        if (place.isPresent() && place.get().getId() != placeDTO.getId()) {
-            throw new DuplicatePlaceNameException("Place with name " + placeDTO.getName() + " already exists");
-        }
-    }
 
     public ResponseEntity<List<PlaceDTO>> getAllDTO() {
         List<PlaceDTO> placeDTOS = placeRepository
@@ -45,10 +35,6 @@ public class PlaceService {
                 .map(PlaceDTO::toDTO)
                 .collect(Collectors.toList());
         return new ResponseEntity<>(placeDTOS, HttpStatus.OK);
-    }
-
-    public Place getById(Long id) {
-        return placeRepository.findById(id).orElse(null);
     }
 
     public ResponseEntity<PlaceDTO> getByIdDTO(Long id) {
@@ -152,6 +138,13 @@ public class PlaceService {
         return new ResponseEntity<>("Place not found", HttpStatus.NOT_FOUND);
     }
 
+    public void checkForDuplicate(PlaceDTO placeDTO) {
+        Optional<Place> place = placeRepository.findByName(placeDTO.getName());
+        if (place.isPresent() && place.get().getId() != placeDTO.getId()) {
+            throw new DuplicatePlaceNameException("Place with name " + placeDTO.getName() + " already exists");
+        }
+    }
+
     public static JSONObject singlePlaceToJSON(PlaceDTO placeDTO) {
         if (placeDTO == null) {
             return null;
@@ -172,10 +165,7 @@ public class PlaceService {
             placeJson.put("category", placeDTO.getCategoryDTO().getName());
             return placeJson;
         }
-
-
     }
-
 
     public static JSONArray placesToJSON(List<PlaceDTO> placeDTOS) {
         if (placeDTOS == null) {
