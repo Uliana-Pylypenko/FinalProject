@@ -6,6 +6,8 @@ Main features:
 - Filter them by category, localization, activities, etc.
 - Show places on a map (using [Geoapify](https://www.geoapify.com)
 - Showing other tourist places around the chosen astrotouristic site (also using [Geoapify](https://www.geoapify.com)
+- Simple user login and registration
+- Users which have admin rights are supposed to check newly added places and approve them
 
 # Technologies used
 1. Java
@@ -18,6 +20,6 @@ Main features:
 
 # Installation
 1. Download the project
-2. Add your username and password to connect with the database
+2. Add your username and password to connect with the database in *application.properties*
 3. Create an account on [Geoapify](https://www.geoapify.com) and create your API key following the instruction
 4. Run the project
