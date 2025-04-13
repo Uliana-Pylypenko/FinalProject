@@ -55,9 +55,9 @@
 <script type="text/javascript">
 
   var places = JSON.parse('${places}');
-  console.log(places);
+  //console.log(places[0]['latitude']);
 
-  var map = L.map("my-map").setView([places[0].latitude, places[0].longitude], 10);
+  var map = L.map("my-map").setView([places[0]['latitude'], places[0]['longitude']], 10);
 
   // Get your own API Key on https://myprojects.geoapify.com
   var myAPIKey = "9f97967260db4356adf1836958f7f9f8"
@@ -69,19 +69,6 @@
           "https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}.png?apiKey={apiKey}";
   var retinaUrl =
           "https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}@2x.png?apiKey={apiKey}";
-
-  // marker = L.marker(new L.LatLng(48.1500327, 11.5753989)).addTo(map); <!-- PINEZKA -->
-
-  //const markerIcon = L.icon({
-  //  iconUrl: `https://api.geoapify.com/v1/icon/?type=material&color=red&iconType=awesome&scaleFactor=2&apiKey=${myAPIKey}`,
-  //iconSize: [31, 46], // size of the icon
-  //iconAnchor: [15.5, 42], // point of the icon which will correspond to marker's location
-  //popupAnchor: [0, -45] // point from which the popup should open relative to the iconAnchor
-  // });
-
-
-  var places = JSON.parse('${places}');
-  console.log(places);
 
   places.forEach(function(place) {
     var latitude = place.latitude;

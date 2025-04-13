@@ -19,7 +19,8 @@
    Place: <a href="/place-details/place-id/${current_place.id}">${current_place.name}</a><br>
   Country: ${current_details.country}<br>
   City: ${current_details.location}<br>
-    Description: ${current_single_event.description}<br>
+    Description: <br>
+  ${current_single_event.description}<br>
 </div>
 
 
@@ -37,7 +38,7 @@
 
   <div class="inner align-center">
     <h2>Other events in this place</h2>
-
+<c:if test="${current_events.size()-1 == 0}">
     <div class="table-wrapper align-left">
       <table>
         <thead>
@@ -61,6 +62,7 @@
         </tbody>
       </table>
     </div>
+    </c:if>
   </div>
 
     <c:if test="${current_events.size()-1 == 0}">

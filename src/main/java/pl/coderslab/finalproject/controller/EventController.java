@@ -175,7 +175,9 @@ public class EventController {
                 }
             }
             session.setAttribute("userPlaces", placeDTOS);
-            return "redirect:/user/home";
+            UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
+            String role = userDTO.isAdmin() ? "admin" : "user";
+            return "redirect:/" + role + "/home";
         } else {
             return "redirect:/event/" + id;
         }

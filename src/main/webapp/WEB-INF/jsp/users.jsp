@@ -29,7 +29,7 @@
         </thead>
         <tbody>
         <c:forEach items="${all_users}" var="user">
-         <c:if test="${user != userDTO}">
+         <c:if test="${user.id != userDTO.id}">
         <tr>
           <td>${user.id}</td>
           <td>${user.username}</td>

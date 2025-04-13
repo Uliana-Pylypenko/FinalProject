@@ -49,7 +49,7 @@
 
         <br><br>
 
-        <textarea name="description" placeholder="Description" value="${current_single_event.description}" rows="6"></textarea>
+        <textarea name="description" placeholder="Description (max 1000 characters)" rows="6">${current_single_event.description}</textarea>
 
         <br>
         <div class="12u$">

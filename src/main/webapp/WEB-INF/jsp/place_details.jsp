@@ -5,7 +5,9 @@
 <section id="One" class="wrapper style3">
   <div class="inner">
     <header class="align-center">
+    <p>${current_place.categoryDTO.name}</p>
       <h2>${current_place.name}</h2>
+
     </header>
   </div>
 </section>
@@ -58,6 +60,8 @@
         <a href="/event/create" class="button special">Add event</a>
         </c:if>
   </c:if>
+
+  <c:if test="${not empty current_events}">
     <div class="table-wrapper align-left">
       <table>
         <thead>
@@ -79,12 +83,13 @@
         </tbody>
       </table>
     </div>
+    </c:if>
   </div>
 </section>
 
 <section class="wrapper align-center">
 <div class="align-center">
-<a href="/geoapi/places/${current_place.id}/leisure" class="button special">Show other tourist places nearby</a><br>
+<a href="/geoapi/places/${current_place.id}/leisure,natural,entertainment" class="button special">Show other tourist places nearby</a><br>
 </div>
 
 <c:if test="${userDTO.admin && !current_place.approved}">

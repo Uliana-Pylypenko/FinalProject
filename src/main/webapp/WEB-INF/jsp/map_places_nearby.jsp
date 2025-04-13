@@ -3,7 +3,7 @@
 <section class="wrapper style3">
   <div class="inner">
     <header class="align-center">
-      <h2>Touristic places near ${place}</h2>
+      <h2>Touristic places near ${place.name}</h2>
     </header>
   </div>
 </section>
@@ -22,7 +22,7 @@
   <script type="text/javascript">
     var placeJSON = JSON.parse('${placeJSON}');
     var map = L.map("my-map").setView([placeJSON['latitude'], placeJSON['longitude']], 10);
-
+    console.log(placeJSON);
     // Get your own API Key on https://myprojects.geoapify.com
     var myAPIKey = "9f97967260db4356adf1836958f7f9f8"
 
@@ -54,13 +54,13 @@
 
     var placeApis = JSON.parse('${placeApiDTOS}');
 
-    //console.log(placeJSON['latitude'])
+    console.log(placeApis);
 
     placeApis.forEach(function(place) {
       var latitude = place['lat']
       var longitude = place['lon']
       var marker = L.marker([latitude, longitude]).addTo(map);
-      marker.bindPopup("Name: " + place['name'] + ", Address: " + place['formatted'] + ", Distance: " + place['distance'] + " m");
+      marker.bindPopup("Name: " + place['name'] + ", Address: " + place['address'] + ", Distance: " + place['distance'] + " m");
       marker.on('click', function (e) {
         marker.openPopup();
       });
