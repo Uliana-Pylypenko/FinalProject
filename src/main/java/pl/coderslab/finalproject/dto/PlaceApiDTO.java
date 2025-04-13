@@ -103,8 +103,12 @@ public class PlaceApiDTO {
                 resultJSON.put("lat", jsonObject.getDouble("lat"));
                 resultJSON.put("lon", jsonObject.getDouble("lon"));
                 resultJSON.put("name", jsonObject.getString("name").replace("\"", ""));
-                resultJSON.put("address", jsonObject.getString("formatted").replace("\"", ""));
-                resultJSON.put("distance", jsonObject.getInt("distance"));
+                if (jsonObject.has("formatted")) {
+                    resultJSON.put("address", jsonObject.getString("formatted").replace("\"", ""));
+                }
+                if (jsonObject.has("distance")) {
+                    resultJSON.put("distance", jsonObject.getInt("distance"));
+                }
                 resultArray.put(resultJSON);
             }
         }

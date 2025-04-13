@@ -56,16 +56,24 @@
 
     console.log(placeApis);
 
-    placeApis.forEach(function(place) {
-      var latitude = place['lat']
-      var longitude = place['lon']
-      var marker = L.marker([latitude, longitude]).addTo(map);
-      marker.bindPopup("Name: " + place['name'] + ", Address: " + place['address'] + ", Distance: " + place['distance'] + " m");
-      marker.on('click', function (e) {
-        marker.openPopup();
+    if (placeApis.length>0) {
+      placeApis.forEach(function (place) {
+        var latitude = place['lat']
+        var longitude = place['lon']
+        var marker = L.marker([latitude, longitude]).addTo(map);
+        var popup = "Name: " + place['name']
+        if (place.hasOwnProperty("address")) {
+          popup += ", Address: " + place['address'];
+        }
+        if (place.hasOwnProperty("distance")) {
+          popup += ", Distance: " + place['distance'] + " m"
+        }
+        marker.bindPopup(popup);
+        marker.on('click', function (e) {
+          marker.openPopup();
+        });
       });
-    });
-
+    }
     // Add map tiles layer. Set 20 as the maximal zoom and provide map data attribution.
     L.tileLayer(isRetina ? retinaUrl : baseUrl, {
       attribution:
