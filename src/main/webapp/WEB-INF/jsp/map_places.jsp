@@ -10,6 +10,7 @@
 
 
 <section class="wrapper style2 align-center">
+  <div class="inner align-center">
   <!-- Form -->
     <form method="get" action="">
       <div class="align-center">
@@ -49,7 +50,7 @@
     <div id="my-map"></div>
   </div>
 
-
+  </div>
 </section>
 
 <script type="text/javascript">
