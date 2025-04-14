@@ -4,8 +4,8 @@ Final project for "Java Developer" course by CodersLab, Warsaw - website for bro
 Main features:
 - Add, update, and delete places and events
 - Filter them by category, localization, activities, etc.
-- Show places on a map (using [Geoapify](https://www.geoapify.com)
-- Showing other tourist places around the chosen astrotouristic site (also using [Geoapify](https://www.geoapify.com)
+- Show places on a map (using [Geoapify](https://www.geoapify.com))
+- Showing other tourist places around the chosen astrotouristic site (also using [Geoapify](https://www.geoapify.com))
 - Simple user login and registration
 - Users which have admin rights are supposed to check newly added places and approve them
 
